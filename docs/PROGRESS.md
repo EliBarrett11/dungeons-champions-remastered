@@ -21,7 +21,7 @@ Update this file at the end of each approved milestone.
 - [ ] Schema fixes from the audit applied.
 - [x] M1 reviewed and merged into `main` (PR #5, merge commit `1fafb5a`, 2026-10-11).
 - [x] M2 redefined as a browser-playable Expedition and its prototype decisions recorded (T-010, P-018 to P-021, 2026-10-11).
-- [x] M2 first playable Expedition implemented and tested (2026-10-11) on branch `claude/modest-hamilton-ngoiru`; two P-018 details await owner confirmation.
+- [x] M2 first playable Expedition implemented and tested (2026-10-11) on branch `claude/modest-hamilton-ngoiru`; its two pending P-018 details were confirmed in the M3 review (R-003, R-004).
 - [x] M2 reviewed and merged into `main` (PR #6, merge commit `b00e885`, 2026-10-11).
 - [x] Approved 135-Champion roster recorded (D-017 to D-021, superseding D-003 and D-013) and integrated as M3 (P-022), 2026-10-11, on branch `claude/modest-hamilton-ngoiru`.
 - [ ] M3 reviewed and merged into `main`.
@@ -180,7 +180,14 @@ Update this file at the end of each approved milestone.
   - Mutation checks: 7 removed validator rules and 5 integration bugs were each caught by the tests.
 - **Gameplay effect to review:** with roster Champions the Expedition is much harder than in M2. In 300 seeded runs, a "front-line first" team cleared 38 times, and the first three bench Champions cleared 15 times (M2: about two in three). Round 1 is won almost always, Round 2 about two times in three. The cause is that 68 of the 135 Champions are Mages, Controllers or Supports, whose power (Spell Power, abilities) is not implemented, so their temporary Attack is low. Monsters and rewards were not retuned (that would change P-018/P-019 values); see `OPEN_QUESTIONS.md`.
 - **Caveats:** the importer needs `openpyxl` and the content check needs `jsonschema` (Python; outside `npm run check`). The smoke test needs Playwright outside the repository. Champion names include their number suffix ("Aerin Ashford 001") exactly as in the workbook. The M1 and M2 caveats still apply.
-- **Next smallest task:** owner review of M3: the Fighter/Ranger Role question, whether to retune the fixture encounters for roster benches, and the two P-018 items awaiting confirmation. Then a pull request when the owner asks.
+- **Owner review (2026-10-11), recorded as R-001 to R-005 in `DECISIONS.md`:**
+  - no retuning; the reduced clear rate is a known limitation, to be reassessed after combat abilities exist (R-001);
+  - Fighter and Ranger are not added as Roles; the labelled placeholder stays, and Role assignments stay PROPOSED (R-002);
+  - the voluntary end of an Expedition is confirmed, with no extra reward (R-003);
+  - full Health at the start of each Monster Round is confirmed for the prototype (R-004);
+  - team capacity stays 12, the bench of four and 1–3 fielding are unchanged, and Renown is not implemented (R-005).
+  No code or rule values changed as a result.
+- **Next smallest task:** review and merge of the M3 pull request. M4 is not started.
 
 ## Required end-of-task report
 - Milestone and scope

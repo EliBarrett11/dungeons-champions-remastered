@@ -69,7 +69,7 @@ Build in small vertical slices. Every milestone should end with a runnable resul
 
 **Excluded:** Trait effects and bracket bonuses, economy, shop, purchases, rerolls, upgrades, Multi-Class, Champion-specific ability execution, changes to the bench of four or the 1–3 fielding limit, changes to the engine's rules.
 
-**M3 status (2026-10-11):** implemented and tested on branch `claude/modest-hamilton-ngoiru` (checkpoints A–D); not yet reviewed or merged. Results and caveats: `docs/PROGRESS.md`, "M3 approved roster integration".
+**M3 status (2026-10-11):** implemented and tested on branch `claude/modest-hamilton-ngoiru` (checkpoints A–D); owner review decisions R-001 to R-005 recorded; pull request open for review, not merged. Known limitation (R-001): with roster Champions the Expedition clears far less often until Champion mechanics exist. Results and caveats: `docs/PROGRESS.md`, "M3 approved roster integration".
 
 ## M4 — Minimal economy and bot match
 **Goal:** demonstrate a complete small match loop. (Formerly M2, then M3; renumbered by T-010 and again when the roster milestone became M3. The former M3 browser goals of showing the shop, Gold and Health are carried here because the browser client now exists.)

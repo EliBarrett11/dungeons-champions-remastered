@@ -8,7 +8,7 @@
 export const EXPEDITION_CONFIG = Object.freeze({
   /** P-018: Monster Rounds in one prototype Expedition (documented: Floor 1 opens with three). */
   encounterCount: 3,
-  /** P-020: Champions the player may field per battle. Renown is not modelled in M2. */
+  /** P-020: Champions the player may field per battle. Renown is not implemented (R-005). */
   minTeamSize: 1,
   maxTeamSize: 3,
   /** P-020 / P-022: Champions on the starting bench, drawn by seed from the approved roster. */

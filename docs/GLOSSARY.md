@@ -27,7 +27,7 @@ Definitions are taken from the existing documentation; the source is given for e
 | **Gold** | Match currency used in the Tavern. Persists across Runs. Earned as baseline income, win-streak bonus and interest. | `GAMEPLAY/ECONOMY.md` |
 | **Interest** | `min(5, floor(Gold held immediately before Round income / 10))`. | `GAMEPLAY/ECONOMY.md` |
 | **Fame** | Persistent resource that determines Renown; e.g. "Play my song" costs 4 Gold and grants 4 Fame. Thresholds UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
-| **Renown** | Starts at 1, capped at 12 (D-019). A player may field one Champion per Renown level. Whether it also acts as "player level" for shop odds: UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
+| **Renown** | Starts at 1, capped at 12 (D-019). Not implemented in the prototype. A player may field one Champion per Renown level. Whether it also acts as "player level" for shop odds: UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
 | **Tavern** | The shop: six slots, refreshes automatically every Round. Each player's interaction is private; offers are visible to all and reserve nothing. | `GAMEPLAY/ECONOMY.md`, D-009 |
 | **Drink ("Purchase a Drink")** | Costs 2 Gold and rerolls all six Tavern slots. | `GAMEPLAY/ECONOMY.md` |
 
