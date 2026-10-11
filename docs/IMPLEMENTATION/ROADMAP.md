@@ -110,7 +110,7 @@ Build in small vertical slices. Every milestone should end with a runnable resul
   - Gold equals 3 + reward Gold − spending at every step;
   - Gold is never negative.
 
-**C. Deterministic six-slot shop, provisional prices, refresh timing** (done 2026-10-11, awaiting owner review)
+**C. Deterministic six-slot shop, provisional prices, refresh timing** (done 2026-10-11, commit `8774c13`, approved by the owner)
 - **Modules:** `shop.ts` (`SHOP_ROOT_OUTPUT` = 5, `shopRootSeed`, `shopSeed(k)`, `generateShop`; shop slots carry `priceStatus: 'provisional'`); `expedition.ts` (`shopCandidates`; shop 0 on creation, a refresh on continue; the content check refuses a round count whose roster draw would reach output 5).
 - **Edge cases:** owned and all six reserved Champions excluded; refresh only on continue; no shop changes in other phases.
 - **Tests:**
@@ -122,7 +122,7 @@ Build in small vertical slices. Every milestone should end with a runnable resul
   - the engine golden replays are unchanged;
   - the derivation (root = output 5; shop *k* = output *k*+1 of `Sfc32(root)`) is documented in `shop.ts` and pinned by a test against independently computed sfc32 outputs.
 
-**D. Purchases, rerolls, capacity, reserved Champions, rejected actions**
+**D. Purchases, rerolls, capacity, reserved Champions, rejected actions** (done 2026-10-11, awaiting owner review)
 - **Modules:** `expedition.ts` actions `buy` (slot) and `reroll`; the reward-claim capacity guard.
 - **Edge cases:** a sold slot; too little Gold for a buy (below the price) or a reroll (below 2); 12 owned (buy refused, Champion reward refused, Gold reward allowed); buying in a non-preparation phase; a double buy; a reroll after buying; buying the last affordable slot.
 - **Tests:**

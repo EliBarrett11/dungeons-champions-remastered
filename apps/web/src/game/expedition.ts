@@ -98,7 +98,11 @@ export type ExpeditionAction =
   | { readonly type: 'chooseReward'; readonly bundleId: string }
   | { readonly type: 'continue' }
   | { readonly type: 'endExpedition' }
-  | { readonly type: 'newExpedition'; readonly seed: number };
+  | { readonly type: 'newExpedition'; readonly seed: number }
+  /** M4: buy the offer in shop slot `slot` (0-based) during preparation (P-023, P-024, P-027). */
+  | { readonly type: 'buy'; readonly slot: number }
+  /** M4: pay the reroll cost to replace all six shop slots during preparation (P-023, P-029). */
+  | { readonly type: 'reroll' };
 
 export type TransitionResult =
   | { readonly ok: true; readonly state: ExpeditionState }
@@ -431,6 +435,11 @@ export function transition(
       if (!bundle) return reject(state, `Reward "${action.bundleId}" is not offered for this encounter.`);
       const unknown = bundle.champions.filter((id) => !content.champions.some((champion) => champion.id === id));
       if (unknown.length > 0) return reject(state, 'This reward refers to missing Champion data.', unknown);
+      // P-027 / P-030: a Champion bundle cannot take the collection past the cap; the Gold-only
+      // bundle always stays available, so a victory always has a valid reward choice.
+      if (bundle.champions.length > 0 && state.bench.length + bundle.champions.length > EXPEDITION_CONFIG.maxOwnedChampions) {
+        return reject(state, `Your collection is full (${EXPEDITION_CONFIG.maxOwnedChampions} Champions), so this reward cannot be chosen. The Gold-only reward is still available.`);
+      }
       const added = bundle.champions.map((championId, index) => ({
         instanceId: `c${state.nextInstanceNumber + index}`,
         championId,
@@ -459,6 +468,37 @@ export function transition(
     case 'endExpedition': {
       if (state.phase !== 'decision') return wrongPhase(state, action);
       return accept({ ...state, phase: 'ended', endReason: 'retreated' });
+    }
+
+    case 'buy': {
+      // Checks in order; any failure returns the unchanged state (Gold, collection, shop, numbering).
+      if (state.phase !== 'preparation') return wrongPhase(state, action);
+      const slot = Number.isSafeInteger(action.slot) ? state.shop.slots[action.slot] : undefined;
+      if (!slot) return reject(state, `Shop slot ${action.slot} does not exist.`);
+      if (slot.sold) return reject(state, 'That shop offer has already been bought.');
+      if (state.bench.length >= EXPEDITION_CONFIG.maxOwnedChampions) {
+        return reject(state, `Your collection is full (${EXPEDITION_CONFIG.maxOwnedChampions} Champions).`);
+      }
+      if (!content.champions.some((champion) => champion.id === slot.championId)) {
+        return reject(state, 'This offer refers to missing Champion data.', [slot.championId]);
+      }
+      const paid = applyGoldChange(state, { kind: 'purchase', amount: slot.price });
+      if (!paid.ok) return reject(state, `You cannot afford this Champion (${slot.price} Gold).`, [paid.error]);
+      const index = action.slot;
+      return accept({
+        ...paid.account,
+        bench: [...state.bench, { instanceId: `c${state.nextInstanceNumber}`, championId: slot.championId }],
+        nextInstanceNumber: state.nextInstanceNumber + 1,
+        shop: { ...state.shop, slots: state.shop.slots.map((entry, i) => (i === index ? { ...entry, sold: true } : entry)) },
+      });
+    }
+
+    case 'reroll': {
+      if (state.phase !== 'preparation') return wrongPhase(state, action);
+      const paid = applyGoldChange(state, { kind: 'reroll', amount: EXPEDITION_CONFIG.rerollCost });
+      if (!paid.ok) return reject(state, `You cannot afford a reroll (${EXPEDITION_CONFIG.rerollCost} Gold).`, [paid.error]);
+      // P-023 / P-029: all six slots are replaced by the next numbered shop.
+      return accept(withNewShop(paid.account, content));
     }
 
     case 'newExpedition': {

@@ -27,7 +27,7 @@ Update this file at the end of each approved milestone.
 - [x] M3 reviewed and merged into `main` (PR #7, merge commit `062da77`, 2026-10-11).
 - [x] M4 economy audit completed and prototype economy decisions P-023 to P-029 recorded (2026-10-11).
 - [x] M4 decisions P-030 and P-031 recorded and the M4 implementation plan (checkpoints A–F) approved by the owner (2026-10-11).
-- [ ] M4 implemented (checkpoints A–F). Checkpoints A (`8a78e42`) and B (`3f81232`) done and approved; checkpoint C done 2026-10-11, awaiting owner review.
+- [ ] M4 implemented (checkpoints A–F). Checkpoints A (`8a78e42`), B (`3f81232`) and C (`8774c13`) done and approved; checkpoint D done 2026-10-11, awaiting owner review.
 
 ## Session log
 
@@ -229,6 +229,16 @@ Update this file at the end of each approved milestone.
   - `expedition.ts`: `shopCandidates` (roster order, minus owned, minus all six reserved); shop 0 generated with the Expedition; a fresh shop on every accepted continue; the shop number advances only on generation; `economyStateProblems` checks the provisional marker; the content check refuses a round count whose roster draw would reach output 5.
   - Tests: new `shop.test.ts`. `economy-state.test.ts` updated where checkpoint A asserted "no shop yet" (now shop 0 and next number 1); its invariant cases start from a shop-less copy, so each still checks exactly one problem; a provisional-marker case was added.
 - **Results:** see the checkpoint C report.
+
+### 2026-10-11 — M4 checkpoint D: purchases, rerolls and capacity
+- **Scope:** game logic only; no browser shop panel (checkpoint E). The engine, reward values, monsters, roster data, starting four and fielding 1–3 are unchanged.
+- **Changes (`expedition.ts`):**
+  - Action `buy` (slot 0–5), preparation only. Checks run in order: phase, slot exists, not sold, fewer than 12 owned, Champion data exists, enough Gold. The provisional price is spent through `applyGoldChange` ('purchase'); the Champion is added once as a new instance, not placed on the board; the slot is marked sold; the shop number is unchanged.
+  - Action `reroll`, preparation only. It spends 2 Gold through `applyGoldChange` ('reroll'), then generates the next numbered shop (all six slots replaced; the shop number advances once).
+  - Reward claims: at 12 owned, Champion bundles are refused, and the 3-Gold bundle stays available (P-030).
+  - Every rejection returns the identical state: Gold, accounting, collection, offers, sold flags and shop numbering are unchanged.
+- **Tests:** new `purchase.test.ts`. No existing test was changed.
+- **Results:** see the checkpoint D report.
 
 ## Required end-of-task report
 - Milestone and scope
