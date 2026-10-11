@@ -130,3 +130,8 @@ button:focus-visible { outline: 3px solid var(--player); outline-offset: 2px; }
 .tone-result { font-weight: 700; }
 
 .history { padding-left: 20px; }
+
+.traits { margin: 2px 0; font-weight: 600; font-size: 0.9rem; }
+details { font-size: 0.85rem; color: var(--muted); }
+details summary { cursor: pointer; }
+.proposed { margin: 4px 0 0; padding-left: 18px; }

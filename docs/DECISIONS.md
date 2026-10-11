@@ -155,6 +155,13 @@ Approved by the owner on 2026-10-11, when the owner asked for M2 to be a browser
 | P-020 | Prototype team size: the player starts with a bench of four fixture Champions (Tank, Bruiser, Marksman, Support) and fields 1 to 3 of them in legal P-003/I-1 board slots. Renown is not modelled. | PROVISIONAL (M2 prototype only) |
 | P-021 | Prototype content: fixture Champions and monsters use the P-007 Role-table stats with the P-015 fixture Basic Attack, Initiative Modifier +0 (I-7). They are explicitly labelled fixtures, have no Passive, Ultimate, Trait, Item or Feat, and are not roster or Monster content. They extend P-007/P-015 from engine tests to the M2 prototype client only. | PROVISIONAL (M2 prototype only) |
 
+## Approved decisions for M3 (roster integration)
+Recorded on 2026-10-11 from the owner's M3 instructions: replace the placeholder Champions with the approved roster; use the documented Role stats where a Role has a row and a clearly labelled placeholder otherwise; exclude Multi-Class text; keep the bench of four and the 1–3 fielding limit; choose a seeded selection method. Prototype-only.
+
+| ID | Decision | Status |
+|---|---|---|
+| P-022 | Prototype roster integration. (1) Champions: the starting bench of four (P-020) and the Champion in each Champion bundle (P-019; Gold values unchanged) are roster Champions, drawn without repeats when the Expedition starts. The draw is a partial Fisher-Yates shuffle of the roster in ID order using the engine's `rollDie`, seeded with output 4 of the Expedition-seed sfc32 generator (outputs 1–3 stay the battle seeds), so a seed replays exactly and battle seeds are unchanged. (2) Stats: a Champion whose PROPOSED Role has a P-007 Role-table row uses that row; Fighter and Ranger, which have none, use a labelled temporary placeholder equal to the rounded mean of the nine Role-table rows (Health 607, Attack 52, Armor 24, Accuracy +3, Evasion +3, 0.828 attacks/s). Neither is a balance value, and no Champion's Role is changed. (3) Combat fallback: every Champion uses the P-015 fixture Basic Attack (1d8 + Attack, physical); the roster's proposed Basic Attack, Passive, Ultimate and Feat text is displayed as "not implemented" and never executed. (4) Monsters stay P-021 fixtures. Supersedes the P-020 fixed Tank/Bruiser/Marksman/Support bench and the P-019/P-021 fixture reward Champions. | PROVISIONAL (M3 prototype only) |
+
 ## Repository decision
 The repository audit reports the actual remote as `github.com/EliBarrett11/dungeons-champions-remastered`. Use that remote. The earlier shorthand `EliBarrett/dungeons-champions-remastered` was inaccurate.
 
