@@ -27,7 +27,7 @@ Update this file at the end of each approved milestone.
 - [x] M3 reviewed and merged into `main` (PR #7, merge commit `062da77`, 2026-10-11).
 - [x] M4 economy audit completed and prototype economy decisions P-023 to P-029 recorded (2026-10-11).
 - [x] M4 decisions P-030 and P-031 recorded and the M4 implementation plan (checkpoints A–F) approved by the owner (2026-10-11).
-- [ ] M4 implemented (checkpoints A–F). Checkpoint A done 2026-10-11, awaiting owner review.
+- [ ] M4 implemented (checkpoints A–F). Checkpoint A done and approved (`8a78e42`); checkpoint B done 2026-10-11, awaiting owner review.
 
 ## Session log
 
@@ -212,6 +212,15 @@ Update this file at the end of each approved milestone.
   - `expedition.ts`: state fields `shop` (number and slots) and `nextShopNumber`, initialised empty and 0 and reset on a new Expedition; `reservedRewardChampions` (all six, for the whole Expedition); `economyStateProblems` (consistency checks for Gold, the cap, duplicates, shop numbering, slot count, prices, and reserved or owned offers); the content check also validates the settings and that a six-slot shop can always be filled (117 eligible with a full collection).
   - Tests: new `economy-state.test.ts` and `seed-baseline.test.ts`, and one expected-message addition in `expedition.test.ts`.
 - **Results:** see the checkpoint A report. Every check passes, and 9 deliberate bugs were each caught by the tests.
+
+### 2026-10-11 — M4 checkpoint B: starting Gold and single-path Gold accounting
+- **Scope:** Gold only. No shop generation, purchases, rerolls or shop UI. The engine, roster data, monsters, reward bundles and values, the 12 cap, fielding 1–3, and the battle, bench and reward draws are unchanged.
+- **Changes:**
+  - `config.ts`: `startingGold` 3 (P-025).
+  - New `gold.ts`: `applyGoldChange`, the one function that changes Gold. Income kind `reward`; spending kinds `purchase` and `reroll` are prepared but unused. Spending more than is held, or a negative or fractional amount, is refused without changing anything. Also `startingGoldAccount` and `goldAccountProblems` (Gold = 3 + earned − spent, nothing negative).
+  - `expedition.ts`: state fields `goldEarned` and `goldSpent`; a new Expedition starts with 3 / 0 / 0; reward claims add their bundle Gold through `applyGoldChange`; `economyStateProblems` includes the reconciliation.
+  - Tests: new `gold.test.ts`. Existing Gold expectations in `expedition.test.ts`, `run-flow.test.ts` and the smoke test raised by exactly 3, as P-025 requires, and one expected reconciliation message added in `economy-state.test.ts`. No assertion was removed or loosened.
+- **Results:** see the checkpoint B report.
 
 ## Required end-of-task report
 - Milestone and scope

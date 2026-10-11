@@ -4,6 +4,7 @@ import type { PlayableChampion } from './champions';
 import { EXPEDITION_CONFIG } from './config';
 import type { ExpeditionContent } from './content';
 import type { EncounterFixture } from './fixtures';
+import { applyGoldChange, goldAccountProblems, startingGoldAccount } from './gold';
 import { NO_SHOP, economyConfigProblems } from './shop';
 import type { EconomySettings, ShopState } from './shop';
 import { formationProblems, isLegalSlot } from './formation';
@@ -69,7 +70,12 @@ export interface ExpeditionState {
   readonly encounterIndex: number;
   readonly bench: readonly BenchChampion[];
   readonly formation: readonly Placement[];
+  /** Gold held; changed only through applyGoldChange (gold.ts). */
   readonly gold: number;
+  /** Total Gold received this Expedition (reward Gold; P-026). */
+  readonly goldEarned: number;
+  /** Total Gold spent this Expedition (0 until purchases and rerolls exist). */
+  readonly goldSpent: number;
   /** The battle of the current encounter; null in preparation. */
   readonly battle: BattleRecord | null;
   readonly history: readonly HistoryEntry[];
@@ -207,7 +213,7 @@ export function createExpedition(seed: number, content: ExpeditionContent): Expe
     encounterIndex: 0,
     bench,
     formation: [],
-    gold: EXPEDITION_CONFIG.startingGold,
+    ...startingGoldAccount(),
     battle: null,
     history: [],
     endReason: null,
@@ -230,7 +236,7 @@ export function reservedRewardChampions(state: ExpeditionState): ReadonlySet<str
  */
 export function economyStateProblems(state: ExpeditionState, content: ExpeditionContent): string[] {
   const problems: string[] = [];
-  if (!Number.isSafeInteger(state.gold) || state.gold < 0) problems.push(`Gold must be a whole number, 0 or more (got ${state.gold}).`);
+  problems.push(...goldAccountProblems(state));
   if (state.bench.length > EXPEDITION_CONFIG.maxOwnedChampions) {
     problems.push(`${state.bench.length} Champions are owned; the cap is ${EXPEDITION_CONFIG.maxOwnedChampions} (P-027).`);
   }
@@ -406,12 +412,14 @@ export function transition(
         instanceId: `c${state.nextInstanceNumber + index}`,
         championId,
       }));
+      // P-026: the bundle's Gold goes through the single Gold path (gold.ts).
+      const paid = applyGoldChange(state, { kind: 'reward', amount: bundle.gold });
+      if (!paid.ok) return reject(state, 'This reward could not be applied.', [paid.error]);
       const isLast = state.encounterIndex + 1 >= EXPEDITION_CONFIG.encounterCount;
       return accept({
-        ...state,
+        ...paid.account,
         phase: isLast ? 'ended' : 'decision',
         endReason: isLast ? 'cleared' : null,
-        gold: state.gold + bundle.gold,
         bench: [...state.bench, ...added],
         nextInstanceNumber: state.nextInstanceNumber + added.length,
         history: [...state.history, { encounterIndex: state.encounterIndex, outcome: 'victory', rewardId: bundle.id }],

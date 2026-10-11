@@ -124,7 +124,10 @@ describe('economyStateProblems (invariant checker for later checkpoints)', () =>
   });
 
   it('flags Gold, capacity and duplicate ownership problems', () => {
-    expect(economyStateProblems({ ...base, gold: -1 }, PROTOTYPE_CONTENT)).toEqual(['Gold must be a whole number, 0 or more (got -1).']);
+    expect(economyStateProblems({ ...base, gold: -1 }, PROTOTYPE_CONTENT)).toEqual([
+      'Gold must be a whole number, 0 or more (got -1).',
+      'Gold does not reconcile: -1 held, but 3 starting + 0 earned - 0 spent = 3.',
+    ]);
     const thirteen = Array.from({ length: 13 }, (_, i) => ({ instanceId: `c${i + 1}`, championId: PROTOTYPE_CONTENT.champions[i]!.id }));
     expect(economyStateProblems({ ...base, bench: thirteen }, PROTOTYPE_CONTENT)).toContain('13 Champions are owned; the cap is 12 (P-027).');
     expect(economyStateProblems({ ...base, bench: [...base.bench, { instanceId: 'c9', championId: owned }] }, PROTOTYPE_CONTENT)).toEqual([

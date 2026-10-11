@@ -13,11 +13,8 @@ export const EXPEDITION_CONFIG = Object.freeze({
   maxTeamSize: 3,
   /** P-020 / P-022: Champions on the starting bench, drawn by seed from the approved roster. */
   startingBenchSize: 4,
-  /**
-   * Gold at the start of an Expedition. P-025 sets this to 3; the change is applied with the Gold
-   * accounting in M4 checkpoint B, not in checkpoint A.
-   */
-  startingGold: 0,
+  /** P-025: Gold at the start of every new Expedition (reset on restart; carried between rounds). */
+  startingGold: 3,
   /** P-023: Tavern (shop) slots. */
   shopSlots: 6,
   /** P-023: Gold cost of a reroll ("Purchase a Drink"), which replaces every slot. */

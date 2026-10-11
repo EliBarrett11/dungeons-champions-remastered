@@ -94,7 +94,7 @@ describe('roster Champions in battle (M3)', () => {
     state = act(state, { type: 'startBattle' });
     expect(state.battle!.outcome).toBe('draw');
     state = act(state, { type: 'finishBattle' });
-    expect(state).toMatchObject({ phase: 'ended', endReason: 'draw', gold: 3 });
+    expect(state).toMatchObject({ phase: 'ended', endReason: 'draw', gold: 6 });
   });
 });
 
@@ -102,10 +102,10 @@ describe('rewards and progression (AC-05, AC-06)', () => {
   it('a victory offers the reward; choosing it applies Gold and Champions exactly once', () => {
     let state = fight(placeStandardTeam(deepFreeze(newExpedition(24))));
     expect(state.phase).toBe('reward');
-    expect(state.gold).toBe(0);
+    expect(state.gold).toBe(3);
     state = act(state, { type: 'chooseReward', bundleId: 'e1-champion-a' });
     expect(state.phase).toBe('decision');
-    expect(state.gold).toBe(1);
+    expect(state.gold).toBe(4);
     expect(state.bench.at(-1)).toEqual({ instanceId: 'c5', championId: state.offers[0]![0]!.champions[0] });
     expect(state.bench.at(-1)!.championId).toMatch(/^DC-\d{3}$/);
     expect(state.history).toEqual([{ encounterIndex: 0, outcome: 'victory', rewardId: 'e1-champion-a' }]);
@@ -130,7 +130,7 @@ describe('rewards and progression (AC-05, AC-06)', () => {
   it('continue moves to the next encounter in preparation, keeping the formation and clearing the battle', () => {
     let state = act(fight(placeStandardTeam(newExpedition(24))), { type: 'chooseReward', bundleId: 'e1-champion-b' });
     state = act(state, { type: 'continue' });
-    expect(state).toMatchObject({ phase: 'preparation', encounterIndex: 1, battle: null, gold: 1 });
+    expect(state).toMatchObject({ phase: 'preparation', encounterIndex: 1, battle: null, gold: 4 });
     expect(state.formation).toHaveLength(3);
     // The new Champion can be fielded after swapping someone out.
     state = act(state, { type: 'remove', instanceId: 'c3' });
@@ -141,7 +141,7 @@ describe('rewards and progression (AC-05, AC-06)', () => {
   it('ending the Expedition at the decision keeps the rewards earned and ends as retreated', () => {
     let state = act(fight(placeStandardTeam(newExpedition(24))), { type: 'chooseReward', bundleId: 'e1-gold' });
     state = act(state, { type: 'endExpedition' });
-    expect(state).toMatchObject({ phase: 'ended', endReason: 'retreated', gold: 3 });
+    expect(state).toMatchObject({ phase: 'ended', endReason: 'retreated', gold: 6 });
   });
 });
 
@@ -156,7 +156,7 @@ describe('complete Expeditions (AC-07)', () => {
     state = fight(state);
     expect(state.phase).toBe('reward');
     state = act(state, { type: 'chooseReward', bundleId: 'e3-champion-b' });
-    expect(state).toMatchObject({ phase: 'ended', endReason: 'cleared', gold: 7, battlesFought: 3, encounterIndex: 2 });
+    expect(state).toMatchObject({ phase: 'ended', endReason: 'cleared', gold: 10, battlesFought: 3, encounterIndex: 2 });
     expect(state.history.map((h) => h.outcome)).toEqual(['victory', 'victory', 'victory']);
     expect(transition(state, { type: 'continue' }, PROTOTYPE_CONTENT).ok).toBe(false);
   });
@@ -170,7 +170,7 @@ describe('complete Expeditions (AC-07)', () => {
     state = act(state, { type: 'startBattle' });
     expect(state.battle!.outcome).toBe('defeat');
     state = act(state, { type: 'finishBattle' });
-    expect(state).toMatchObject({ phase: 'ended', endReason: 'defeated', gold: 6 });
+    expect(state).toMatchObject({ phase: 'ended', endReason: 'defeated', gold: 9 });
     expect(state.history.at(-1)).toEqual({ encounterIndex: 2, outcome: 'defeat', rewardId: null });
     expect(transition(state, { type: 'chooseReward', bundleId: 'e3-gold' }, PROTOTYPE_CONTENT).ok).toBe(false);
   });
@@ -189,7 +189,7 @@ describe('complete Expeditions (AC-07)', () => {
     expect(state.battle!.result.outcome).toEqual({ kind: 'draw', reason: 'hardStop' });
     expect(state.battle!.outcome).toBe('draw');
     state = act(state, { type: 'finishBattle' }, content);
-    expect(state).toMatchObject({ phase: 'ended', endReason: 'draw', gold: 0 });
+    expect(state).toMatchObject({ phase: 'ended', endReason: 'draw', gold: 3 });
   });
 
   it('a new Expedition after the end starts clean: no stale battle, rewards, bench or history', () => {
@@ -197,7 +197,7 @@ describe('complete Expeditions (AC-07)', () => {
     state = act(state, { type: 'endExpedition' });
     const restarted = act(state, { type: 'newExpedition', seed: 24 });
     expect(restarted).toEqual(newExpedition(24));
-    expect(restarted).toMatchObject({ gold: 0, battle: null, history: [], formation: [], battlesFought: 0, endReason: null });
+    expect(restarted).toMatchObject({ gold: 3, battle: null, history: [], formation: [], battlesFought: 0, endReason: null });
     expect(restarted.bench).toHaveLength(4);
     // The same seed replays the same first battle as before.
     const first = act(placeStandardTeam(restarted), { type: 'startBattle' });

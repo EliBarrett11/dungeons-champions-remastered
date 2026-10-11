@@ -94,6 +94,7 @@ async function main() {
     await page.getByTestId('screen-preparation').waitFor();
     check((await page.title()).startsWith('Dungeons & Champions'), 'app loads with its title');
     check((await text(page, 'status-seed')) === '24', 'seed from the URL is used');
+    check((await text(page, 'status-gold')) === '3', 'a new Expedition starts with 3 Gold (P-025)');
     const benchText = await page.locator('[data-testid^="bench-"]').allInnerTexts();
     check(benchText.length === 4, `bench shows 4 roster Champions (got ${benchText.length})`);
     check(benchText.every((t) => /DC-\d{3}/.test(t) && /Proposed Role:/.test(t)), 'bench cards show roster IDs and PROPOSED Roles');
@@ -125,7 +126,7 @@ async function main() {
     await shot(page, '04-reward');
     await page.getByTestId('choose-e1-champion-a').click();
     await page.getByTestId('screen-decision').waitFor();
-    check((await text(page, 'status-gold')) === '1', 'reward Gold applied once (1)');
+    check((await text(page, 'status-gold')) === '4', 'reward Gold applied once (3 starting + 1 = 4)');
     check((await text(page, 'status-bench')) === '5', 'reward Champion joined the bench (5)');
     await shot(page, '05-decision');
     await page.getByTestId('continue').click();
@@ -136,7 +137,7 @@ async function main() {
     check(outcome === 'Victory', `round 2 shows Victory (got ${outcome})`);
     await page.getByTestId('finish-battle').click();
     await page.getByTestId('choose-e2-gold').click();
-    check((await text(page, 'status-gold')) === '4', 'Gold totals 4 after round 2');
+    check((await text(page, 'status-gold')) === '7', 'Gold carries between rounds: 7 after round 2');
     await page.getByTestId('continue').click();
     outcome = await fightAndFinish(page);
     check(outcome === 'Victory', `round 3 shows Victory (got ${outcome})`);
@@ -144,12 +145,12 @@ async function main() {
     await page.getByTestId('choose-e3-champion-a').click();
     await page.getByTestId('screen-ended').waitFor();
     check((await text(page, 'end-title')) === 'Expedition cleared!', 'end screen shows the clear');
-    check((await text(page, 'end-summary')).includes('Monster Rounds won: 3 of 3. Gold: 5. Champions: 6.'), 'end summary totals');
+    check((await text(page, 'end-summary')).includes('Monster Rounds won: 3 of 3. Gold: 8. Champions: 6.'), 'end summary totals');
     await shot(page, '06-cleared');
 
     await page.getByTestId('new-expedition').click();
     await page.getByTestId('screen-preparation').waitFor();
-    check((await text(page, 'status-gold')) === '0', 'new Expedition resets Gold');
+    check((await text(page, 'status-gold')) === '3', 'new Expedition resets Gold to 3');
     check((await text(page, 'status-bench')) === '4', 'new Expedition resets the bench');
     check((await text(page, 'status-round')) === '1 / 3', 'new Expedition starts at round 1');
     check((await page.getByTestId('battle-log').count()) === 0, 'no stale battle log after restart');
@@ -190,7 +191,7 @@ async function main() {
     await page.getByTestId('finish-battle').click();
     await page.getByTestId('screen-ended').waitFor();
     check((await text(page, 'end-title')) === 'Expedition over: defeated', 'defeat ends the Expedition');
-    check((await text(page, 'status-gold')) === '6', 'defeat grants no reward (Gold stays 6)');
+    check((await text(page, 'status-gold')) === '9', 'defeat grants no reward (Gold stays 9)');
     await shot(page, '08-defeated-end');
 
     // ---- Flow 3: seed 26 ends round 2 in a draw. ----
@@ -213,7 +214,7 @@ async function main() {
     await page.getByTestId('choose-e1-gold').click();
     await page.getByTestId('end-expedition').click();
     check((await text(page, 'end-title')) === 'Expedition ended', 'ending at the decision ends the Expedition');
-    check((await text(page, 'status-gold')) === '3', 'retreat keeps the Gold earned');
+    check((await text(page, 'status-gold')) === '6', 'retreat keeps the Gold earned (6)');
 
     // ---- Narrow viewport renders without horizontal scrolling. ----
     await page.setViewportSize({ width: 375, height: 800 });

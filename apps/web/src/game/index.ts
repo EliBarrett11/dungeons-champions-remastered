@@ -42,3 +42,5 @@ export { DOCUMENTED_ROLES, ROSTER_RULES, TRAIT_CANON, validateRoster } from './r
 export type { ProposedChampionContent, Roster, RosterChampion, RosterValidation, TraitCanon } from './roster';
 export { NO_SHOP, economyConfigProblems } from './shop';
 export type { EconomySettings, ShopSlot, ShopState } from './shop';
+export { applyGoldChange, goldAccountProblems, startingGoldAccount } from './gold';
+export type { GoldAccount, GoldChange, GoldIncome, GoldResult, GoldSpending } from './gold';
