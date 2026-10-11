@@ -5,7 +5,22 @@
 **Target repository:** `EliBarrett11/dungeons-champions-remastered`  
 **Package status:** Draft baseline assembled from established design discussions. Not every game rule is final.
 
-No application code exists yet. This repository currently contains documentation, JSON Schemas, templates and examples only.
+The repository contains the documentation and specifications, a headless deterministic combat engine (M1, `packages/engine`), a small browser prototype (M2, `apps/web`) and a content checker (`tools/`). The prototype uses labelled fixture Champions and monsters with Basic Attacks only; it is not the full game.
+
+## Run it
+
+Requires Node.js 22.12 or later. From the repository root:
+
+```bash
+npm install
+npm run dev            # browser prototype (Vite dev server); open the printed URL
+npm run build          # production build in apps/web/dist/
+npm run preview        # serve the production build
+npm run check          # type-checks and all Vitest tests (engine + web)
+npm run content-check  # JSON Schema content check (needs Python 3 + jsonschema 4+)
+```
+
+Add `?seed=123` to the prototype URL to replay an Expedition exactly. The browser smoke test (`apps/web/scripts/smoke.mjs`) needs a Playwright installation outside the repository; see `docs/PROGRESS.md`.
 
 ## Start here
 
@@ -28,6 +43,10 @@ No application code exists yet. This repository currently contains documentation
 ```text
 CLAUDE.md
 README.md
+package.json     npm workspaces root (scripts: check, dev, build, preview, content-check)
+packages/engine/ headless deterministic combat engine (M1)
+apps/web/        browser prototype (M2): src/game (pure rules), src/ui (DOM)
+tools/           content_check.py (T-009) and its tests
 docs/
   PROJECT_BRIEF.md  DECISIONS.md  OPEN_QUESTIONS.md  GLOSSARY.md  PROGRESS.md  PACKAGE_MANIFEST.json
   GAMEPLAY/        MATCH_FLOW, ECONOMY, DUNGEON_AND_REWARDS, CHAMPIONS, TRAITS, ITEMS

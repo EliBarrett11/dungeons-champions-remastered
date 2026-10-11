@@ -15,6 +15,8 @@ This list is intentionally honest about gaps. The presence of a proposal elsewhe
 | B7 | What is the full Floor route and 8-player PvP/PvE schedule? | Required for full match progression. | PARTLY SPECIFIED. Floor 1 has three Monster Rounds before the first PvP Round. Later structure needs approval. |
 | B8 | What exactly persists when a Run ends, and how are upgrades selected and scaled? | Required for run-end progression. | PARTLY SPECIFIED. Core persistence behavior is known; tier thresholds and upgrade catalogue need definition. |
 
+**M2 prototype note (2026-10-11):** the browser Expedition uses PROVISIONAL prototype stand-ins for parts of B5, B7 and B8: three fixture Monster Rounds, fixed reward bundles, a team of 1–3 with no Renown, and no player Health (P-018 to P-021). These stand-ins do **not** resolve those questions. Still open from M2: whether Champion Health carries between Rounds (the prototype restores it each battle), and whether a player may end a Floor or Expedition voluntarily (both *confirmation pending* in P-018).
+
 ## Additional rules to settle before their relevant milestones
 
 ### Prototype ruleset (M1)

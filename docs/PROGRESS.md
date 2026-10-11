@@ -17,9 +17,12 @@ Update this file at the end of each approved milestone.
 - [x] M1 tech stack approved: TypeScript + Vitest headless engine package (T-008, 2026-10-11). Full-game architecture T-001 to T-007 remains PROPOSED.
 - [x] M1 readiness decisions recorded: fixture Basic Attack P-015, content-check rules T-009, targeting/defeated attackers P-016 (2026-10-11).
 - [x] Owner-confirmed critical-hit interpretation P-017 recorded: the dice roll includes the flat modifier K (2026-10-11, M1 step 4).
-- [x] M1 headless deterministic duel implemented and tested (2026-10-11): all seven M1 acceptance criteria met; item 5 is verified by review rather than an automated check. Implemented on branch `claude/modest-hamilton-ngoiru` (commits `b51b15c` to `6ab2585`); not yet merged into `main`.
+- [x] M1 headless deterministic duel implemented and tested (2026-10-11): all seven M1 acceptance criteria met; item 5 is verified by review rather than an automated check. Implemented on branch `claude/modest-hamilton-ngoiru` (commits `b51b15c` to `6ab2585`); merged into `main` on 2026-10-11 (see below).
 - [ ] Schema fixes from the audit applied.
-- [ ] M1 reviewed and merged into `main`.
+- [x] M1 reviewed and merged into `main` (PR #5, merge commit `1fafb5a`, 2026-10-11).
+- [x] M2 redefined as a browser-playable Expedition and its prototype decisions recorded (T-010, P-018 to P-021, 2026-10-11).
+- [x] M2 first playable Expedition implemented and tested (2026-10-11) on branch `claude/modest-hamilton-ngoiru`; two P-018 details await owner confirmation.
+- [ ] M2 reviewed and merged into `main`.
 
 ## Session log
 
@@ -102,6 +105,54 @@ Update this file at the end of each approved milestone.
   - The schema and content-data issues listed in `OPEN_QUESTIONS.md` remain open; the content check reports them as warnings only.
   - The root `README.md` still states that no application code exists, and the `CLAUDE.md` project map does not yet list `packages/` or `tools/`. Both were left unchanged in this step.
 - **Next smallest task:** owner review of M1. If approved, a pull request from `claude/modest-hamilton-ngoiru` into `main` when the owner asks. M2 (minimal economy and bot match) needs its open questions in `OPEN_QUESTIONS.md` settled before implementation.
+
+### 2026-10-11 — M2 first playable Expedition (implementation)
+- **Milestone and scope:** M2 as redefined by the owner (T-010; `IMPLEMENTATION/ROADMAP.md`): a small browser-playable loop on top of the unchanged M1 engine. Before coding, the repository was found to differ from the M2 brief: there was no browser application, and the roadmap's M2 was a headless economy milestone. The owner chose to reorder the milestones and approved four prototype decisions (T-010, P-018, P-019, P-020; P-021 records the fixture content they describe).
+- **How to run it** (from the repository root, after `npm install`):
+  - `npm run dev`: start the Vite development server, then open the printed URL.
+  - `npm run build`, then `npm run preview`: production build in `apps/web/dist/` and a local preview server.
+  - Add `?seed=<0-4294967295>` to the URL to replay an Expedition exactly; without it a random seed is chosen and shown in the header.
+  - `NODE_PATH="$(npm root -g)" node apps/web/scripts/smoke.mjs [screenshot-dir]`: browser smoke test (needs `npm run build` first, plus a Playwright installation outside the repository; exit 2 if Playwright is missing).
+- **What the player can do:** see the next Monster Round's monsters; select Champions from a bench of four and place 1–3 of them in the 12 board slots (front, middle, back); start a battle (blocked, with reasons shown, until the team is legal); watch the battle play back with Health bars and a combat log, or skip to the result; see Victory, Defeat or Draw; after a victory choose one of three reward bundles (Gold and/or a new fixture Champion); then continue to the next Monster Round or end the Expedition; after a defeat, a draw, ending voluntarily or clearing all three Monster Rounds, see a summary and start a new Expedition.
+- **Implemented:**
+  - `apps/web` workspace (`@dc/web`), plain TypeScript + DOM, built with Vite 8.3.4. Vite is now an explicit exact-pinned root devDependency; it was already installed as Vitest's peer, and the lockfile gains no new third-party package (only the workspace link and removed `peer` flags).
+  - `src/game/` (pure; same restricted tsconfig as the engine plus a purity scan): `config.ts` (P-018 to P-020 values), `fixtures.ts` (seven fixture Champions, three fixture Monster Rounds, reward bundles; P-021), `formation.ts` (slots and rows from the engine's `M1_CONFIG` and `rowOfSlot`; team legality), `expedition.ts` (explicit state machine `transition(state, action, content)`, content checks, P-009 battle-seed derivation, engine invocation), `battleView.ts` (read-only view of the engine log for playback and the combat log).
+  - `src/ui/`: a renderer that only sends actions to `transition` and draws the result; playback timers are presentation only.
+  - Root scripts: `check` now runs the engine and web checks; new `dev`, `build`, `preview`. `.gitignore` adds `dist/`.
+- **Not implemented:** shop, Gold spending, Renown, player Health, PvP, bots, Items and Components, Traits, Ultimates and every other M1 exclusion, persistence (a page reload starts a new Expedition), real Champion or Monster content, balanced rewards.
+- **Commands and exact results (2026-10-11):**
+  - `npm run check`: all type-checks passed (engine 2 configs, web 3 configs); engine Vitest **20 files, 449 tests passed** (unchanged); web Vitest **5 files, 52 tests passed**; exit code 0.
+  - `npm run content-check`: PASS, 0 failures, 11 known warnings, 0 unexpected; exit 0.
+  - `npm run content-check:test`: 13 tests OK; exit 0.
+  - `npm run build`: passed (about 37 kB of JavaScript, 4 kB of CSS).
+  - Browser smoke test in Chromium (Playwright 1.56.1, global install): **30 of 30 checks passed**, no console errors or warnings; screenshots were reviewed for the preparation, battle, reward, decision, end and 375 px mobile screens.
+  - Mutation check: seven deliberate bugs in `expedition.ts` (missing phase guards, a reward on a draw, Gold surviving a restart, the outcome read from the side instead of the participant, a single seed for all encounters, a stale battle after continuing) were each caught by the web tests, and the file was restored.
+- **Test inventory (web, 52 Vitest tests):** expedition 17 (creation, placement, removal, limits, invalid starts, content problems, engine validation errors, phase guards, seed derivation, seed parsing); purity 9; run-flow 15 (engine result stored unchanged, outcome mapping, displayed Health read from the log, playback independence, determinism, reward once, continue, retreat, clear with seed 2, defeat with seed 1, hard-stop draw, clean restart); formation 7; content 4 (content valid, fixture stats equal to the engine test fixtures, every encounter is a valid engine battle).
+- **M2 acceptance (owner's brief):**
+
+  | AC | Status | Evidence |
+  |---|---|---|
+  | 01 Existing application preserved | Pass | The only prior application was the engine and tools: its 449 tests and the content check pass unchanged, and no engine file changed. `npm run build` and `npm run dev`/`preview` run the new client. |
+  | 02 Team preparation | Pass | `formation.test.ts`, `expedition.test.ts`; smoke: Start disabled with no team, a fourth Champion refused with a message |
+  | 03 Real engine | Pass | `run-flow.test.ts`: the stored events equal `runBattle(input)` byte for byte (canonical JSON) |
+  | 04 Understandable battle | Pass | Smoke and screenshots: Health bars, combat log, Victory/Defeat banners |
+  | 05 Reward once | Pass | Tests reject a second claim; smoke checks Gold 1 → 4 → 5 and a bench of 5 |
+  | 06 Next choice | Pass | Tests and smoke for continue and for ending the Expedition |
+  | 07 Finish and restart | Pass | Clear, defeat, draw and retreat endings; restart equals a fresh Expedition (test) and shows no stale log, Gold or formation (smoke) |
+  | 08 Invalid states | Pass | Content problems, engine validation errors, missing Champion data and wrong-phase actions return messages with the state unchanged |
+  | 09 Determinism | Pass | Same seed and choices give identical logs; playback position never changes the stored result |
+  | 10 Automated tests | Pass | 449 + 52 Vitest tests and 13 Python tests pass |
+  | 11 Build and browser smoke | Pass | `npm run build`; 30/30 smoke checks in Chromium |
+  | 12 Documentation | Pass | This entry, `ROADMAP.md`, `DECISIONS.md`, `GLOSSARY.md`, `README.md`, `CLAUDE.md` |
+
+- **Rules decisions:** T-010, P-018, P-019, P-020 (owner-approved, PROVISIONAL, M2 only) and P-021 (the fixture basis of those choices), all in `DECISIONS.md`. *Confirmation pending* for two P-018 details: the voluntary "End Expedition here" choice, and Champions starting each battle at full Health.
+- **Caveats and limitations:**
+  - All Champions and monsters are labelled fixtures with Role-table stats and the same Basic Attack; there are no abilities, Traits or Items, and the UI says so.
+  - Reward values and encounter strength are placeholders chosen by a 300-seed simulation, not balance.
+  - Gold has no use yet. A page reload discards the Expedition, by design (no persistence).
+  - The browser smoke test needs Playwright installed outside the repository and is not part of `npm run check`; the UI layer itself has no unit tests (DOM tests would need a new dependency such as jsdom), so it is covered by the smoke test.
+  - The M1 caveats still apply: the config centralisation (M1 acceptance item 5) is reviewed rather than scanned, replay hashes need re-verification when rules change, the content check needs Python 3 and `jsonschema`, and there is no "attack scheduled" event.
+- **Next smallest task:** owner review of M2, including the two *confirmation pending* details in P-018. M3 (economy and bot match) needs the B5 economy values first.
 
 ## Required end-of-task report
 - Milestone and scope
