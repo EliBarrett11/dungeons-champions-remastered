@@ -4,6 +4,8 @@ import type { PlayableChampion } from './champions';
 import { EXPEDITION_CONFIG } from './config';
 import type { ExpeditionContent } from './content';
 import type { EncounterFixture } from './fixtures';
+import { NO_SHOP, economyConfigProblems } from './shop';
+import type { EconomySettings, ShopState } from './shop';
 import { formationProblems, isLegalSlot } from './formation';
 import type { Placement } from './formation';
 
@@ -76,6 +78,10 @@ export interface ExpeditionState {
   readonly battlesFought: number;
   /** Reward offers per encounter, fixed when the Expedition is created. */
   readonly offers: readonly (readonly RewardOffer[])[];
+  /** M4: the Tavern on display (P-023). Empty until shop generation exists (checkpoint C). */
+  readonly shop: ShopState;
+  /** M4: shop number k for the next successful shop generation (P-029); starts at 0. */
+  readonly nextShopNumber: number;
 }
 
 export type ExpeditionAction =
@@ -93,7 +99,8 @@ export type TransitionResult =
   | { readonly ok: false; readonly state: ExpeditionState; readonly error: string; readonly details: readonly string[] };
 
 /** Problems in the content itself (missing or inconsistent data); empty when usable. */
-export function contentProblems(content: ExpeditionContent): string[] {
+/** `economy` defaults to the real settings; tests pass variants to prove they are validated. */
+export function contentProblems(content: ExpeditionContent, economy: EconomySettings = EXPEDITION_CONFIG): string[] {
   const problems: string[] = [];
   const championIds = new Set<string>();
   for (const champion of content.champions) {
@@ -103,6 +110,13 @@ export function contentProblems(content: ExpeditionContent): string[] {
   const needed = championsNeeded(content);
   if (content.champions.length < needed) {
     problems.push(`The roster has ${content.champions.length} playable Champions; an Expedition draws ${needed}.`);
+  }
+  problems.push(...economyConfigProblems(economy));
+  // P-028 / P-031: a shop must be fillable even with a full collection and every reward reserved.
+  const reserved = needed - economy.startingBenchSize;
+  const eligible = Math.max(0, content.champions.length - economy.maxOwnedChampions - reserved);
+  if (eligible < economy.shopSlots) {
+    problems.push(`Only ${eligible} Champions could be offered with a full collection; the shop has ${economy.shopSlots} slots.`);
   }
   if (content.encounters.length !== EXPEDITION_CONFIG.encounterCount) {
     problems.push(`Expected ${EXPEDITION_CONFIG.encounterCount} encounters, found ${content.encounters.length}.`);
@@ -200,7 +214,55 @@ export function createExpedition(seed: number, content: ExpeditionContent): Expe
     nextInstanceNumber: bench.length + 1,
     battlesFought: 0,
     offers,
+    shop: NO_SHOP,
+    nextShopNumber: 0,
   };
+}
+
+/** The six (in general: all) Champions reserved for this Expedition's reward choices (P-031). */
+export function reservedRewardChampions(state: ExpeditionState): ReadonlySet<string> {
+  return new Set(state.offers.flat().flatMap((offer) => offer.champions));
+}
+
+/**
+ * Economy invariants of a state (M4 state model). Empty when the state is consistent. Used by
+ * tests now and by every later checkpoint to prove that no action leaves a broken economy.
+ */
+export function economyStateProblems(state: ExpeditionState, content: ExpeditionContent): string[] {
+  const problems: string[] = [];
+  if (!Number.isSafeInteger(state.gold) || state.gold < 0) problems.push(`Gold must be a whole number, 0 or more (got ${state.gold}).`);
+  if (state.bench.length > EXPEDITION_CONFIG.maxOwnedChampions) {
+    problems.push(`${state.bench.length} Champions are owned; the cap is ${EXPEDITION_CONFIG.maxOwnedChampions} (P-027).`);
+  }
+  const owned = new Set(state.bench.map((entry) => entry.championId));
+  if (owned.size !== state.bench.length) problems.push('A Champion is owned more than once (P-028).');
+  if (!Number.isSafeInteger(state.nextShopNumber) || state.nextShopNumber < 0) {
+    problems.push(`The next shop number must be a whole number, 0 or more (got ${state.nextShopNumber}).`);
+  }
+  const { shop } = state;
+  if (shop.number === null) {
+    if (shop.slots.length > 0) problems.push('The shop has offers but no shop number.');
+  } else {
+    if (!Number.isSafeInteger(shop.number) || shop.number < 0 || shop.number >= state.nextShopNumber) {
+      problems.push(`Shop number ${shop.number} must be below the next shop number ${state.nextShopNumber}.`);
+    }
+    if (shop.slots.length !== EXPEDITION_CONFIG.shopSlots) {
+      problems.push(`The shop has ${shop.slots.length} slots; it must have ${EXPEDITION_CONFIG.shopSlots} (P-023).`);
+    }
+  }
+  const reserved = reservedRewardChampions(state);
+  const offered = new Set<string>();
+  shop.slots.forEach((slot, index) => {
+    const label = `Shop slot ${index + 1}`;
+    const champion = content.champions.find((entry) => entry.id === slot.championId);
+    if (!champion) problems.push(`${label} offers unknown Champion "${slot.championId}".`);
+    else if (slot.price !== champion.proposed.cost_rank) problems.push(`${label}: price ${slot.price} is not the cost rank ${champion.proposed.cost_rank} (P-024).`);
+    if (offered.has(slot.championId)) problems.push(`${label} repeats ${slot.championId}.`);
+    offered.add(slot.championId);
+    if (reserved.has(slot.championId)) problems.push(`${label} offers reserved reward Champion ${slot.championId} (P-031).`);
+    if (!slot.sold && owned.has(slot.championId)) problems.push(`${label} offers owned Champion ${slot.championId} (P-028).`);
+  });
+  return problems;
 }
 
 /** The reward offers for the current encounter. */

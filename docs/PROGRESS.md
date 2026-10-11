@@ -27,7 +27,7 @@ Update this file at the end of each approved milestone.
 - [x] M3 reviewed and merged into `main` (PR #7, merge commit `062da77`, 2026-10-11).
 - [x] M4 economy audit completed and prototype economy decisions P-023 to P-029 recorded (2026-10-11).
 - [x] M4 decisions P-030 and P-031 recorded and the M4 implementation plan (checkpoints A–F) approved by the owner (2026-10-11).
-- [ ] M4 implemented (checkpoints A–F).
+- [ ] M4 implemented (checkpoints A–F). Checkpoint A done 2026-10-11, awaiting owner review.
 
 ## Session log
 
@@ -203,6 +203,15 @@ Update this file at the end of each approved milestone.
   - checkpoints A–F approved;
   - two-player matches, the bot, player Health and match-end rules moved to M8 with their requirements kept.
 - **Next:** M4 checkpoint A when the owner has reviewed this documentation. No code has changed yet.
+
+### 2026-10-11 — M4 checkpoint A: economy configuration and state model
+- **Scope:** settings and state only. There is no Gold accounting, shop generation, purchase, reroll or UI change. The engine, battle seeds, bench and reward draws, reward values and roster data are unchanged. Starting Gold stays 0 until checkpoint B, which adds the P-025 value of 3.
+- **Changes:**
+  - `config.ts`: `shopSlots` 6, `rerollCost` 2, `maxOwnedChampions` 12.
+  - New `shop.ts`: shop slot and shop types, the empty shop, settings validation.
+  - `expedition.ts`: state fields `shop` (number and slots) and `nextShopNumber`, initialised empty and 0 and reset on a new Expedition; `reservedRewardChampions` (all six, for the whole Expedition); `economyStateProblems` (consistency checks for Gold, the cap, duplicates, shop numbering, slot count, prices, and reserved or owned offers); the content check also validates the settings and that a six-slot shop can always be filled (117 eligible with a full collection).
+  - Tests: new `economy-state.test.ts` and `seed-baseline.test.ts`, and one expected-message addition in `expedition.test.ts`.
+- **Results:** see the checkpoint A report. Every check passes, and 9 deliberate bugs were each caught by the tests.
 
 ## Required end-of-task report
 - Milestone and scope

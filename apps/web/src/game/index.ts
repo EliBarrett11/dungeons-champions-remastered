@@ -17,6 +17,8 @@ export {
   currentEncounter,
   currentOffers,
   drawRosterChampions,
+  economyStateProblems,
+  reservedRewardChampions,
   encounterSeed,
   parseSeed,
   playerOutcome,
@@ -38,3 +40,5 @@ export { buildBattleView, eventCountAt, outcomeText, snapshotAfter } from './bat
 export type { BattleView, LogLine, Team, UnitSnapshot, ViewUnit } from './battleView';
 export { DOCUMENTED_ROLES, ROSTER_RULES, TRAIT_CANON, validateRoster } from './roster';
 export type { ProposedChampionContent, Roster, RosterChampion, RosterValidation, TraitCanon } from './roster';
+export { NO_SHOP, economyConfigProblems } from './shop';
+export type { EconomySettings, ShopSlot, ShopState } from './shop';

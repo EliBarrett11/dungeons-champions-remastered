@@ -92,13 +92,14 @@ Build in small vertical slices. Every milestone should end with a runnable resul
 - **Seeded replay:** the state machine stays pure. The same Expedition seed and the same action sequence give the same shop numbers, the same owned and reserved sets at each generation, and therefore identical shops, purchases, battles and outcomes. Existing seeds keep identical battles and benches for the same actions.
 
 ### Approved checkpoints (owner, 2026-10-11)
-**A. Economy configuration and state model**
-- **Modules:** `apps/web/src/game/config.ts` (shop slots 6, reroll cost 2, owned cap 12, starting Gold 3); a new `shop.ts` (types); `expedition.ts` (state fields: shop slots, next shop number); a content check that every roster Champion has a whole-number cost rank from 1 to 5.
+**A. Economy configuration and state model** (done 2026-10-11, awaiting owner review)
+- **Modules:** `apps/web/src/game/config.ts` (shop slots 6, reroll cost 2, owned cap 12); a new `shop.ts` (shop types, empty shop, settings validation); `expedition.ts` (state fields `shop` and `nextShopNumber`; the reserved-reward set; an economy consistency checker; the content check now includes the settings and whether a shop can always be filled). The cost rank 1–5 is already enforced by the roster validator (M3). Starting Gold 3 moved to checkpoint B, which the owner's checkpoint list names "Starting Gold and single-path Gold accounting".
 - **Edge cases:** invalid configuration values; a slot count larger than the eligible pool.
 - **Tests:**
   - configuration and content validation reject bad values;
-  - a new Expedition has Gold 3 and shop 0;
-  - restarting resets Gold, the shop and the shop number.
+  - a new Expedition has no shop yet and shop number 0;
+  - restarting resets the shop and the shop number;
+  - a pre-M4 seed baseline (battle seeds, bench, reward draws, round-1 log hash) is pinned.
 
 **B. Starting Gold and single-path Gold accounting**
 - **Modules:** one Gold helper in `expedition.ts`, used by reward claims (and later purchases and rerolls).
