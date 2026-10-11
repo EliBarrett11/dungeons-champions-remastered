@@ -71,14 +71,78 @@ Build in small vertical slices. Every milestone should end with a runnable resul
 
 **M3 status (2026-10-11):** implemented and tested on branch `claude/modest-hamilton-ngoiru` (checkpoints A–D); owner review decisions R-001 to R-005 recorded; pull request open for review, not merged. Known limitation (R-001): with roster Champions the Expedition clears far less often until Champion mechanics exist. Results and caveats: `docs/PROGRESS.md`, "M3 approved roster integration".
 
-## M4 — Minimal economy and bot match
-**Goal:** demonstrate a complete small match loop. (Formerly M2, then M3; renumbered by T-010 and again when the roster milestone became M3. The former M3 browser goals of showing the shop, Gold and Health are carried here because the browser client now exists.)
-- Add two players, placeholder shop, buy/sell/reroll and Gold checks.
-- Add one simple heuristic bot.
-- Add player Health and match-end logic.
-- Show the shop, Gold and player Health in the existing `apps/web` client; keep rules out of the UI.
-**Acceptance:** no overspending; shared-pool counts reconcile; matches terminate with exactly one winner or documented draw; seeded batch tests pass; a browser smoke test covers buying and fielding a unit and starting a battle with no console errors.
-Needs the economy values in `OPEN_QUESTIONS.md` B5 (or approved PROVISIONAL values) first.
+## M4 — Economy and recruitment (prototype Expedition)
+**Goal:** a functional Gold economy in the single-player Expedition: a seeded six-slot Tavern, buying roster Champions, and rerolls, under the owner-approved prototype rules P-023 to P-031 (2026-10-11). The M1 engine, battle seeds, the initial bench and reward draw (P-022), monsters and reward bundles stay unchanged.
+
+**Status (2026-10-11):** decisions P-023 to P-031 recorded; implementation plan (checkpoints A–F) **approved by the owner**. **Not yet implemented.** Each checkpoint is reported before the next one starts.
+
+**Excluded:** selling, combining duplicates, Champion levels and XP, interest, base income, win- or loss-streak bonuses, shop odds by rank or level, a shared pool, locking offers, "Play my song", Fame and Renown, monster or reward retuning, any change to the starting four or the 1–3 fielding limit.
+
+**Former M4 scope:** two-player matches, the heuristic bot opponent, player Health and match-end rules were deferred by the owner to the multiplayer milestone (M8), where they are listed.
+
+### Approved rules detail (owner, 2026-10-11)
+- **Reserved reward Champions (P-031):** the six Champions drawn for the reward bundles when the Expedition is created (`state.offers`, two per Monster Round; P-022) are all reserved for the whole Expedition, including future rounds' offers and Champions from reward choices already passed up. They are never released within the Expedition. The shop excludes all six, plus every owned Champion.
+- **Capacity (12 owned, P-027, P-030):** enforced on every acquisition path. A purchase is refused when 12 are owned. When 12 are owned, the two Champion reward bundles are disabled and the 3-Gold bundle stays available, so every victory has a valid reward choice. The starting four and fielding 1–3 are unchanged.
+- **Gold:** 3 when an Expedition is created and on every new Expedition; changed only by reward Gold (+), purchases (−) and rerolls (−2); never negative; carried between rounds; no other income.
+- **Shop timing:** shop 0 is generated when the Expedition is created (round 1 preparation). A new shop is generated automatically, free, when the player continues to the next Monster Round. A reroll is allowed only in preparation, costs 2 Gold, and immediately replaces all six slots, including sold ones. No shop activity happens in the battle, reward, decision or ended phases.
+- **Purchases:** allowed only in preparation, for an unsold slot, with enough Gold and fewer than 12 owned. The price (proposed cost rank) is taken, the Champion joins the collection as a new instance (not placed on the board), and the slot is marked sold.
+- **Rejections:** wrong phase, invalid slot, sold slot, too little Gold, or a full collection return the same, unchanged state object with a message. A rejected purchase or reroll never changes Gold, the collection, the shop offers or the shop numbering (a rejected reroll does not use up a shop number).
+- **Shop contents:** eligible Champions are the roster in ID order, minus owned, minus reserved (at least 135 − 12 − 6 = 117, so six can always be drawn). Six are drawn without repeats by a partial Fisher–Yates shuffle using the engine's `rollDie`. Each slot's price is that Champion's proposed cost rank.
+- **Random stream (P-029, approved in principle):** every existing derivation builds a fresh sfc32 generator from the Expedition seed, so no generator is stored in the state and nothing is consumed from a shared mutable generator. Outputs 1–3 of `Sfc32(expeditionSeed)` are the battle seeds, and output 4 seeds the roster draw. The shop stream root is **output 5** of a fresh `Sfc32(expeditionSeed)`, called *R*. Shop number *k* (0-based, counting every shop generated in the Expedition in order: shop 0, then each refresh and reroll) is drawn with `new BattleRng(seed_k)`, where *seed_k* is output *k* + 1 of a fresh `Sfc32(R)`. The state stores only the next shop number *k* and the current slots. The existing functions (`encounterSeed`, `drawRosterChampions`) are not modified. Only a successful shop generation (shop 0, a refresh on continuing, or an accepted reroll) advances *k*. The derivation is documented in the code and in the tests. **Acceptance condition set by the owner:** tests must show that, for existing seeds, battle seeds, the starting bench, the reward draws and existing battle logs are unchanged.
+- **Seeded replay:** the state machine stays pure. The same Expedition seed and the same action sequence give the same shop numbers, the same owned and reserved sets at each generation, and therefore identical shops, purchases, battles and outcomes. Existing seeds keep identical battles and benches for the same actions.
+
+### Approved checkpoints (owner, 2026-10-11)
+**A. Economy configuration and state model**
+- **Modules:** `apps/web/src/game/config.ts` (shop slots 6, reroll cost 2, owned cap 12, starting Gold 3); a new `shop.ts` (types); `expedition.ts` (state fields: shop slots, next shop number); a content check that every roster Champion has a whole-number cost rank from 1 to 5.
+- **Edge cases:** invalid configuration values; a slot count larger than the eligible pool.
+- **Tests:**
+  - configuration and content validation reject bad values;
+  - a new Expedition has Gold 3 and shop 0;
+  - restarting resets Gold, the shop and the shop number.
+
+**B. Starting Gold and single-path Gold accounting**
+- **Modules:** one Gold helper in `expedition.ts`, used by reward claims (and later purchases and rerolls).
+- **Edge cases:** reward bundles still give 1, 1 or 3 Gold; Gold carries into the next round; restart gives 3 again.
+- **Tests:**
+  - reward bundle values are unchanged;
+  - existing reward and flow tests pass, with Gold expectations raised by 3 (a legitimate change from P-025);
+  - Gold equals 3 + reward Gold − spending at every step;
+  - Gold is never negative.
+
+**C. Deterministic six-slot shop, provisional prices, refresh timing**
+- **Modules:** `shop.ts` (`shopRootSeed`, `shopSeed(k)`, `generateShop`); `expedition.ts` (create and continue).
+- **Edge cases:** owned and all six reserved Champions excluded; refresh only on continue; no shop changes in other phases.
+- **Tests:**
+  - the same seed and actions give identical shops;
+  - shops differ between seeds and between shop numbers;
+  - no owned or reserved Champion is ever offered (checked over many seeds);
+  - prices equal cost ranks;
+  - battle seeds, the bench and reward draw, and the existing seeded battle logs are identical before and after the change;
+  - the engine golden replays are unchanged;
+  - the derivation (root = output 5; shop *k* = output *k*+1 of `Sfc32(root)`) is documented in `shop.ts` and pinned by a test against independently computed sfc32 outputs.
+
+**D. Purchases, rerolls, capacity, reserved Champions, rejected actions**
+- **Modules:** `expedition.ts` actions `buy` (slot) and `reroll`; the reward-claim capacity guard.
+- **Edge cases:** a sold slot; too little Gold for a buy (below the price) or a reroll (below 2); 12 owned (buy refused, Champion reward refused, Gold reward allowed); buying in a non-preparation phase; a double buy; a reroll after buying; buying the last affordable slot.
+- **Tests:**
+  - every rejected purchase or reroll returns the identical state object: Gold, collection, shop offers and shop number all unchanged, and a rejected reroll does not use up a shop number;
+  - at 12 owned, both Champion reward bundles are refused and the 3-Gold bundle is accepted (P-030);
+  - no shop ever offers one of the six reserved reward Champions, including ones already passed up (P-031);
+  - a buy deducts the price and adds the Champion exactly once;
+  - a reroll deducts 2 and replaces all six slots;
+  - the cap holds across purchases and rewards;
+  - a full-Expedition replay with purchases is deterministic;
+  - deliberately breaking each guard makes a test fail.
+
+**E. Browser UI**
+- **Modules:** `apps/web/src/ui/app.ts` (a Tavern panel in preparation, Gold display) and `styles.css`.
+- **Edge cases:** disabled Buy showing "Need N Gold", "Sold" or "Collection full (12)"; disabled Reroll showing "Need 2 Gold"; prices labelled "Price N Gold (provisional)"; Champion reward bundles disabled at the cap; any rejection message shown.
+- **Tests:** the screens type-check, plus the smoke test in F.
+
+**F. Regression tests, browser smoke test, documentation**
+- **Checks:** `npm run check` (engine 449 unchanged, plus web), `content-check`, `content-check:test`, `roster:check`, `build`.
+- **Browser smoke test:** the shop appears with six priced offers; buying; an unaffordable purchase; a reroll; a double click; restart resets Gold to 3 and the shop; a seeded replay with purchases; 375 px width; no console errors.
+- **Docs:** PROGRESS, this roadmap and DECISIONS updated with the measured effect on clear rate (reported, not retuned; R-001).
 
 ## M5 — Core combat systems
 Add validated effects, role targeting, Class Resources, Ultimates (including the opening bonus Ultimate and the Ultimate queue, following the P-011 timing model, with no Basic Attack pauses, and P-013 Ultimate-first same-timestamp resolution), Rogue/Sorcerer critical rules, damage types, defenses, status effects and death/survival rules in separately testable increments. Each needs its open questions in `docs/OPEN_QUESTIONS.md` settled first.
@@ -100,7 +164,8 @@ Add Floor/route progression, Monster Round bundles, Run streaks and Run-End Upgr
 
 ## M8 — Eight-player multiplayer
 Add authoritative server, rooms, WebSocket actions, pairing and odd-player PvE replacement.
-**Acceptance:** integration tests cover eight players, reconnect/disconnect behavior, invalid actions, simultaneous round resolution and spectator views.
+**Deferred here from the former M4 (owner, 2026-10-11):** two-player matches; a simple heuristic bot opponent; player Health and match-end logic; the match shop with buy, sell and reroll and Gold checks against a shared pool; and showing the shop, Gold and player Health for a match, with rules kept out of the UI. They need the economy values in `OPEN_QUESTIONS.md` B5 and the player-damage formula. They may become an earlier sub-milestone if the owner chooses.
+**Acceptance:** integration tests cover eight players, reconnect/disconnect behavior, invalid actions, simultaneous round resolution and spectator views. For the deferred match scope: no overspending; shared-pool counts reconcile; matches end with exactly one winner or a documented draw; seeded batch tests pass; a browser smoke test covers buying, fielding a unit and starting a battle with no console errors.
 
 ## M9 — Balance, polish and deployment
 Run seeded simulations, tune config values, improve animation/accessibility, handle persistence only as required, and deploy.

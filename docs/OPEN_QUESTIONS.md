@@ -50,6 +50,7 @@ This list is intentionally honest about gaps. The presence of a proposal elsewhe
 - Simultaneous healing versus lethal damage at the same timestamp.
 
 ### Champions and economy
+- **Prototype stand-ins (M4, PROVISIONAL, owner-approved 2026-10-11):** starting Gold 3, shop prices equal to proposed cost ranks, six-slot Tavern with a 2-Gold reroll, no base income, interest or streaks, a 12-owned-Champion cap, and no duplicates (P-023 to P-031). They apply to the single-player Expedition only and **do not** resolve the questions below for the full game.
 - Exact Rank 1–5 copy counts in the shared pool and whether pool counts vary by player count.
 - Shop odds by player level/round and whether offers are generated before or after shared-pool updates.
 - Initial Gold, baseline income, Rank costs, reroll cost, sell values and experience progression.

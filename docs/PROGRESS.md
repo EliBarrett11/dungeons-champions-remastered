@@ -24,7 +24,10 @@ Update this file at the end of each approved milestone.
 - [x] M2 first playable Expedition implemented and tested (2026-10-11) on branch `claude/modest-hamilton-ngoiru`; its two pending P-018 details were confirmed in the M3 review (R-003, R-004).
 - [x] M2 reviewed and merged into `main` (PR #6, merge commit `b00e885`, 2026-10-11).
 - [x] Approved 135-Champion roster recorded (D-017 to D-021, superseding D-003 and D-013) and integrated as M3 (P-022), 2026-10-11, on branch `claude/modest-hamilton-ngoiru`.
-- [ ] M3 reviewed and merged into `main`.
+- [x] M3 reviewed and merged into `main` (PR #7, merge commit `062da77`, 2026-10-11).
+- [x] M4 economy audit completed and prototype economy decisions P-023 to P-029 recorded (2026-10-11).
+- [x] M4 decisions P-030 and P-031 recorded and the M4 implementation plan (checkpoints A–F) approved by the owner (2026-10-11).
+- [ ] M4 implemented (checkpoints A–F).
 
 ## Session log
 
@@ -188,6 +191,18 @@ Update this file at the end of each approved milestone.
   - team capacity stays 12, the bench of four and 1–3 fielding are unchanged, and Renown is not implemented (R-005).
   No code or rule values changed as a result.
 - **Next smallest task:** review and merge of the M3 pull request. M4 is not started.
+
+### 2026-10-11 — M4 economy decisions recorded (documentation only)
+- **Scope:** recorded the owner's M4 prototype economy decisions after the M4 audit. Source code, tests, configuration, roster data and schemas were not changed. Nothing was committed.
+- **Decisions:** P-023 (Tavern: 6 slots, auto-refresh, 2-Gold reroll of all six), P-024 (price = provisional cost rank 1–5, not final balance), P-025 (starting Gold 3), P-026 (reward choices unchanged; no base income, interest or streaks; Gold carries between rounds), P-027 (12 owned Champions from all sources; starting four and fielding 1–3 unchanged), P-028 (no owned or reserved reward Champions in the shop; no combining), P-029 (separate seeded shop stream).
+- **Documents changed:** `DECISIONS.md`, `GAMEPLAY/ECONOMY.md`, `GAMEPLAY/DUNGEON_AND_REWARDS.md`, `GLOSSARY.md`, `OPEN_QUESTIONS.md`, `IMPLEMENTATION/ROADMAP.md` (M4 checkpoints A–F, proposed), this file.
+- **Follow-up review (same day):**
+  - P-030: Champion bundles disabled at the 12 cap, 3-Gold bundle always available;
+  - P-031: all six reward Champions reserved for the whole Expedition;
+  - the shop-stream derivation approved in principle, with acceptance tests showing unchanged seeds, bench, reward draws and battle logs, and rejected actions never using a shop number;
+  - checkpoints A–F approved;
+  - two-player matches, the bot, player Health and match-end rules moved to M8 with their requirements kept.
+- **Next:** M4 checkpoint A when the owner has reviewed this documentation. No code has changed yet.
 
 ## Required end-of-task report
 - Milestone and scope
