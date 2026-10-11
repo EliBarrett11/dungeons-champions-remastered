@@ -60,10 +60,19 @@ Build in small vertical slices. Every milestone should end with a runnable resul
 
 **Acceptance (owner's M2 brief, AC-01 to AC-12):** the application builds and runs; team preparation works and invalid teams cannot start; battles use the real engine; the outcome is understandable; a reward is applied exactly once; the next choice works; the Expedition can finish and restart with no stale state; invalid states give clear feedback; determinism is preserved; automated tests pass; production build and a browser smoke test pass; documentation is accurate.
 
-**M2 status (2026-10-11):** implemented and tested on branch `claude/modest-hamilton-ngoiru`; not yet reviewed or merged. `npm run check` passes (engine 449 tests, web 52 tests), `npm run build` passes, and the browser smoke test (`apps/web/scripts/smoke.mjs`, 30 checks in Chromium) passes. Details, how to run it and the limitations are in `docs/PROGRESS.md` under "M2 first playable Expedition (implementation)".
+**M2 status (2026-10-11):** implemented, tested and merged into `main` through PR #6 (merge commit `b00e885`). `npm run check` passes (engine 449 tests, web 52 tests), `npm run build` passes, and the browser smoke test (`apps/web/scripts/smoke.mjs`, 30 checks in Chromium) passes. Details, how to run it and the limitations are in `docs/PROGRESS.md` under "M2 first playable Expedition (implementation)".
 
-## M3 — Minimal economy and bot match
-**Goal:** demonstrate a complete small match loop. (Formerly M2; renumbered by T-010. The former M3 browser goals of showing the shop, Gold and Health are carried here because the browser client now exists.)
+## M3 — Approved 135-Champion roster
+**Goal:** replace the prototype's placeholder Champions with the approved roster (D-017 to D-021) while keeping M1 and M2 behaviour. Defined by the owner on 2026-10-11; later milestones were renumbered (economy M4 … deployment M9).
+
+**In scope:** a single roster data file imported from the approved workbook; strict validation (135 Champions, unique IDs and combinations, 9 per trait, canonical names, no Multi-Class); roster Champions in the Expedition with temporary combat numbers and a documented Basic Attack fallback (P-022); documentation reconciled with the approved decisions.
+
+**Excluded:** Trait effects and bracket bonuses, economy, shop, purchases, rerolls, upgrades, Multi-Class, Champion-specific ability execution, changes to the bench of four or the 1–3 fielding limit, changes to the engine's rules.
+
+**M3 status (2026-10-11):** implemented and tested on branch `claude/modest-hamilton-ngoiru` (checkpoints A–D); not yet reviewed or merged. Results and caveats: `docs/PROGRESS.md`, "M3 approved roster integration".
+
+## M4 — Minimal economy and bot match
+**Goal:** demonstrate a complete small match loop. (Formerly M2, then M3; renumbered by T-010 and again when the roster milestone became M3. The former M3 browser goals of showing the shop, Gold and Health are carried here because the browser client now exists.)
 - Add two players, placeholder shop, buy/sell/reroll and Gold checks.
 - Add one simple heuristic bot.
 - Add player Health and match-end logic.
@@ -71,7 +80,7 @@ Build in small vertical slices. Every milestone should end with a runnable resul
 **Acceptance:** no overspending; shared-pool counts reconcile; matches terminate with exactly one winner or documented draw; seeded batch tests pass; a browser smoke test covers buying and fielding a unit and starting a battle with no console errors.
 Needs the economy values in `OPEN_QUESTIONS.md` B5 (or approved PROVISIONAL values) first.
 
-## M4 — Core combat systems
+## M5 — Core combat systems
 Add validated effects, role targeting, Class Resources, Ultimates (including the opening bonus Ultimate and the Ultimate queue, following the P-011 timing model, with no Basic Attack pauses, and P-013 Ultimate-first same-timestamp resolution), Rogue/Sorcerer critical rules, damage types, defenses, status effects and death/survival rules in separately testable increments. Each needs its open questions in `docs/OPEN_QUESTIONS.md` settled first.
 **Acceptance:** each mechanic has schema/content validation and focused tests; deterministic event order maintained.
 
@@ -81,19 +90,19 @@ Add validated effects, role targeting, Class Resources, Ultimates (including the
 - Seeded runs that include Ultimates are reproducible under the section 9.2 order (identical event log and hash across repeated runs).
 - Defeated-attacker and defeated-target rules are preserved. If an Ultimate defeats the attacker or the target after commitment, the committed attack still resolves with its stored outcome against its original target, and Health is clamped at 0 (P-006, P-012, P-013).
 
-## M5 — Roster, Traits, items and progression
-Add Champion data in batches; validate uniqueness and required fields; add Trait breakpoints, Items, Champion levels and Feats.
+## M6 — Roster, Traits, items and progression
+The approved roster and its validation were delivered early in M3. Remaining: full combat definitions for roster Champions; add Trait breakpoints, Items, Champion levels and Feats.
 **Acceptance:** roster count and taxonomy constraints validate; all content passes schema and semantic checks; no unimplemented effect is presented as functional.
 
-## M6 — Dungeon, routes, Monster rounds and rewards
+## M7 — Dungeon, routes, Monster rounds and rewards
 Add Floor/route progression, Monster Round bundles, Run streaks and Run-End Upgrades after the remaining rules are approved.
 **Acceptance:** seeded end-to-end match simulation passes route, reward and persistence invariants.
 
-## M7 — Eight-player multiplayer
+## M8 — Eight-player multiplayer
 Add authoritative server, rooms, WebSocket actions, pairing and odd-player PvE replacement.
 **Acceptance:** integration tests cover eight players, reconnect/disconnect behavior, invalid actions, simultaneous round resolution and spectator views.
 
-## M8 — Balance, polish and deployment
+## M9 — Balance, polish and deployment
 Run seeded simulations, tune config values, improve animation/accessibility, handle persistence only as required, and deploy.
 **Acceptance:** agreed performance, stability, browser support and match-length criteria pass.
 

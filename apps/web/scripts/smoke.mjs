@@ -1,4 +1,4 @@
-// Browser smoke test for the M2 prototype Expedition (AC-11).
+// Browser smoke test for the prototype Expedition (M2 AC-11; M3 checkpoint D: roster Champions).
 //
 // Drives the production build in a real Chromium through Playwright. Playwright is NOT a repository
 // dependency: this script uses a separately installed copy (for example a global install), found
@@ -89,11 +89,19 @@ async function main() {
     });
     page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
 
-    // ---- Flow 1: seed 2 clears all three Monster Rounds, then restarts cleanly. ----
-    await page.goto(`${BASE}?seed=2`);
+    // ---- Flow 1: seed 24 clears all three Monster Rounds, then restarts cleanly. ----
+    await page.goto(`${BASE}?seed=24`);
     await page.getByTestId('screen-preparation').waitFor();
     check((await page.title()).startsWith('Dungeons & Champions'), 'app loads with its title');
-    check((await text(page, 'status-seed')) === '2', 'seed from the URL is used');
+    check((await text(page, 'status-seed')) === '24', 'seed from the URL is used');
+    const benchText = await page.locator('[data-testid^="bench-"]').allInnerTexts();
+    check(benchText.length === 4, `bench shows 4 roster Champions (got ${benchText.length})`);
+    check(benchText.every((t) => /DC-\d{3}/.test(t) && /Proposed Role:/.test(t)), 'bench cards show roster IDs and PROPOSED Roles');
+    const traits = await page.locator('[data-testid^="traits-DC-"]').allInnerTexts();
+    check(traits.length === 4 && traits.every((t) => t.split(' · ').length === 3), `each card shows Class · Race · Origin (${traits.join(' | ')})`);
+    check(benchText.some((t) => t.includes('Temporary placeholder stats')), 'placeholder stats are labelled (seed 24 bench has a Ranger)');
+    await page.locator('[data-testid="bench-c1"] summary').click();
+    check((await text(page, 'bench-c1')).includes('Proposed abilities (not implemented)') && (await text(page, 'bench-c1')).includes('Ultimate:'), 'proposed abilities are shown and marked not implemented');
     check(await page.getByTestId('start-battle').isDisabled(), 'Start battle is disabled with no team');
     await shot(page, '01-preparation-empty');
 
@@ -110,11 +118,12 @@ async function main() {
     check(outcome === 'Victory', `round 1 shows Victory (got ${outcome})`);
     check((await page.getByTestId('battle-log').locator('li').count()) > 10, 'combat log lists events');
     check((await text(page, 'hp-m1-1')) === 'Defeated', 'defeated monster is shown as defeated');
+    const firstLog = await text(page, 'battle-log');
     await shot(page, '03-battle-victory');
     await page.getByTestId('finish-battle').click();
     await page.getByTestId('screen-reward').waitFor();
     await shot(page, '04-reward');
-    await page.getByTestId('choose-e1-assassin').click();
+    await page.getByTestId('choose-e1-champion-a').click();
     await page.getByTestId('screen-decision').waitFor();
     check((await text(page, 'status-gold')) === '1', 'reward Gold applied once (1)');
     check((await text(page, 'status-bench')) === '5', 'reward Champion joined the bench (5)');
@@ -132,7 +141,7 @@ async function main() {
     outcome = await fightAndFinish(page);
     check(outcome === 'Victory', `round 3 shows Victory (got ${outcome})`);
     await page.getByTestId('finish-battle').click();
-    await page.getByTestId('choose-e3-tank').click();
+    await page.getByTestId('choose-e3-champion-a').click();
     await page.getByTestId('screen-ended').waitFor();
     check((await text(page, 'end-title')) === 'Expedition cleared!', 'end screen shows the clear');
     check((await text(page, 'end-summary')).includes('Monster Rounds won: 3 of 3. Gold: 5. Champions: 6.'), 'end summary totals');
@@ -158,6 +167,14 @@ async function main() {
       'the second of two instant clicks on Start battle is refused (one battle only)',
     );
 
+    // ---- Seeded replay in the browser: same seed, same team -> same bench and same battle log. ----
+    await page.goto(`${BASE}?seed=24`);
+    await page.getByTestId('screen-preparation').waitFor();
+    check(JSON.stringify(await page.locator('[data-testid^="bench-"]').allInnerTexts()) === JSON.stringify(benchText), 'reloading seed 24 shows the same bench');
+    await placeTeam(page);
+    await fightAndFinish(page);
+    check((await text(page, 'battle-log')) === firstLog, 'reloading seed 24 replays an identical round 1 battle log (skipped vs played back)');
+
     // ---- Flow 2: seed 1 is defeated in round 3. ----
     await page.goto(`${BASE}?seed=1`);
     await placeTeam(page);
@@ -176,8 +193,20 @@ async function main() {
     check((await text(page, 'status-gold')) === '6', 'defeat grants no reward (Gold stays 6)');
     await shot(page, '08-defeated-end');
 
-    // ---- Flow 3: retreat after round 1. ----
-    await page.goto(`${BASE}?seed=2`);
+    // ---- Flow 3: seed 26 ends round 2 in a draw. ----
+    await page.goto(`${BASE}?seed=26`);
+    await placeTeam(page);
+    await fightAndFinish(page);
+    await page.getByTestId('finish-battle').click();
+    await page.getByTestId('choose-e1-gold').click();
+    await page.getByTestId('continue').click();
+    outcome = await fightAndFinish(page);
+    check(outcome === 'Draw', `seed 26 round 2 shows Draw (got ${outcome})`);
+    await page.getByTestId('finish-battle').click();
+    check((await text(page, 'end-title')) === 'Expedition over: draw', 'a draw ends the Expedition');
+
+    // ---- Flow 4: retreat after round 1. ----
+    await page.goto(`${BASE}?seed=24`);
     await placeTeam(page);
     await fightAndFinish(page);
     await page.getByTestId('finish-battle').click();
@@ -188,7 +217,7 @@ async function main() {
 
     // ---- Narrow viewport renders without horizontal scrolling. ----
     await page.setViewportSize({ width: 375, height: 800 });
-    await page.goto(`${BASE}?seed=2`);
+    await page.goto(`${BASE}?seed=24`);
     await page.getByTestId('screen-preparation').waitFor();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     check(overflow <= 0, `no horizontal scroll at 375px (overflow ${overflow}px)`);

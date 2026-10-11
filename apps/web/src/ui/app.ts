@@ -112,7 +112,7 @@ export class ExpeditionApp {
       'header',
       { class: 'top' },
       h('h1', {}, 'Dungeons & Champions'),
-      h('p', { class: 'subtitle' }, 'Prototype Expedition: fixture Champions and monsters, Basic Attacks only.'),
+      h('p', { class: 'subtitle' }, 'Prototype Expedition: approved roster Champions (temporary stats) against fixture monsters. Basic Attacks only.'),
       h(
         'p',
         { class: 'status', 'data-testid': 'status' },
