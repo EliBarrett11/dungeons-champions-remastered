@@ -29,6 +29,10 @@ export const M1_CONFIG = Object.freeze({
   /** Test units per side in M1 (roadmap M1 scope). */
   minUnitsPerSide: 1,
   maxUnitsPerSide: 5,
+  /** Dice-expression limits (technical safety limits, not game rules). */
+  maxDiceCount: 100,
+  maxDieSides: 1_000,
+  maxDiceModifier: 1_000_000,
 });
 
 export type M1Config = typeof M1_CONFIG;
