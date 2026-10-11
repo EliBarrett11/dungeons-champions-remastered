@@ -4,15 +4,14 @@ import {
   EXPEDITION_CONFIG,
   PROTOTYPE_CONTENT,
   contentProblems,
-  createExpedition,
   encounterSeed,
   parseSeed,
   transition,
 } from '../src/game/index';
 import type { ExpeditionContent, ExpeditionState } from '../src/game/index';
-import { act, deepFreeze, placeStandardTeam } from './support/play';
+import { act, deepFreeze, newExpedition, placeStandardTeam } from './support/play';
 
-const fresh = () => deepFreeze(createExpedition(2));
+const fresh = () => deepFreeze(newExpedition(2));
 
 function rejected(state: ExpeditionState, action: Parameters<typeof transition>[1], content: ExpeditionContent = PROTOTYPE_CONTENT) {
   const result = transition(state, action, content);
@@ -24,19 +23,15 @@ function rejected(state: ExpeditionState, action: Parameters<typeof transition>[
 
 describe('createExpedition', () => {
   it('starts in preparation with the starting bench, no board, no Gold and no battle', () => {
-    const state = createExpedition(7);
+    const state = newExpedition(7);
     expect(state).toMatchObject({ seed: 7, phase: 'preparation', encounterIndex: 0, formation: [], gold: 0, battle: null, history: [] });
-    expect(state.bench).toEqual([
-      { instanceId: 'c1', championId: 'tank' },
-      { instanceId: 'c2', championId: 'bruiser' },
-      { instanceId: 'c3', championId: 'marksman' },
-      { instanceId: 'c4', championId: 'support' },
-    ]);
+    expect(state.bench.map((b) => b.instanceId)).toEqual(['c1', 'c2', 'c3', 'c4']);
+    for (const b of state.bench) expect(PROTOTYPE_CONTENT.champions.some((c) => c.id === b.championId)).toBe(true);
   });
 
   it('rejects a seed that is not a uint32', () => {
-    expect(() => createExpedition(-1)).toThrow(RangeError);
-    expect(() => createExpedition(2 ** 32)).toThrow(RangeError);
+    expect(() => newExpedition(-1)).toThrow(RangeError);
+    expect(() => newExpedition(2 ** 32)).toThrow(RangeError);
   });
 });
 
@@ -97,18 +92,18 @@ describe('invalid content and engine validation (AC-08)', () => {
   it('lists every content problem', () => {
     const encounter = PROTOTYPE_CONTENT.encounters[0]!;
     const broken: ExpeditionContent = {
-      champions: PROTOTYPE_CONTENT.champions.filter((c) => c.id !== 'support'),
+      champions: PROTOTYPE_CONTENT.champions.slice(0, 5),
       encounters: [
-        { ...encounter, monsters: [], rewards: [{ id: 'a', gold: -1, champions: ['ghost'] }, { id: 'a', gold: 1, champions: [] }] },
+        { ...encounter, monsters: [], rewards: [{ id: 'a', gold: -1, championCount: -1 }, { id: 'a', gold: 1, championCount: 0 }] },
         ...PROTOTYPE_CONTENT.encounters.slice(1),
       ],
     };
     expect(contentProblems(broken)).toEqual([
-      'Starting bench Champion "support" is missing from the content.',
+      'The roster has 5 playable Champions; an Expedition draws 8.',
       'Encounter 1 has 0 monsters; the engine allows 1-5.',
       'Encounter 1 offers 2 reward bundles; P-019 requires exactly 3.',
       'Encounter 1: bundle "a" has invalid Gold.',
-      'Encounter 1: bundle "a" names unknown Champion "ghost".',
+      'Encounter 1: bundle "a" has an invalid Champion count.',
       'Encounter 1: duplicate reward bundle id "a".',
     ]);
   });
@@ -131,9 +126,11 @@ describe('invalid content and engine validation (AC-08)', () => {
 
   it('reports missing Champion data for a bench instance', () => {
     const state: ExpeditionState = { ...placeStandardTeam(fresh()) };
-    const broken: ExpeditionContent = { ...PROTOTYPE_CONTENT, champions: PROTOTYPE_CONTENT.champions.filter((c) => c.id !== 'marksman') };
+    const missing = state.bench.find((b) => b.instanceId === 'c3')!.championId;
+    const broken: ExpeditionContent = { ...PROTOTYPE_CONTENT, champions: PROTOTYPE_CONTENT.champions.filter((c) => c.id !== missing) };
     const result = rejected(state, { type: 'startBattle' }, broken);
-    expect(result.error).toBe('The game data is incomplete, so the battle cannot start.');
+    expect(result.error).toBe('The battle could not be prepared.');
+    expect(result.details).toEqual(['Champion data for c3 is missing.']);
   });
 });
 

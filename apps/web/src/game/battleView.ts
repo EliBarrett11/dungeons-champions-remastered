@@ -2,7 +2,7 @@ import type { BattleEvent } from '@dc/engine';
 import { EXPEDITION_CONFIG } from './config';
 import { championOf } from './expedition';
 import type { BattleRecord, BenchChampion, PlayerOutcome } from './expedition';
-import type { ExpeditionContent } from './fixtures';
+import type { ExpeditionContent } from './content';
 
 /**
  * Read-only presentation of an engine battle log. Everything here is derived from the engine's

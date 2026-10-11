@@ -46,4 +46,5 @@ Build Dungeons & Champions from scratch as a browser-based, eight-player auto-ba
 - `docs/proposals/0001-initial-plan.md` — SUPERSEDED; history only.
 - `packages/engine/` — headless deterministic combat engine (M1); `npm run check` runs its type-checks and tests.
 - `apps/web/` — browser prototype (M2): `src/game/` pure Expedition rules, `src/ui/` DOM rendering; `npm run dev` / `npm run build`.
-- `tools/` — `content_check.py` (T-009) and its tests; `npm run content-check`.
+- `tools/` — `content_check.py` (T-009) and its tests; `npm run content-check`; `import_roster.py` (`npm run roster:import` / `roster:check`).
+- `content/roster/` — approved 135-Champion roster: `champions.json` (generated; do not edit by hand) and the source workbook in `source/`.

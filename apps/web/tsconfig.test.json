@@ -3,7 +3,9 @@
   "compilerOptions": {
     // Tests exercise the game layer headlessly with the same restricted globals as the engine.
     "lib": ["ES2022"],
-    "types": []
+    "types": [],
+    // M3: the roster and its schema are JSON files outside this package.
+    "resolveJsonModule": true
   },
   "include": ["src/game/**/*.ts", "test/**/*.ts", "vitest.config.ts", "vite.config.ts"]
 }

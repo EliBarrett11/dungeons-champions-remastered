@@ -12,19 +12,22 @@ Dungeons & Champions is a browser-based, D&D-inspired auto-battler with eight pl
 - Gameplay information is public. Each player's Tavern interaction is private, but Tavern offers are visible to everyone. Shop offers do not reserve shared-pool copies.
 
 ## Roster shape
-- 120 Champions are planned.
+- The roster has exactly 135 Champions (D-017); the approved assignments are in `content/roster/champions.json` (D-021).
+- Maximum team size: 12 Champions fielded (D-019).
 - Each Champion has exactly three Traits: one Race, one Class and one Origin.
 - Each Champion has exactly one of nine Roles: Tank, Bruiser, Assassin, Skirmisher, Marksman, Artillery, Mage, Controller or Support.
 - Each Champion has a Basic Attack, Passive, Ultimate and two Feat milestones with choices.
 - Champion levels run from 1 to 10. Duplicate combining and fielding progression are both intended systems; exact interactions are tracked in `OPEN_QUESTIONS.md`.
-- Each Race+Class+Origin combination is unique.
+- Each Race+Class+Origin combination is unique, and each Class, Race and Origin has exactly 9 Champions. Multi-Class is excluded (D-020).
 
 ## Trait taxonomy
-**Classes (12):** Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Warlock, Wizard.
+**Classes (15):** Artificer, Barbarian, Bard, Cleric, Druid, Fighter, Gunslinger, Monk, Monster Hunter, Paladin, Ranger, Rogue, Sorcerer, Warlock, Wizard.
 
 **Origins (15):** Acolyte, Arcane, Cultist, Fey-Touched, Gladiator, Knight, Mercenary, Noble, Outlaw, Pirate, Scholar, Tribal, Undead, Underdark, Witch.
 
-**Races (16):** Aasimar, Dragonborn, Dwarf, Elf, Genasi, Githyanki, Gnome, Goblin, Half-Elf, Half-Orc, Halfling, Human, Orc, Shifter, Tiefling, Warforged.
+**Races (15):** Aasimar, Dragonborn, Dwarf, Elf, Genasi, Githyanki, Gnome, Goblin, Half-Elf, Halfling, Human, Orc, Shifter, Tiefling, Warforged.
+
+**Trait brackets (D-018):** Classes 2 / 4 / 6 / 8; Races 3 / 5 / 7 / 9; Origins 3 / 5 / 7 / 9.
 
 ## Match and combat goals
 - Combat should be readable, tactical through pre-battle composition and positioning, and fully automated.

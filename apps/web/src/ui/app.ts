@@ -5,6 +5,7 @@ import {
   buildBattleView,
   championOf,
   createExpedition,
+  currentOffers,
   currentEncounter,
   eventCountAt,
   formationProblems,
@@ -16,12 +17,12 @@ import {
 import type {
   BattleView,
   BenchChampion,
-  ChampionFixture,
+  PlayableChampion,
+  RewardOffer,
   EndReason,
   ExpeditionAction,
   ExpeditionContent,
   ExpeditionState,
-  RewardBundle,
 } from '../game/index';
 import { button, h } from './dom';
 
@@ -56,7 +57,7 @@ export class ExpeditionApp {
     seed: number,
     private readonly newSeed: () => number,
   ) {
-    this.state = createExpedition(seed);
+    this.state = createExpedition(seed, content);
   }
 
   start(): void {
@@ -111,7 +112,7 @@ export class ExpeditionApp {
       'header',
       { class: 'top' },
       h('h1', {}, 'Dungeons & Champions'),
-      h('p', { class: 'subtitle' }, 'Prototype Expedition: fixture Champions and monsters, Basic Attacks only.'),
+      h('p', { class: 'subtitle' }, 'Prototype Expedition: approved roster Champions (temporary stats) against fixture monsters. Basic Attacks only.'),
       h(
         'p',
         { class: 'status', 'data-testid': 'status' },
@@ -240,13 +241,34 @@ export class ExpeditionApp {
     return h('div', { class: 'prep' }, enemy, board, bench);
   }
 
-  private championDetails(champion: ChampionFixture): Node {
+  private championDetails(champion: PlayableChampion): Node {
+    const { proposed } = champion;
+    const statsLabel =
+      champion.statsSource === 'role-table'
+        ? `Temporary stats: ${champion.role} Role table`
+        : `Temporary placeholder stats (no Role-table row for "${champion.role}")`;
     return h(
       'div',
-      {},
-      h('p', { class: 'role' }, `Fixture Champion (${champion.name} Role stats)`),
+      { class: 'champion-details' },
+      h('p', { class: 'traits', 'data-testid': `traits-${champion.id}` }, `${champion.class} · ${champion.race} · ${champion.origin}`),
+      h('p', { class: 'role' }, `${champion.id} · Proposed Role: ${champion.role} · Proposed cost ${proposed.cost_rank} (${proposed.rarity})`),
+      h('p', { class: 'stats' }, statsLabel),
       this.statLine(champion.stats),
-      h('p', { class: 'stats' }, `Basic Attack: ${champion.basicAttack.dice} + Attack, physical. No other abilities in this prototype.`),
+      h('p', { class: 'stats' }, `In battle: ${champion.basicAttack.dice} + Attack, physical Basic Attack only.`),
+      h(
+        'details',
+        {},
+        h('summary', {}, 'Proposed abilities (not implemented)'),
+        h(
+          'ul',
+          { class: 'proposed' },
+          h('li', {}, `Basic Attack: ${proposed.basic_attack}`),
+          h('li', {}, `Passive: ${proposed.passive}`),
+          h('li', {}, `Ultimate: ${proposed.ultimate}`),
+          h('li', {}, `Feat 1: ${proposed.feat_milestone_1}`),
+          proposed.feat_milestone_2 ? h('li', {}, `Feat 2: ${proposed.feat_milestone_2}`) : h('li', {}, 'Feat 2: not included (Multi-Class text excluded).'),
+        ),
+      ),
     );
   }
 
@@ -377,17 +399,16 @@ export class ExpeditionApp {
   // ---- reward and decision -------------------------------------------------------------------
 
   private rewardScreen(): Node {
-    const encounter = currentEncounter(this.state, this.content);
     return h(
       'section',
       { class: 'panel' },
       h('h2', {}, 'Choose one reward'),
       h('p', { class: 'hint' }, 'Gold is tracked but cannot be spent yet in this prototype. New Champions join your bench.'),
-      h('ul', { class: 'cards' }, (encounter?.rewards ?? []).map((bundle) => this.bundleCard(bundle))),
+      h('ul', { class: 'cards' }, currentOffers(this.state).map((bundle) => this.bundleCard(bundle))),
     );
   }
 
-  private bundleCard(bundle: RewardBundle): Node {
+  private bundleCard(bundle: RewardOffer): Node {
     const champions = bundle.champions.map((id) => this.content.champions.find((c) => c.id === id));
     return h(
       'li',
@@ -396,7 +417,7 @@ export class ExpeditionApp {
       champions.length === 0 ? h('p', {}, 'No Champion.') : null,
       champions.map((champion, index) =>
         champion
-          ? h('div', {}, h('p', {}, `Champion: ${champion.name}`), this.championDetails(champion))
+          ? h('div', {}, h('p', {}, h('strong', {}, `Champion: ${champion.name}`)), this.championDetails(champion))
           : h('p', { class: 'warning' }, `Unknown Champion ${bundle.champions[index]}`),
       ),
       button('Choose this reward', () => this.dispatch({ type: 'chooseReward', bundleId: bundle.id }), {
@@ -428,7 +449,7 @@ export class ExpeditionApp {
   }
 
   private describeBundle(encounterIndex: number, bundleId: string | null): string {
-    const bundle = this.content.encounters[encounterIndex]?.rewards.find((b) => b.id === bundleId);
+    const bundle = this.state.offers[encounterIndex]?.find((b) => b.id === bundleId);
     if (!bundle) return 'none';
     const names = bundle.champions.map((id) => this.content.champions.find((c) => c.id === id)?.name ?? id);
     return [`+${bundle.gold} Gold`, ...names.map((n) => `Champion: ${n}`)].join(', ');

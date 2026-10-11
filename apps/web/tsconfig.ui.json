@@ -3,7 +3,9 @@
   "compilerOptions": {
     // Browser presentation layer: DOM types are allowed here and only here.
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": []
+    "types": [],
+    // M3: the roster and its schema are JSON files outside this package.
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts"]
 }

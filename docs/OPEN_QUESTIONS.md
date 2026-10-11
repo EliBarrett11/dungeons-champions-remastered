@@ -15,7 +15,7 @@ This list is intentionally honest about gaps. The presence of a proposal elsewhe
 | B7 | What is the full Floor route and 8-player PvP/PvE schedule? | Required for full match progression. | PARTLY SPECIFIED. Floor 1 has three Monster Rounds before the first PvP Round. Later structure needs approval. |
 | B8 | What exactly persists when a Run ends, and how are upgrades selected and scaled? | Required for run-end progression. | PARTLY SPECIFIED. Core persistence behavior is known; tier thresholds and upgrade catalogue need definition. |
 
-**M2 prototype note (2026-10-11):** the browser Expedition uses PROVISIONAL prototype stand-ins for parts of B5, B7 and B8: three fixture Monster Rounds, fixed reward bundles, a team of 1–3 with no Renown, and no player Health (P-018 to P-021). These stand-ins do **not** resolve those questions. Still open from M2: whether Champion Health carries between Rounds (the prototype restores it each battle), and whether a player may end a Floor or Expedition voluntarily (both *confirmation pending* in P-018).
+**M2 prototype note (2026-10-11):** the browser Expedition uses PROVISIONAL prototype stand-ins for parts of B5, B7 and B8: three fixture Monster Rounds, fixed reward bundles, a team of 1–3 with no Renown, and no player Health (P-018 to P-021). These stand-ins do **not** resolve those questions. For the prototype, the owner confirmed full Champion Health at the start of each Monster Round and the voluntary end of an Expedition (R-003, R-004, 2026-10-11). Still open for the final game: whether Champion damage persists between Rounds, and whether a Floor can be left voluntarily.
 
 ## Additional rules to settle before their relevant milestones
 
@@ -67,10 +67,13 @@ This list is intentionally honest about gaps. The presence of a proposal elsewhe
 - Names/effects of all nine Components and all 45 completed Items.
 - How Components are equipped before automatic combination; temporary component slots and invalid-combination UX.
 - Exact item stats, stacking and Champion item eligibility.
-- Exact effects and numbers for all 43 Traits and each bracket.
+- Exact effects and numbers for all 45 Traits and each bracket.
 - Rules for hybrid builds, duplicate Trait counts, trait effects on non-matching units and minimum/maximum brackets.
-- **Trait bracket arithmetic.** With 120 Champions, Origins average 8 Champions each but the top Origin bracket is 10 (15 × 10 = 150 > 120), and Races average 7.5 against a top bracket of 8 (16 × 8 = 128 > 120). Not every Origin or Race can reach its top bracket unless the roster is uneven or Traits can be granted (e.g. by Items). This conflicts with "every Trait should have a viable vertical build" if "vertical" means the top bracket. Classes are fine (12 × 9 = 108). The Renown cap of 10 also means an Origin-10 team is the whole field.
-- Final mapping of all 120 Champions to Race, Class, Origin, Role, abilities and Feats.
+- **Trait bracket arithmetic** — RESOLVED by D-017/D-018 (2026-10-11): 135 Champions give exactly 9 per Class, Race and Origin, so every top bracket (Classes 8, Races 9, Origins 9) is reachable; the earlier 120-Champion shortfall no longer applies.
+- Champion mapping: Class/Race/Origin assignments for all 135 Champions are approved (D-021). Still PROPOSED: names' final form, Roles, cost ranks, abilities and Feats.
+- **Roster Roles outside the Role list.** The roster's proposed Roles include "Fighter" (11 Champions) and "Ranger" (11), which are not among the nine documented Roles (Tank, Bruiser, Assassin, Skirmisher, Marksman, Artillery, Mage, Controller, Support), and no Champion uses Skirmisher, Marksman or Artillery. The owner decided not to add Fighter or Ranger to the Role taxonomy because they are Class names (R-002); those Champions keep a clearly labelled temporary placeholder stat block. Still open: the separate review of all PROPOSED Role assignments.
+- **Expedition difficulty with roster Champions (M3).** With roster benches, a front-line-first team clears the three fixture Monster Rounds in about 13% of seeds (M2 fixture bench: about 67%), because Spell Power and abilities are not implemented. Owner decision R-001: no retuning now; a known limitation, to be reassessed once the relevant combat abilities and stats exist.
+- **Champion combat schema** (`champion-combat.schema.json`): its `class` enum was updated to the 15 approved Classes (M3). Its `role` enum still has the nine documented Roles and so cannot describe Fighter/Ranger-Role Champions until the question above is settled. No roster Champion has a full combat definition yet.
 
 ### Dungeon and match
 - Exact floor count and the round schedule for each Floor after Floor 1.
@@ -82,7 +85,7 @@ This list is intentionally honest about gaps. The presence of a proposal elsewhe
 - Exact total reward-value calculation and fairness budget over a match.
 - Run streak reset/carry behavior across Floors.
 - Exact Run-End Upgrade catalogue, tier thresholds and generation rules.
-- Exact Fame-to-Renown thresholds and Renown cap behavior.
+- Exact Fame-to-Renown thresholds and Renown cap behavior (the cap is 12 per D-019; Renown is not implemented).
 - Exact solo Dragon encounter rules after match victory, and what the Dragon fight's outcome changes (if anything).
 - What happens when the last remaining players are all eliminated in the same Round (D-006 "last player standing" has no rule for this), and how placements are ordered for simultaneous eliminations.
 - Player Health damage after a drawn battle.

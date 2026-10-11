@@ -5,7 +5,10 @@ FAILS (exit code 1) on:
   - invalid JSON in any *.json file under docs/;
   - a schema in docs/COMBAT/schemas/ that is not a valid Draft 2020-12 JSON Schema;
   - a template or example that fails validation against its applicable schema
-    (or a mapped template/example that is missing, since it cannot be validated).
+    (or a mapped template/example that is missing, since it cannot be validated);
+  - M3: content/roster/champions.json missing, not valid JSON, or failing roster.schema.json.
+    Roster rules a JSON Schema cannot express (unique Class/Race/Origin combinations, nine
+    Champions per trait, unique IDs) are checked by the roster validator in `npm run check`.
 
 WARNS, without failing (exit code 0), on content-data issues:
   - missing cross-file references (effect IDs used by abilities; ability and Feat IDs used by
@@ -36,6 +39,10 @@ except ImportError:  # pragma: no cover - depends on the environment
     sys.exit(2)
 
 SCHEMAS_DIR = Path("docs/COMBAT/schemas")
+
+# M3: the approved roster (content outside docs/) and the schema it must satisfy.
+ROSTER = Path("content/roster/champions.json")
+ROSTER_SCHEMA = "roster.schema.json"
 
 # Applicable schema for each template and example (roadmap M1 acceptance item 7).
 APPLICABLE_SCHEMAS: dict[str, str] = {
@@ -122,6 +129,29 @@ def check_instances(root: Path, documents: dict[str, object], validators: dict[s
             report.warn(False, f"no applicable-schema mapping for {relative}; it was not validated")
 
 
+def check_roster(root: Path, validators: dict[str, Draft202012Validator], report: Report) -> bool:
+    """Validates the roster file against roster.schema.json. Returns True if it was parsed."""
+    path = root / ROSTER
+    relative = ROSTER.as_posix()
+    if not path.exists():
+        report.failures.append(f"missing roster: {relative} (expected to validate against {ROSTER_SCHEMA})")
+        return False
+    try:
+        roster = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError) as error:
+        report.failures.append(f"invalid JSON: {relative}: {error}")
+        return False
+    validator = validators.get(ROSTER_SCHEMA)
+    if validator is None:
+        report.failures.append(f"cannot validate {relative}: schema {ROSTER_SCHEMA} is missing or invalid")
+        return True
+    errors = sorted(validator.iter_errors(roster), key=lambda e: [str(p) for p in e.absolute_path])
+    for error in errors:
+        location = "/".join(str(p) for p in error.absolute_path) or "<root>"
+        report.failures.append(f"schema validation failed: {relative} against {ROSTER_SCHEMA}: {location}: {error.message}")
+    return True
+
+
 def as_dict(value: object) -> dict:
     return value if isinstance(value, dict) else {}
 
@@ -177,8 +207,10 @@ def main(argv: list[str]) -> int:
     validators = check_schemas(documents, report)
     check_instances(root, documents, validators, report)
     check_references(documents, report)
+    roster_parsed = check_roster(root, validators, report)
 
     print(f"content-check: {len(documents)} JSON file(s) parsed under {root / 'docs'}")
+    print(f"content-check: roster {ROSTER.as_posix()} {'parsed' if roster_parsed else 'NOT parsed'}")
     print(f"\nSchema-validation failures ({len(report.failures)}):")
     for line in report.failures or ["none"]:
         print(f"  {line}")

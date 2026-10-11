@@ -1,12 +1,16 @@
-import { M1_CONFIG, Sfc32, isUint32, runBattle, validateBattleInput } from '@dc/engine';
+import { BattleRng, M1_CONFIG, Sfc32, isUint32, rollDie, runBattle, validateBattleInput } from '@dc/engine';
 import type { BattleInput, BattleResult, UnitInput } from '@dc/engine';
+import type { PlayableChampion } from './champions';
 import { EXPEDITION_CONFIG } from './config';
-import type { ChampionFixture, EncounterFixture, ExpeditionContent, RewardBundle } from './fixtures';
+import type { ExpeditionContent } from './content';
+import type { EncounterFixture } from './fixtures';
 import { formationProblems, isLegalSlot } from './formation';
 import type { Placement } from './formation';
 
 /**
- * The M2 prototype Expedition (P-018 to P-021): an explicit, pure state machine.
+ * The prototype Expedition (M2: P-018 to P-021; M3: P-022): an explicit, pure state machine.
+ * Since M3 the bench and the Champions offered as rewards are drawn by seed from the approved
+ * roster when the Expedition is created (`drawRosterChampions`), so a seed replays exactly.
  *
  *   preparation --startBattle--> battle --finishBattle--> reward   (victory)
  *                                                    \--> ended    (defeat or draw, P-018)
@@ -42,6 +46,14 @@ export interface BattleRecord {
   readonly outcome: PlayerOutcome;
 }
 
+/** One reward bundle as offered in this Expedition: the P-019 template with its drawn Champions. */
+export interface RewardOffer {
+  readonly id: string;
+  readonly gold: number;
+  /** Roster Champion ids (P-022). */
+  readonly champions: readonly string[];
+}
+
 export interface HistoryEntry {
   readonly encounterIndex: number;
   readonly outcome: PlayerOutcome;
@@ -62,6 +74,8 @@ export interface ExpeditionState {
   readonly endReason: EndReason | null;
   readonly nextInstanceNumber: number;
   readonly battlesFought: number;
+  /** Reward offers per encounter, fixed when the Expedition is created. */
+  readonly offers: readonly (readonly RewardOffer[])[];
 }
 
 export type ExpeditionAction =
@@ -86,8 +100,9 @@ export function contentProblems(content: ExpeditionContent): string[] {
     if (championIds.has(champion.id)) problems.push(`Duplicate Champion id "${champion.id}".`);
     championIds.add(champion.id);
   }
-  for (const id of EXPEDITION_CONFIG.startingBench) {
-    if (!championIds.has(id)) problems.push(`Starting bench Champion "${id}" is missing from the content.`);
+  const needed = championsNeeded(content);
+  if (content.champions.length < needed) {
+    problems.push(`The roster has ${content.champions.length} playable Champions; an Expedition draws ${needed}.`);
   }
   if (content.encounters.length !== EXPEDITION_CONFIG.encounterCount) {
     problems.push(`Expected ${EXPEDITION_CONFIG.encounterCount} encounters, found ${content.encounters.length}.`);
@@ -109,8 +124,8 @@ export function contentProblems(content: ExpeditionContent): string[] {
       if (bundleIds.has(bundle.id)) problems.push(`${label}: duplicate reward bundle id "${bundle.id}".`);
       bundleIds.add(bundle.id);
       if (!Number.isSafeInteger(bundle.gold) || bundle.gold < 0) problems.push(`${label}: bundle "${bundle.id}" has invalid Gold.`);
-      for (const id of bundle.champions) {
-        if (!championIds.has(id)) problems.push(`${label}: bundle "${bundle.id}" names unknown Champion "${id}".`);
+      if (!Number.isSafeInteger(bundle.championCount) || bundle.championCount < 0) {
+        problems.push(`${label}: bundle "${bundle.id}" has an invalid Champion count.`);
       }
     }
   });
@@ -128,14 +143,50 @@ export function encounterSeed(expeditionSeed: number, encounterIndex: number): n
   return value;
 }
 
-export function createExpedition(seed: number): ExpeditionState {
+/** Champions drawn per Expedition: the starting bench plus every Champion any bundle offers. */
+export function championsNeeded(content: ExpeditionContent): number {
+  const offered = content.encounters.reduce(
+    (sum, encounter) => sum + encounter.rewards.reduce((inner, bundle) => inner + Math.max(0, bundle.championCount), 0),
+    0,
+  );
+  return EXPEDITION_CONFIG.startingBenchSize + offered;
+}
+
+/**
+ * P-022: the Expedition's Champions, drawn without repeats from the roster (in roster order) by a
+ * partial Fisher-Yates shuffle. The generator is seeded with the next output after the battle
+ * seeds (`encounterSeed(seed, encounterCount)`), so the draw never shares numbers with a battle.
+ * The first `startingBenchSize` ids form the bench; the rest fill the reward bundles in order.
+ */
+export function drawRosterChampions(seed: number, content: ExpeditionContent): string[] {
+  const needed = championsNeeded(content);
+  const pool = content.champions.map((champion) => champion.id);
+  if (pool.length < needed) throw new RangeError(`The roster has ${pool.length} Champions; ${needed} are needed.`);
+  const rng = new BattleRng(encounterSeed(seed, EXPEDITION_CONFIG.encounterCount));
+  for (let i = 0; i < needed; i += 1) {
+    const j = i + rollDie(rng, pool.length - i) - 1;
+    [pool[i], pool[j]] = [pool[j]!, pool[i]!];
+  }
+  return pool.slice(0, needed);
+}
+
+export function createExpedition(seed: number, content: ExpeditionContent): ExpeditionState {
   if (!isUint32(seed)) {
     throw new RangeError(`Expedition seed must be an integer from 0 to 4294967295; received ${seed}`);
   }
-  const bench = EXPEDITION_CONFIG.startingBench.map((championId, index) => ({
+  const drawn = drawRosterChampions(seed, content);
+  const bench = drawn.slice(0, EXPEDITION_CONFIG.startingBenchSize).map((championId, index) => ({
     instanceId: `c${index + 1}`,
     championId,
   }));
+  let next = EXPEDITION_CONFIG.startingBenchSize;
+  const offers = content.encounters.map((encounter) =>
+    encounter.rewards.map((bundle) => {
+      const champions = drawn.slice(next, next + bundle.championCount);
+      next += bundle.championCount;
+      return { id: bundle.id, gold: bundle.gold, champions };
+    }),
+  );
   return {
     seed,
     phase: 'preparation',
@@ -148,14 +199,20 @@ export function createExpedition(seed: number): ExpeditionState {
     endReason: null,
     nextInstanceNumber: bench.length + 1,
     battlesFought: 0,
+    offers,
   };
+}
+
+/** The reward offers for the current encounter. */
+export function currentOffers(state: ExpeditionState): readonly RewardOffer[] {
+  return state.offers[state.encounterIndex] ?? [];
 }
 
 export function currentEncounter(state: ExpeditionState, content: ExpeditionContent): EncounterFixture | undefined {
   return content.encounters[state.encounterIndex];
 }
 
-export function championOf(instance: BenchChampion, content: ExpeditionContent): ChampionFixture | undefined {
+export function championOf(instance: BenchChampion, content: ExpeditionContent): PlayableChampion | undefined {
   return content.champions.find((champion) => champion.id === instance.championId);
 }
 
@@ -279,7 +336,7 @@ export function transition(
 
     case 'chooseReward': {
       if (state.phase !== 'reward' || !state.battle) return wrongPhase(state, action);
-      const bundle: RewardBundle | undefined = currentEncounter(state, content)?.rewards.find((b) => b.id === action.bundleId);
+      const bundle = currentOffers(state).find((b) => b.id === action.bundleId);
       if (!bundle) return reject(state, `Reward "${action.bundleId}" is not offered for this encounter.`);
       const unknown = bundle.champions.filter((id) => !content.champions.some((champion) => champion.id === id));
       if (unknown.length > 0) return reject(state, 'This reward refers to missing Champion data.', unknown);
@@ -313,7 +370,9 @@ export function transition(
     case 'newExpedition': {
       if (state.phase !== 'ended') return wrongPhase(state, action);
       if (!isUint32(action.seed)) return reject(state, `Seed must be an integer from 0 to 4294967295.`);
-      return accept(createExpedition(action.seed));
+      const problems = contentProblems(content);
+      if (problems.length > 0) return reject(state, 'The game data is incomplete, so a new Expedition cannot start.', problems);
+      return accept(createExpedition(action.seed, content));
     }
   }
 }

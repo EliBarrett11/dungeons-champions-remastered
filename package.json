@@ -13,7 +13,9 @@
     "build": "npm run build --workspace @dc/web",
     "preview": "npm run preview --workspace @dc/web",
     "content-check": "python3 -I tools/content_check.py",
-    "content-check:test": "python3 -I tools/test_content_check.py"
+    "content-check:test": "python3 -I tools/test_content_check.py",
+    "roster:import": "python3 -I tools/import_roster.py",
+    "roster:check": "python3 -I tools/import_roster.py --check"
   },
   "engines": {
     "node": ">=22.12.0"

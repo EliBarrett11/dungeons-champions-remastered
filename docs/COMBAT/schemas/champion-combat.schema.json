@@ -54,12 +54,15 @@
     },
     "class": {
       "enum": [
+        "artificer",
         "barbarian",
         "bard",
         "cleric",
         "druid",
         "fighter",
+        "gunslinger",
         "monk",
+        "monster_hunter",
         "paladin",
         "ranger",
         "rogue",

@@ -1,7 +1,7 @@
 import type { BasicAttackInput, UnitStats } from '@dc/engine';
 
 /**
- * PROTOTYPE FIXTURE CONTENT (P-021). Not authoritative roster or monster content.
+ * PROTOTYPE FIXTURE CONTENT (P-021, P-022). Not authoritative Monster content.
  *
  * - Stats are the docs/COMBAT/STAT_MODEL.md Role table at Rank 1, level 1 (P-007), which is a
  *   PROPOSED balance table used here as fixture data only. Spell Power and Magic Resistance are
@@ -9,7 +9,8 @@ import type { BasicAttackInput, UnitStats } from '@dc/engine';
  * - Every unit uses the shared P-015 fixture Basic Attack. No Passive, Ultimate, Trait, Item or
  *   Feat is implemented, and none is shown as if it were.
  * - Monster teams reuse Role-table stats; the real Monster roster is UNRESOLVED.
- * - Reward bundles hold Gold and fixture Champions only; Item Components are not implemented.
+ * - Since M3 the player's Champions come from the approved roster (champions.ts), which reuses
+ *   these Role-table stats as temporary combat numbers. Item Components are not implemented.
  */
 
 export type FixtureRole =
@@ -37,14 +38,6 @@ export const ROLE_STATS: Readonly<Record<FixtureRole, UnitStats>> = Object.freez
   support: { health: 620, attack: 25, armor: 25, accuracy: 2, evasion: 2, attackSpeedMilli: 750, initiativeModifier: 0 },
 });
 
-export interface ChampionFixture {
-  readonly id: string;
-  readonly name: string;
-  readonly role: FixtureRole;
-  readonly stats: UnitStats;
-  readonly basicAttack: BasicAttackInput;
-}
-
 export interface MonsterFixture {
   readonly name: string;
   readonly role: FixtureRole;
@@ -53,11 +46,14 @@ export interface MonsterFixture {
   readonly basicAttack: BasicAttackInput;
 }
 
+/**
+ * P-019 reward bundle template. `championCount` roster Champions are drawn for the bundle by seed
+ * when the Expedition starts (P-022); the resulting offer is stored in the Expedition state.
+ */
 export interface RewardBundle {
   readonly id: string;
   readonly gold: number;
-  /** Fixture Champion ids added to the bench; may be empty. */
-  readonly champions: readonly string[];
+  readonly championCount: number;
 }
 
 export interface EncounterFixture {
@@ -68,71 +64,51 @@ export interface EncounterFixture {
   readonly rewards: readonly RewardBundle[];
 }
 
-export interface ExpeditionContent {
-  readonly champions: readonly ChampionFixture[];
-  readonly encounters: readonly EncounterFixture[];
-}
-
-function champion(role: FixtureRole, name: string): ChampionFixture {
-  return { id: role, name, role, stats: ROLE_STATS[role], basicAttack: FIXTURE_BASIC_ATTACK };
-}
-
 function monster(role: FixtureRole, name: string, slot: number): MonsterFixture {
   return { name, role, slot, stats: ROLE_STATS[role], basicAttack: FIXTURE_BASIC_ATTACK };
 }
 
 /**
- * Encounter strength rises 1 -> 2 -> 3 monsters. With the starting bench, a three-Champion
- * front-line team wins Encounters 1 and 2 almost always and Encounter 3 roughly two times in three
- * (300-seed simulation, 2026-10-11); weak compositions lose. Values are PROVISIONAL (P-018, P-019).
+ * Encounter strength rises 1 -> 2 -> 3 monsters (P-018, unchanged from M2). Monsters remain
+ * fixtures: the roster contains Champions only, and the Monster roster is UNRESOLVED.
+ * Reward values are PROVISIONAL (P-019); the Champions offered come from the roster (P-022).
  */
-export const PROTOTYPE_CONTENT: ExpeditionContent = Object.freeze({
-  champions: Object.freeze([
-    champion('tank', 'Tank'),
-    champion('bruiser', 'Bruiser'),
-    champion('marksman', 'Marksman'),
-    champion('support', 'Support'),
-    champion('assassin', 'Assassin'),
-    champion('skirmisher', 'Skirmisher'),
-    champion('artillery', 'Artillery'),
-  ]),
-  encounters: Object.freeze([
-    {
-      id: 'encounter-1',
-      name: 'Monster Round 1',
-      monsters: [monster('skirmisher', 'Monster (Skirmisher stats)', 1)],
-      rewards: [
-        { id: 'e1-assassin', gold: 1, champions: ['assassin'] },
-        { id: 'e1-skirmisher', gold: 1, champions: ['skirmisher'] },
-        { id: 'e1-gold', gold: 3, champions: [] },
-      ],
-    },
-    {
-      id: 'encounter-2',
-      name: 'Monster Round 2',
-      monsters: [
-        monster('skirmisher', 'Monster (Skirmisher stats)', 1),
-        monster('artillery', 'Monster (Artillery stats)', 8),
-      ],
-      rewards: [
-        { id: 'e2-artillery', gold: 1, champions: ['artillery'] },
-        { id: 'e2-bruiser', gold: 1, champions: ['bruiser'] },
-        { id: 'e2-gold', gold: 3, champions: [] },
-      ],
-    },
-    {
-      id: 'encounter-3',
-      name: 'Monster Round 3',
-      monsters: [
-        monster('skirmisher', 'Monster (Skirmisher stats)', 0),
-        monster('bruiser', 'Monster (Bruiser stats)', 1),
-        monster('artillery', 'Monster (Artillery stats)', 8),
-      ],
-      rewards: [
-        { id: 'e3-tank', gold: 1, champions: ['tank'] },
-        { id: 'e3-marksman', gold: 1, champions: ['marksman'] },
-        { id: 'e3-gold', gold: 3, champions: [] },
-      ],
-    },
-  ]),
-});
+export const PROTOTYPE_ENCOUNTERS: readonly EncounterFixture[] = Object.freeze([
+  {
+    id: 'encounter-1',
+    name: 'Monster Round 1',
+    monsters: [monster('skirmisher', 'Monster (Skirmisher stats)', 1)],
+    rewards: [
+      { id: 'e1-champion-a', gold: 1, championCount: 1 },
+      { id: 'e1-champion-b', gold: 1, championCount: 1 },
+      { id: 'e1-gold', gold: 3, championCount: 0 },
+    ],
+  },
+  {
+    id: 'encounter-2',
+    name: 'Monster Round 2',
+    monsters: [
+      monster('skirmisher', 'Monster (Skirmisher stats)', 1),
+      monster('artillery', 'Monster (Artillery stats)', 8),
+    ],
+    rewards: [
+      { id: 'e2-champion-a', gold: 1, championCount: 1 },
+      { id: 'e2-champion-b', gold: 1, championCount: 1 },
+      { id: 'e2-gold', gold: 3, championCount: 0 },
+    ],
+  },
+  {
+    id: 'encounter-3',
+    name: 'Monster Round 3',
+    monsters: [
+      monster('skirmisher', 'Monster (Skirmisher stats)', 0),
+      monster('bruiser', 'Monster (Bruiser stats)', 1),
+      monster('artillery', 'Monster (Artillery stats)', 8),
+    ],
+    rewards: [
+      { id: 'e3-champion-a', gold: 1, championCount: 1 },
+      { id: 'e3-champion-b', gold: 1, championCount: 1 },
+      { id: 'e3-gold', gold: 3, championCount: 0 },
+    ],
+  },
+]);

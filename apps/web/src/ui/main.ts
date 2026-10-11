@@ -1,4 +1,4 @@
-import { PROTOTYPE_CONTENT, contentProblems, parseSeed } from '../game/index';
+import { PROTOTYPE_CONTENT, ROSTER_VALIDATION, contentProblems, parseSeed } from '../game/index';
 import { ExpeditionApp } from './app';
 
 /** A fresh Expedition seed. Browser randomness is used only here, never inside game logic. */
@@ -11,7 +11,8 @@ if (!root) {
   throw new Error('Missing #app element');
 }
 
-const problems = contentProblems(PROTOTYPE_CONTENT);
+// The roster is validated strictly first (M3); an invalid roster leaves no playable Champions.
+const problems = [...ROSTER_VALIDATION.errors, ...contentProblems(PROTOTYPE_CONTENT)];
 if (problems.length > 0) {
   // Missing or inconsistent data: explain instead of starting a broken Expedition (AC-08).
   root.replaceChildren(
