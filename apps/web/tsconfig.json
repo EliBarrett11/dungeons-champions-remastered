@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Game logic (src/game) sees only the ECMAScript standard library, like the engine:
+    // no DOM, no Node, no clocks. Rendering lives in src/ui (tsconfig.ui.json).
+    "lib": ["ES2022"],
+    "types": []
+  },
+  "include": ["src/game/**/*.ts"]
+}

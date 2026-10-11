@@ -1,0 +1,18 @@
+{
+  "name": "@dc/web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Dungeons & Champions browser prototype (M2: first playable Expedition).",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.ui.json && tsc -p tsconfig.test.json",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run test"
+  },
+  "dependencies": {
+    "@dc/engine": "0.0.0"
+  }
+}
