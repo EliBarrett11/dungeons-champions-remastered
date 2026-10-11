@@ -1,0 +1,50 @@
+{
+  "id": "rogue_critical_focus",
+  "name": "Critical Focus",
+  "version": 1,
+  "status": "illustrative",
+  "kind": "passive",
+  "description": "The Rogue gains Class Resource when it lands a qualifying critical hit.",
+  "timing": {
+    "activation": "on_event",
+    "resolution_window": "post_damage",
+    "cooldown_seconds": 0,
+    "priority": 0,
+    "can_be_interrupted": false,
+    "interrupt_cost_policy": "not_applicable"
+  },
+  "targeting": {
+    "side": "self",
+    "selection": "self",
+    "filters": [],
+    "fallback": "skip"
+  },
+  "effects": [
+    "rogue_resource_on_critical"
+  ],
+  "trigger_rules": [
+    {
+      "event": "critical_hit_confirmed",
+      "effect_id": "rogue_resource_on_critical",
+      "conditions": [
+        "source_is_rogue",
+        "once_per_attack"
+      ],
+      "once_per_event": true
+    }
+  ],
+  "tags": [
+    "illustrative",
+    "rogue",
+    "resource"
+  ],
+  "balance": {
+    "cost_rank": 2,
+    "power_budget": 1,
+    "expected_ultimate_activations": 1.5,
+    "design_notes": [
+      "Resource gain amount and Ultimate target require simulation."
+    ]
+  },
+  "notes": "Illustrative trigger. Rogue critical range is natural 16-20; critical damage multiplier is proposed at 1.5x."
+}

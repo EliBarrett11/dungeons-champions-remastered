@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dungeons-and-champions.local/schemas/ability.schema.json",
+  "title": "Dungeons & Champions Ability Definition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "version",
+    "status",
+    "kind",
+    "description",
+    "timing",
+    "targeting",
+    "effects",
+    "tags"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "established",
+        "proposed",
+        "illustrative",
+        "deprecated"
+      ]
+    },
+    "kind": {
+      "enum": [
+        "basic_attack",
+        "passive",
+        "ultimate",
+        "feat",
+        "trait",
+        "item",
+        "reaction"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "damage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "expression"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "bludgeoning",
+              "piercing",
+              "slashing",
+              "acid",
+              "cold",
+              "fire",
+              "force",
+              "lightning",
+              "thunder",
+              "necrotic",
+              "poison",
+              "psychic",
+              "radiant"
+            ]
+          },
+          "expression": {
+            "type": "string",
+            "pattern": "^[0-9]+d[0-9]+([+-][0-9]+)?$"
+          },
+          "scaling_stat": {
+            "enum": [
+              "attack",
+              "spell_power",
+              "none"
+            ]
+          },
+          "scaling_ratio": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "can_crit": {
+            "type": "boolean",
+            "default": true
+          },
+          "mitigation_tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation",
+        "resolution_window"
+      ],
+      "properties": {
+        "activation": {
+          "enum": [
+            "basic_attack_timer",
+            "passive_trigger",
+            "resource_threshold",
+            "initiative_opening",
+            "battle_start",
+            "battle_end",
+            "on_event",
+            "scheduled",
+            "feat_choice"
+          ]
+        },
+        "resolution_window": {
+          "type": "string"
+        },
+        "cooldown_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "can_be_interrupted": {
+          "type": "boolean"
+        },
+        "interrupt_cost_policy": {
+          "enum": [
+            "resource_consumed",
+            "refund_all",
+            "refund_partial",
+            "not_applicable"
+          ]
+        }
+      }
+    },
+    "targeting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "side",
+        "selection"
+      ],
+      "properties": {
+        "side": {
+          "enum": [
+            "self",
+            "ally",
+            "enemy",
+            "both",
+            "field",
+            "source",
+            "event_target"
+          ]
+        },
+        "selection": {
+          "enum": [
+            "self",
+            "single",
+            "all",
+            "random_valid",
+            "lowest_health_percent",
+            "lowest_health",
+            "highest_threat",
+            "role_priority",
+            "marked_target",
+            "area",
+            "event_target",
+            "custom_registered_selector"
+          ]
+        },
+        "max_targets": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fallback": {
+          "enum": [
+            "skip",
+            "retarget_by_role",
+            "retarget_by_ability",
+            "resolve_without_target",
+            "custom_registered_fallback"
+          ]
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "resource_id": {
+          "type": "string"
+        },
+        "target": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "opening_bonus_ultimate_eligible": {
+          "type": "boolean"
+        },
+        "consume_on_trigger": {
+          "type": "boolean"
+        },
+        "reset_to": {
+          "type": "number"
+        },
+        "carry_excess": {
+          "type": "boolean"
+        },
+        "generation_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "event",
+              "amount"
+            ],
+            "properties": {
+              "event": {
+                "type": "string"
+              },
+              "amount": {
+                "type": "number"
+              },
+              "once_per_attack": {
+                "type": "boolean"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "effects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "trigger_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "event",
+          "effect_id"
+        ],
+        "properties": {
+          "event": {
+            "type": "string"
+          },
+          "effect_id": {
+            "type": "string"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "once_per_event": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "balance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cost_rank": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "power_budget": {
+          "type": "number",
+          "minimum": 0
+        },
+        "expected_ultimate_activations": {
+          "type": "number",
+          "minimum": 0
+        },
+        "design_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

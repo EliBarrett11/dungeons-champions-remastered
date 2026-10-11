@@ -1,0 +1,75 @@
+{
+  "id": "storm_vanguard",
+  "name": "Storm Vanguard",
+  "version": 1,
+  "status": "illustrative",
+  "kind": "basic_attack",
+  "description": "A defensive frontline Champion strikes with a thunderous weapon blow.",
+  "damage": [
+    {
+      "type": "bludgeoning",
+      "expression": "1d8+3",
+      "scaling_stat": "attack",
+      "scaling_ratio": 1,
+      "can_crit": true,
+      "mitigation_tags": [
+        "physical"
+      ]
+    },
+    {
+      "type": "thunder",
+      "expression": "1d4",
+      "scaling_stat": "spell_power",
+      "scaling_ratio": 0.25,
+      "can_crit": true,
+      "mitigation_tags": [
+        "magical"
+      ]
+    }
+  ],
+  "timing": {
+    "activation": "basic_attack_timer",
+    "resolution_window": "attack_commit",
+    "cooldown_seconds": 0,
+    "priority": 0,
+    "can_be_interrupted": false,
+    "interrupt_cost_policy": "not_applicable"
+  },
+  "targeting": {
+    "side": "enemy",
+    "selection": "role_priority",
+    "filters": [
+      "valid_target",
+      "alive"
+    ],
+    "fallback": "retarget_by_role"
+  },
+  "effects": [
+    "apply_stagger_on_hit"
+  ],
+  "trigger_rules": [
+    {
+      "event": "hit_confirmed",
+      "effect_id": "apply_stagger_on_hit",
+      "conditions": [
+        "target_not_immune_to_stagger"
+      ],
+      "once_per_event": true
+    }
+  ],
+  "tags": [
+    "illustrative",
+    "tank",
+    "thunder"
+  ],
+  "balance": {
+    "cost_rank": 2,
+    "power_budget": 1.2,
+    "expected_ultimate_activations": 0,
+    "design_notes": [
+      "Split damage components are mitigated separately.",
+      "Example values are not approved balance."
+    ]
+  },
+  "notes": "Illustrative ability only. The referenced effect ID must exist in the effect registry before implementation."
+}

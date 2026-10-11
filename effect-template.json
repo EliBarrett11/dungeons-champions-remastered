@@ -1,0 +1,60 @@
+{
+  "id": "example_effect",
+  "name": "Example Effect",
+  "version": 1,
+  "status": "proposed",
+  "category": "stat_modifier",
+  "description": "Describe the observable result and intended purpose.",
+  "operation": {
+    "kind": "modify_stat",
+    "stat": "armor",
+    "modifier_mode": "flat",
+    "amount": 10,
+    "duration": {
+      "kind": "combat_time",
+      "value": 3,
+      "unit": "seconds"
+    }
+  },
+  "timing": {
+    "window": "post_damage",
+    "trigger": "on_qualifying_event",
+    "priority": 0,
+    "once_per_event": true,
+    "can_trigger_self": false,
+    "event_depth_limit": 8
+  },
+  "targeting": {
+    "side": "self",
+    "selection": "self",
+    "filters": [],
+    "fallback": "skip"
+  },
+  "stacking": {
+    "mode": "refresh",
+    "max_stacks": 1
+  },
+  "removal": {
+    "on_expire": "remove",
+    "cleansable": true,
+    "dispellable": true,
+    "conditions": []
+  },
+  "application": {
+    "requires_hit": false,
+    "requires_critical": false,
+    "immunity_tags": [],
+    "resistance_tags": []
+  },
+  "balance": {
+    "power_tier": "minor",
+    "budget_cost": 1,
+    "warning_notes": [
+      "Illustrative values only."
+    ]
+  },
+  "tags": [
+    "example"
+  ],
+  "notes": "Replace all example values before implementation."
+}

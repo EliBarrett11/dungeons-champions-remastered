@@ -1,0 +1,530 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dungeons-and-champions.local/schemas/effect.schema.json",
+  "title": "Dungeons & Champions Effect Definition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "version",
+    "status",
+    "category",
+    "operation",
+    "timing",
+    "targeting",
+    "stacking",
+    "removal",
+    "tags"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "established",
+        "proposed",
+        "illustrative",
+        "deprecated"
+      ]
+    },
+    "category": {
+      "enum": [
+        "damage",
+        "healing",
+        "shield",
+        "stat_modifier",
+        "control",
+        "damage_over_time",
+        "mark",
+        "resource",
+        "trigger",
+        "reaction",
+        "saving_throw",
+        "cleanse",
+        "death_survival",
+        "field",
+        "transformation",
+        "special"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "deal_damage",
+            "restore_health",
+            "grant_shield",
+            "modify_stat",
+            "apply_status",
+            "remove_status",
+            "cleanse_statuses",
+            "purge_buffs",
+            "grant_resource",
+            "drain_resource",
+            "modify_resource_generation",
+            "interrupt_action",
+            "modify_target_priority",
+            "create_field",
+            "schedule_event",
+            "prevent_defeat",
+            "revive",
+            "reflect_damage",
+            "transfer_damage",
+            "chain_to_targets",
+            "consume_stacks",
+            "gain_stacks",
+            "change_stance",
+            "copy_effect",
+            "custom_registered_operation"
+          ]
+        },
+        "damage_type": {
+          "enum": [
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "acid",
+            "cold",
+            "fire",
+            "force",
+            "lightning",
+            "thunder",
+            "necrotic",
+            "poison",
+            "psychic",
+            "radiant"
+          ]
+        },
+        "amount": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "stat": {
+          "enum": [
+            "health",
+            "attack",
+            "spell_power",
+            "armor",
+            "magic_resistance",
+            "accuracy",
+            "evasion",
+            "attack_speed",
+            "initiative_modifier",
+            "critical_multiplier",
+            "resource_generation"
+          ]
+        },
+        "modifier_mode": {
+          "enum": [
+            "flat",
+            "percent_additive",
+            "percent_multiplicative",
+            "set",
+            "minimum",
+            "maximum"
+          ]
+        },
+        "status_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "resource_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "resource_amount": {
+          "type": "number"
+        },
+        "duration": {
+          "$ref": "#/$defs/duration"
+        },
+        "stack_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_targets": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "target_filter": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "window",
+        "trigger"
+      ],
+      "properties": {
+        "window": {
+          "enum": [
+            "pre_action",
+            "action_commit",
+            "attack_roll",
+            "hit_confirmed",
+            "damage_calculation",
+            "damage_application",
+            "post_damage",
+            "resource_update",
+            "defeat_check",
+            "on_defeat",
+            "ultimate_queue",
+            "periodic_tick",
+            "battle_start",
+            "battle_end",
+            "on_status_applied",
+            "on_status_removed",
+            "on_shield_break",
+            "custom_registered_window"
+          ]
+        },
+        "trigger": {
+          "type": "string",
+          "minLength": 1
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "once_per_event": {
+          "type": "boolean",
+          "default": true
+        },
+        "can_trigger_self": {
+          "type": "boolean",
+          "default": false
+        },
+        "event_depth_limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32,
+          "default": 8
+        }
+      }
+    },
+    "targeting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "side",
+        "selection"
+      ],
+      "properties": {
+        "side": {
+          "enum": [
+            "self",
+            "ally",
+            "enemy",
+            "both",
+            "field",
+            "source",
+            "event_target"
+          ]
+        },
+        "selection": {
+          "enum": [
+            "self",
+            "single",
+            "all",
+            "random_valid",
+            "lowest_health_percent",
+            "lowest_health",
+            "highest_threat",
+            "role_priority",
+            "marked_target",
+            "area",
+            "event_target",
+            "custom_registered_selector"
+          ]
+        },
+        "max_targets": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fallback": {
+          "enum": [
+            "skip",
+            "retarget_by_role",
+            "retarget_by_ability",
+            "resolve_without_target",
+            "custom_registered_fallback"
+          ]
+        }
+      }
+    },
+    "duration": {
+      "$ref": "#/$defs/duration"
+    },
+    "stacking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "refresh",
+            "extend",
+            "stack_intensity",
+            "stack_duration",
+            "replace",
+            "unique",
+            "charges",
+            "non_stacking"
+          ]
+        },
+        "max_stacks": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_duration": {
+          "$ref": "#/$defs/duration"
+        },
+        "replacement_priority": {
+          "type": "integer"
+        },
+        "charge_consumption": {
+          "type": "string"
+        }
+      }
+    },
+    "removal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "on_expire",
+        "cleansable",
+        "dispellable"
+      ],
+      "properties": {
+        "on_expire": {
+          "enum": [
+            "remove",
+            "trigger_operation",
+            "convert_status",
+            "persist_until_battle_end",
+            "none"
+          ]
+        },
+        "cleansable": {
+          "type": "boolean"
+        },
+        "dispellable": {
+          "type": "boolean"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "application": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requires_hit": {
+          "type": "boolean"
+        },
+        "requires_critical": {
+          "type": "boolean"
+        },
+        "save_attribute": {
+          "enum": [
+            "strength",
+            "dexterity",
+            "constitution",
+            "intelligence",
+            "wisdom",
+            "charisma"
+          ]
+        },
+        "save_dc": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "save_outcomes": {
+          "enum": [
+            "negate",
+            "half_effect",
+            "reduced_duration",
+            "reduced_magnitude",
+            "custom_registered_outcome"
+          ]
+        },
+        "immunity_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resistance_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "balance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "power_tier": {
+          "enum": [
+            "minor",
+            "moderate",
+            "major",
+            "encounter_defining"
+          ]
+        },
+        "budget_cost": {
+          "type": "number",
+          "minimum": 0
+        },
+        "warning_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "duration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "instant",
+            "combat_time",
+            "action_cycles",
+            "charges",
+            "conditional",
+            "battle"
+          ]
+        },
+        "value": {
+          "type": [
+            "number",
+            "integer"
+          ]
+        },
+        "unit": {
+          "enum": [
+            "milliseconds",
+            "seconds",
+            "actions",
+            "ticks",
+            "charges"
+          ]
+        },
+        "condition": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "instant"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "value"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "conditional"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "condition"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "combat_time",
+                  "action_cycles",
+                  "charges"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

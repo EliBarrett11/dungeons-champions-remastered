@@ -1,0 +1,291 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dungeons-and-champions.local/schemas/champion-combat.schema.json",
+  "title": "Dungeons & Champions Champion Combat Definition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "status",
+    "cost_rank",
+    "role",
+    "class",
+    "race",
+    "origin",
+    "stats",
+    "resource",
+    "abilities",
+    "feats"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "approved",
+        "implemented",
+        "deprecated"
+      ]
+    },
+    "cost_rank": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "role": {
+      "enum": [
+        "tank",
+        "bruiser",
+        "assassin",
+        "skirmisher",
+        "marksman",
+        "artillery",
+        "mage",
+        "controller",
+        "support"
+      ]
+    },
+    "class": {
+      "enum": [
+        "barbarian",
+        "bard",
+        "cleric",
+        "druid",
+        "fighter",
+        "monk",
+        "paladin",
+        "ranger",
+        "rogue",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ]
+    },
+    "race": {
+      "type": "string"
+    },
+    "origin": {
+      "type": "string"
+    },
+    "stats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "health",
+        "attack",
+        "spell_power",
+        "armor",
+        "magic_resistance",
+        "accuracy",
+        "evasion",
+        "attack_speed",
+        "initiative_modifier"
+      ],
+      "properties": {
+        "health": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "attack": {
+          "type": "number",
+          "minimum": 0
+        },
+        "spell_power": {
+          "type": "number",
+          "minimum": 0
+        },
+        "armor": {
+          "type": "number",
+          "minimum": 0
+        },
+        "magic_resistance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "accuracy": {
+          "type": "number"
+        },
+        "evasion": {
+          "type": "number"
+        },
+        "attack_speed": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 2
+        },
+        "initiative_modifier": {
+          "type": "integer",
+          "minimum": -2,
+          "maximum": 5
+        },
+        "saving_throws": {
+          "type": "object",
+          "properties": {
+            "strength": {
+              "type": "number"
+            },
+            "dexterity": {
+              "type": "number"
+            },
+            "constitution": {
+              "type": "number"
+            },
+            "intelligence": {
+              "type": "number"
+            },
+            "wisdom": {
+              "type": "number"
+            },
+            "charisma": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        "resistances": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "vulnerabilities": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "immunities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "starting_value",
+        "target",
+        "reset_to",
+        "carry_excess"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "starting_value": {
+          "type": "number",
+          "minimum": 0
+        },
+        "target": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "reset_to": {
+          "const": 0
+        },
+        "carry_excess": {
+          "const": false
+        },
+        "generation_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "event",
+              "amount"
+            ],
+            "properties": {
+              "event": {
+                "type": "string"
+              },
+              "amount": {
+                "type": "number"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "abilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basic_attack",
+        "passive",
+        "ultimate"
+      ],
+      "properties": {
+        "basic_attack": {
+          "type": "string"
+        },
+        "passive": {
+          "type": "string"
+        },
+        "ultimate": {
+          "type": "string"
+        }
+      }
+    },
+    "feats": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "milestone_level",
+          "options"
+        ],
+        "properties": {
+          "milestone_level": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10
+          },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "trait_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "item_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

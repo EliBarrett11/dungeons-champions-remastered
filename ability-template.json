@@ -1,0 +1,51 @@
+{
+  "id": "example_ability",
+  "name": "Example Ability",
+  "version": 1,
+  "status": "proposed",
+  "kind": "basic_attack",
+  "description": "One sentence describing what the player observes.",
+  "damage": [
+    {
+      "type": "slashing",
+      "expression": "1d8+3",
+      "scaling_stat": "attack",
+      "scaling_ratio": 1,
+      "can_crit": true,
+      "mitigation_tags": [
+        "physical"
+      ]
+    }
+  ],
+  "timing": {
+    "activation": "basic_attack_timer",
+    "resolution_window": "attack_commit",
+    "cooldown_seconds": 0,
+    "priority": 0,
+    "can_be_interrupted": false,
+    "interrupt_cost_policy": "not_applicable"
+  },
+  "targeting": {
+    "side": "enemy",
+    "selection": "role_priority",
+    "filters": [
+      "valid_target",
+      "alive"
+    ],
+    "fallback": "retarget_by_role"
+  },
+  "effects": [],
+  "trigger_rules": [],
+  "tags": [
+    "example"
+  ],
+  "balance": {
+    "cost_rank": 1,
+    "power_budget": 1,
+    "expected_ultimate_activations": 0,
+    "design_notes": [
+      "Illustrative only."
+    ]
+  },
+  "notes": "Replace all example values before implementation."
+}

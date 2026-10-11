@@ -1,0 +1,70 @@
+{
+  "id": "example_champion",
+  "name": "Example Champion",
+  "status": "proposed",
+  "cost_rank": 1,
+  "role": "tank",
+  "class": "fighter",
+  "race": "dwarf",
+  "origin": "knight",
+  "stats": {
+    "health": 900,
+    "attack": 35,
+    "spell_power": 20,
+    "armor": 60,
+    "magic_resistance": 45,
+    "accuracy": 1,
+    "evasion": 1,
+    "attack_speed": 0.65,
+    "initiative_modifier": 0,
+    "saving_throws": {
+      "strength": 2,
+      "dexterity": 0,
+      "constitution": 2,
+      "intelligence": 0,
+      "wisdom": 1,
+      "charisma": 0
+    },
+    "resistances": {},
+    "vulnerabilities": {},
+    "immunities": []
+  },
+  "resource": {
+    "id": "fighter_momentum",
+    "starting_value": 0,
+    "target": 100,
+    "reset_to": 0,
+    "carry_excess": false,
+    "generation_rules": [
+      {
+        "event": "qualifying_event",
+        "amount": 10,
+        "conditions": []
+      }
+    ]
+  },
+  "abilities": {
+    "basic_attack": "example_basic_attack",
+    "passive": "example_passive",
+    "ultimate": "example_ultimate"
+  },
+  "feats": [
+    {
+      "milestone_level": 4,
+      "options": [
+        "example_feat_a",
+        "example_feat_b"
+      ]
+    },
+    {
+      "milestone_level": 8,
+      "options": [
+        "example_feat_c",
+        "example_feat_d"
+      ]
+    }
+  ],
+  "trait_ids": [],
+  "item_ids": [],
+  "notes": "Illustrative only; resource targets and feat levels are not finalized."
+}
