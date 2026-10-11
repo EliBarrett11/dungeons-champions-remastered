@@ -1,0 +1,20 @@
+{
+  "package": "Dungeons & Champions Master Development Package",
+  "status": "Draft baseline; user approval required for proposed decisions",
+  "target_repository": "EliBarrett11/dungeons-champions-remastered",
+  "layout": "Documentation under docs/; JSON Schemas under docs/COMBAT/schemas/, templates under docs/COMBAT/templates/, examples under docs/COMBAT/examples/",
+  "json_files_checked_for_syntax": 8,
+  "json_syntax_errors": [],
+  "schema_validation": {
+    "date": "2026-10-11",
+    "tool": "Python jsonschema 4.26.0, Draft 2020-12",
+    "schemas_valid": 3,
+    "templates_and_examples_valid": 5,
+    "missing_cross_references": 11,
+    "notes": "Instances are valid but the schemas are loose; see docs/OPEN_QUESTIONS.md, 'Schema and content-data issues'."
+  },
+  "provisional_prototype_rules": "P-001 to P-010 in docs/DECISIONS.md; detail in docs/COMBAT/PROTOTYPE_RULESET_V0.md",
+  "contains_full_120_champion_roster": false,
+  "contains_all_240_executable_effects": false,
+  "important_note": "Starter combat schemas are included but require JSON Schema and semantic validation before canonical use."
+}

@@ -1,6 +1,8 @@
 # Proposal 0001 — Initial Architecture & Roadmap
 
-Status: **PROPOSED** (awaiting owner approval). Nothing here is an approved rule yet.
+> **Status: SUPERSEDED** (P-001, approved 2026-10-11). The master development package — root `README.md`, `CLAUDE.md` and `docs/` — is authoritative. This proposal is kept for history only. Where it disagrees with the package, the package wins; in particular its turn-based combat recommendation (replaced by P-002 timed simulation), zod content schemas (the package proposes JSON Schema, T-004), hex/movement board (replaced by P-003 fixed formation), documentation layout, and milestone numbering do not apply. Several of its "unresolved" questions are answered in `docs/DECISIONS.md`.
+
+Original status: **PROPOSED** (awaiting owner approval). Nothing here is an approved rule yet.
 Date: 2026-10-11
 
 ## 1. Repository status at time of writing
