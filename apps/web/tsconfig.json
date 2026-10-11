@@ -4,7 +4,9 @@
     // Game logic (src/game) sees only the ECMAScript standard library, like the engine:
     // no DOM, no Node, no clocks. Rendering lives in src/ui (tsconfig.ui.json).
     "lib": ["ES2022"],
-    "types": []
+    "types": [],
+    // M3: the roster and its schema are JSON files outside this package.
+    "resolveJsonModule": true
   },
   "include": ["src/game/**/*.ts"]
 }

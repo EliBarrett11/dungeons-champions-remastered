@@ -28,3 +28,5 @@ export type {
 } from './expedition';
 export { buildBattleView, eventCountAt, outcomeText, snapshotAfter } from './battleView';
 export type { BattleView, LogLine, Team, UnitSnapshot, ViewUnit } from './battleView';
+export { DOCUMENTED_ROLES, ROSTER_RULES, TRAIT_CANON, validateRoster } from './roster';
+export type { ProposedChampionContent, Roster, RosterChampion, RosterValidation, TraitCanon } from './roster';
