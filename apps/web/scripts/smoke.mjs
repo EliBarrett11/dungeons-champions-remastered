@@ -98,7 +98,8 @@ async function main() {
     const benchText = await page.locator('[data-testid^="bench-"]').allInnerTexts();
     check(benchText.length === 4, `bench shows 4 roster Champions (got ${benchText.length})`);
     check(benchText.every((t) => /DC-\d{3}/.test(t) && /Proposed Role:/.test(t)), 'bench cards show roster IDs and PROPOSED Roles');
-    const traits = await page.locator('[data-testid^="traits-DC-"]').allInnerTexts();
+    // Scoped to the bench: the M4 Tavern cards show the same Class · Race · Origin line.
+    const traits = await page.locator('[data-testid^="bench-"] [data-testid^="traits-DC-"]').allInnerTexts();
     check(traits.length === 4 && traits.every((t) => t.split(' · ').length === 3), `each card shows Class · Race · Origin (${traits.join(' | ')})`);
     check(benchText.some((t) => t.includes('Temporary placeholder stats')), 'placeholder stats are labelled (seed 24 bench has a Ranger)');
     await page.locator('[data-testid="bench-c1"] summary').click();
@@ -216,12 +217,96 @@ async function main() {
     check((await text(page, 'end-title')) === 'Expedition ended', 'ending at the decision ends the Expedition');
     check((await text(page, 'status-gold')) === '6', 'retreat keeps the Gold earned (6)');
 
+    // ---- Flow 5 (M4): the Tavern. Seed 24's shop 0 is DC-022 (1), DC-007 (4), DC-109 (1),
+    // DC-108 (4), DC-122 (4), DC-115 (4); pinned against an independent reference in shop.test.ts. ----
+    const shopTexts = async () => page.locator('[data-testid^="shop-slot-"]').allInnerTexts();
+    await page.goto(`${BASE}?seed=24`);
+    await page.getByTestId('tavern').waitFor();
+    check((await page.locator('[data-testid^="shop-slot-"]').count()) === 6, 'the Tavern shows six offers on Round 1 preparation');
+    const prices = await page.locator('[data-testid^="price-"]').allInnerTexts();
+    check(
+      JSON.stringify(prices) === JSON.stringify([1, 4, 1, 4, 4, 4].map((n) => `Price: ${n} Gold · provisional`)),
+      `prices match the proposed cost ranks and are marked provisional (${prices.join(' | ')})`,
+    );
+    const firstShop = await shopTexts();
+    check(firstShop[0].includes('DC-022') && firstShop[1].includes('DC-007'), 'offers show roster Champions (DC-022, DC-007, …)');
+    check((await text(page, 'tavern-summary')).includes('You have 3 Gold and own 4 of 12 Champions'), 'the Tavern shows 3 Gold and 4 of 12 owned');
+    check(await page.getByTestId('buy-1').isDisabled() && (await text(page, 'buy-1')) === 'Need 4 Gold (you have 3)', 'an unaffordable offer is disabled and says how much Gold is needed');
+    check((await page.getByTestId('buy-0').getAttribute('aria-label')).startsWith('Buy ') , 'buy buttons have accessible labels');
+    await page.getByTestId('buy-0').click();
+    check((await text(page, 'status-gold')) === '2', 'buying deducts the exact price at once (3 - 1 = 2)');
+    check((await text(page, 'status-bench')) === '5', 'the bought Champion joins the collection at once (5)');
+    check((await text(page, 'buy-0')) === 'Sold' && (await page.getByTestId('buy-0').isDisabled()), 'the bought slot shows "Sold" and is disabled');
+    check((await text(page, 'bench-c5')).includes('DC-022'), 'the bought Champion appears in Your Champions');
+    await page.getByTestId('buy-0').evaluate((el) => el.click()); // a forced click on a sold slot
+    check((await text(page, 'status-gold')) === '2' && (await text(page, 'status-bench')) === '5', 'clicking a sold slot again changes nothing');
+    await page.getByTestId('reroll').click();
+    check((await text(page, 'status-gold')) === '0', 'a reroll deducts exactly 2 Gold (2 - 2 = 0)');
+    const rerolled = await shopTexts();
+    check(rerolled.length === 6 && JSON.stringify(rerolled) !== JSON.stringify(firstShop) && !rerolled.some((t) => t.includes('(sold)')), 'a reroll replaces all six slots with unsold offers');
+    check(!rerolled.some((t) => t.includes('DC-022')), 'the bought Champion is not offered again');
+    check(await page.getByTestId('reroll').isDisabled() && (await text(page, 'reroll')) === 'Reroll: need 2 Gold (you have 0)', 'an unaffordable reroll is disabled and says the Gold required');
+    await shot(page, '10-tavern');
+
+    // Seeded replay: the same seed and the same actions give the same offers.
+    await page.goto(`${BASE}?seed=24`);
+    await page.getByTestId('tavern').waitFor();
+    check(JSON.stringify(await shopTexts()) === JSON.stringify(firstShop), 'reloading seed 24 shows the same first shop');
+    await page.getByTestId('buy-0').click();
+    await page.getByTestId('reroll').click();
+    check(JSON.stringify(await shopTexts()) === JSON.stringify(rerolled), 'the same purchase and reroll give the same rerolled shop');
+
+    // The shop exists only during preparation.
+    await placeTeam(page);
+    await page.getByTestId('start-battle').click();
+    await page.getByTestId('screen-battle').waitFor();
+    const noShop = async () => (await page.getByTestId('tavern').count()) === 0 && (await page.locator('[data-testid^="buy-"], [data-testid="reroll"]').count()) === 0;
+    check(await noShop(), 'no Tavern controls during a battle');
+    await page.getByTestId('skip-battle').click();
+    await page.getByTestId('finish-battle').click();
+    await page.getByTestId('screen-reward').waitFor();
+    check(await noShop(), 'no Tavern controls on the reward screen');
+    check((await text(page, 'reward-hint')).includes('can be spent in the Tavern during preparation'), 'the reward screen no longer says Gold cannot be spent');
+    check(await page.getByTestId('choose-e1-gold').isEnabled() && await page.getByTestId('choose-e1-champion-a').isEnabled(), 'all three reward bundles are available below the cap');
+    await page.getByTestId('choose-e1-gold').click();
+    await page.getByTestId('screen-decision').waitFor();
+    check(await noShop(), 'no Tavern controls at the next-step choice');
+    check((await text(page, 'status-gold')) === '3', 'Gold shown after the reward (0 + 3 = 3)');
+    await page.getByTestId('continue').click();
+    await page.getByTestId('tavern').waitFor();
+    const round2 = await shopTexts();
+    check(round2.length === 6 && JSON.stringify(round2) !== JSON.stringify(rerolled), 'continuing to Round 2 refreshes the Tavern with six new offers');
+    check((await text(page, 'tavern-summary')).includes('You have 3 Gold'), 'Gold carries into Round 2 preparation');
+    await page.getByTestId('remove-c1').click();
+    await page.getByTestId('remove-c2').click();
+    await page.getByTestId('remove-c3').click();
+    await page.getByTestId('select-c5').click();
+    await page.getByTestId('slot-1').click();
+    check((await text(page, 'bench-c5')).includes('On board: front row, slot 1'), 'a bought Champion can be placed on the board');
+    await page.getByTestId('start-battle').click();
+    await page.getByTestId('screen-battle').waitFor();
+    await page.getByTestId('skip-battle').click();
+    await page.getByTestId('finish-battle').click();
+    if ((await page.getByTestId('screen-reward').count()) > 0) {
+      await page.getByTestId('choose-e2-gold').click();
+      await page.getByTestId('end-expedition').click();
+    }
+    await page.getByTestId('screen-ended').waitFor();
+    check(await noShop(), 'no Tavern controls on the end screen');
+    await page.getByTestId('new-expedition').click();
+    await page.getByTestId('tavern').waitFor();
+    check((await text(page, 'status-gold')) === '3' && (await page.locator('[data-testid^="shop-slot-"]').count()) === 6, 'restart resets Gold to 3 with a fresh six-slot Tavern');
+
     // ---- Narrow viewport renders without horizontal scrolling. ----
     await page.setViewportSize({ width: 375, height: 800 });
     await page.goto(`${BASE}?seed=24`);
     await page.getByTestId('screen-preparation').waitFor();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     check(overflow <= 0, `no horizontal scroll at 375px (overflow ${overflow}px)`);
+    const buyBoxes = await page.locator('[data-testid^="buy-"]').evaluateAll((els) => els.map((el) => el.getBoundingClientRect().right));
+    check(buyBoxes.length === 6 && buyBoxes.every((right) => right <= 375), 'all six Tavern buy buttons fit the 375px screen');
+    await page.getByTestId('tavern').scrollIntoViewIfNeeded();
+    await shot(page, '11-tavern-mobile');
     await shot(page, '09-mobile');
 
     check(errors.length === 0, `no console errors or warnings${errors.length ? `: ${errors.join(' | ')}` : ''}`);

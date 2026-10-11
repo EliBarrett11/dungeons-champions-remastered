@@ -27,7 +27,7 @@ Update this file at the end of each approved milestone.
 - [x] M3 reviewed and merged into `main` (PR #7, merge commit `062da77`, 2026-10-11).
 - [x] M4 economy audit completed and prototype economy decisions P-023 to P-029 recorded (2026-10-11).
 - [x] M4 decisions P-030 and P-031 recorded and the M4 implementation plan (checkpoints A–F) approved by the owner (2026-10-11).
-- [ ] M4 implemented (checkpoints A–F). Checkpoints A (`8a78e42`), B (`3f81232`) and C (`8774c13`) done and approved; checkpoint D done 2026-10-11, awaiting owner review.
+- [ ] M4 implemented (checkpoints A–F). Checkpoints A (`8a78e42`), B (`3f81232`), C (`8774c13`) and D (`823d368`) done and approved; checkpoint E done 2026-10-11, awaiting owner review.
 
 ## Session log
 
@@ -239,6 +239,16 @@ Update this file at the end of each approved milestone.
   - Every rejection returns the identical state: Gold, accounting, collection, offers, sold flags and shop numbering are unchanged.
 - **Tests:** new `purchase.test.ts`. No existing test was changed.
 - **Results:** see the checkpoint D report.
+
+### 2026-10-11 — M4 checkpoint E: browser Tavern
+- **Scope:** UI only, plus a pure helper for button states. No new rules: selling, duplicates, combining, interest, streaks, XP and levels stay out; reward values, monsters, the engine and roster data are unchanged.
+- **Changes:**
+  - New `apps/web/src/game/shopView.ts`: `priceLabel` ("Price: N Gold · provisional"), `buyAvailability`, `rerollAvailability` and `rewardAvailability`. They give "Sold", "Need N Gold (you have M)", "Collection full (12)", "Reroll: need 2 Gold (you have M)" and "Available during preparation".
+  - `ui/app.ts`: a Tavern panel on the preparation screen only (six cards with name, price, card details and a Buy button; a "Reroll all six (2 Gold)" button; a summary of Gold and owned count). Unavailable buttons are disabled and say why in words, with accessible labels. Reward cards are disabled at the cap with "Collection full (12)" (the 3-Gold card stays). The reward screen says Gold carries over and can be spent in the Tavern.
+  - `ui/styles.css`: price and sold styles; a sold card's name also reads "(sold)".
+  - Tests: new `shop-view.test.ts`, including over 1,000 button states checked against `transition`. The smoke test gains a Tavern flow and a mobile check. The existing M3 trait-line check is scoped to the bench, because Tavern cards reuse the same card details; it still requires exactly four bench cards.
+- **Not covered in the browser:** the "Collection full (12)" states, which need 12 owned. That isn't reachable in a short scripted run; unit tests cover the labels and the button-to-rule agreement.
+- **Results:** see the checkpoint E report.
 
 ## Required end-of-task report
 - Milestone and scope

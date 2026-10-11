@@ -45,3 +45,5 @@ export { NO_SHOP, SHOP_ROOT_OUTPUT, economyConfigProblems, generateShop, shopRoo
 export type { EconomySettings, ShopCandidate, ShopSlot, ShopState } from './shop';
 export { applyGoldChange, goldAccountProblems, startingGoldAccount } from './gold';
 export type { GoldAccount, GoldChange, GoldIncome, GoldResult, GoldSpending } from './gold';
+export { buyAvailability, priceLabel, rerollAvailability, rewardAvailability } from './shopView';
+export type { Availability } from './shopView';

@@ -122,7 +122,7 @@ Build in small vertical slices. Every milestone should end with a runnable resul
   - the engine golden replays are unchanged;
   - the derivation (root = output 5; shop *k* = output *k*+1 of `Sfc32(root)`) is documented in `shop.ts` and pinned by a test against independently computed sfc32 outputs.
 
-**D. Purchases, rerolls, capacity, reserved Champions, rejected actions** (done 2026-10-11, awaiting owner review)
+**D. Purchases, rerolls, capacity, reserved Champions, rejected actions** (done 2026-10-11, commit `823d368`, approved by the owner)
 - **Modules:** `expedition.ts` actions `buy` (slot) and `reroll`; the reward-claim capacity guard.
 - **Edge cases:** a sold slot; too little Gold for a buy (below the price) or a reroll (below 2); 12 owned (buy refused, Champion reward refused, Gold reward allowed); buying in a non-preparation phase; a double buy; a reroll after buying; buying the last affordable slot.
 - **Tests:**
@@ -135,7 +135,7 @@ Build in small vertical slices. Every milestone should end with a runnable resul
   - a full-Expedition replay with purchases is deterministic;
   - deliberately breaking each guard makes a test fail.
 
-**E. Browser UI**
+**E. Browser UI** (done 2026-10-11, awaiting owner review)
 - **Modules:** `apps/web/src/ui/app.ts` (a Tavern panel in preparation, Gold display) and `styles.css`.
 - **Edge cases:** disabled Buy showing "Need N Gold", "Sold" or "Collection full (12)"; disabled Reroll showing "Need 2 Gold"; prices labelled "Price N Gold (provisional)"; Champion reward bundles disabled at the cap; any rejection message shown.
 - **Tests:** the screens type-check, plus the smoke test in F.
