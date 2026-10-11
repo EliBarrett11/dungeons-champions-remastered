@@ -53,8 +53,9 @@ Definitions are taken from the existing documentation; the source is given for e
 | **Opening bonus Ultimate** | An extra Ultimate granted to the Champion(s) with the highest initiative; separate from resource-triggered Ultimates. | C-001, C-002, C-008 |
 | **Basic Attack** | A Champion's repeating attack on its own timer, independent of initiative. | C-004 |
 | **Class Resource** | A per-Class meter filled by class-specific events; reaching its target triggers the Ultimate and resets it to 0. | C-006, C-007 |
-| **Ultimate** | A Champion's major ability, triggered by its Class Resource (or the opening bonus). Has priority over Basic Attacks. | C-007 to C-010 |
+| **Ultimate** | A Champion's major ability, triggered by its Class Resource (or the opening bonus). Resolves at the timestamp it triggers, before Basic Attacks committed at that timestamp, and never pauses Basic Attack timers; its animation is presentation only. | C-007, C-008, C-010, P-011, P-013 |
 | **Timestamp** | A point on the integer-millisecond combat timeline. Actions due at the same timestamp resolve simultaneously. | C-005, P-002 |
+| **Commitment (of a Basic Attack)** | The stage, at a timestamp, in which a due Basic Attack's target and inputs are fixed, its d20 and (on a hit) damage dice are rolled, and on a hit its complete damage is calculated; all of this is stored. Health does not change at commitment. Commitment happens before any action at that timestamp resolves; the stored outcome is applied later, after ready Ultimates. | P-013, P-014 |
 | **Overtime** | Escalating damage after 30 seconds of combat. | C-018, P-006 |
 | **Natural roll** | The unmodified d20 result; it decides automatic hits/misses and critical ranges. | C-012 to C-014 |
 | **Effect** | A reusable, data-defined combat operation (damage, status, shield, …). The 240-entry effect catalogue is a list of concepts, not implemented effects. | `COMBAT/EFFECT_CATALOGUE_STATUS.md` |

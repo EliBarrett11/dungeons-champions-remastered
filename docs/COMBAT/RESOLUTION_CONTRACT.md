@@ -3,10 +3,12 @@
 **Status:** partially confirmed; formulas and several edge cases remain proposed/unresolved.
 Status labels follow `docs/DECISIONS.md` ("Status vocabulary"). Decision IDs (D-/C-/P-) refer to that register.
 
-This file merges the two earlier combat contracts (`RESOLUTION_CONTRACT.md` from the master package and `resolution-contract.md` from the combat starter package). Nothing was promoted in the merge: each rule keeps the status it had in its source, mapped to the shared vocabulary. Rules approved later as provisional prototype rules are cross-referenced to `PROTOTYPE_RULESET_V0.md`.
+This file merges the two earlier combat contracts (`RESOLUTION_CONTRACT.md` from the master package and `resolution-contract.md` from the combat starter package). Nothing was promoted in the merge: each rule keeps the status it had in its source, mapped to the shared vocabulary. Rules approved later as provisional prototype rules are cross-referenced to `PROTOTYPE_RULESET_V0.md`. Where a provisional rule changes this contract (P-011 Ultimate timing), the old text is kept and marked SUPERSEDED.
 
 ## 1. Combat model
-The established behavior implies a timed, simultaneous simulation rather than conventional alternating tabletop turns: Basic Attack timers are independent, same-timestamp Basic Attacks resolve simultaneously, and Ultimates pause Basic Attack timers.
+The established behavior implies a timed, simultaneous simulation rather than conventional alternating tabletop turns: Basic Attack timers are independent and same-timestamp Basic Attacks resolve simultaneously.
+
+*SUPERSEDED:* this section originally added "and Ultimates pause Basic Attack timers" (C-009). That pause was superseded by P-011: Ultimates resolve concurrently with Basic Attack timers and never pause them (section 6).
 
 **PROVISIONAL (P-002):** combat is a timed, event-scheduled simulation on an integer-millisecond timeline, not a frame loop and not turn-based. See `PROTOTYPE_RULESET_V0.md`.
 
@@ -28,9 +30,25 @@ The established behavior implies a timed, simultaneous simulation rather than co
 
 ## 4. Simultaneous resolution
 - Basic attacks due at the same combat timestamp resolve simultaneously. — CONFIRMED (C-005)
-- If an attack is committed as part of a simultaneous timestamp, the attacker completes that attack even if another committed attack defeats it at that timestamp. — Listed as "Established" in the starter package but absent from the decisions register; now PROVISIONAL (P-006).
+- If an attack is committed as part of a simultaneous timestamp, the attacker completes that attack even if another committed attack defeats it at that timestamp. — Listed as "Established" in the starter package but absent from the decisions register; now PROVISIONAL (P-006). Under P-013 this also holds when the attacker or its target is defeated by an Ultimate that resolves earlier at that timestamp.
+- Health never falls below 0; damage beyond remaining Health is excess damage, recorded separately from Health if logged. — PROVISIONAL (P-012).
 
-### Proposed simultaneous timestamp algorithm (PROPOSED)
+### Same-timestamp resolution order — PROVISIONAL (P-013)
+Commitment and resolution are separate stages. At each timestamp before the 60,000 ms hard stop (`PROTOTYPE_RULESET_V0.md` section 7):
+1. Identify eligible actions: ready Ultimates and Basic Attacks whose timers expire at that timestamp.
+2. Commit every eligible Basic Attack before anything resolves, one at a time in the P-010 order. Commitment fixes its target and inputs (state at the start of the timestamp), rolls its d20 and, on a hit, its damage dice, calculates the hit's complete damage from the fixed inputs, and stores the outcome. Health is not changed at commitment (P-014).
+3. Resolve ready Ultimates one at a time, in the C-010/P-010 order, rechecking caster and target validity before each (C-010).
+4. Resolve committed Basic Attacks in the P-010 order with their fixed targets, inputs and stored outcomes. No dice are rolled at this stage. They are not cancelled, retargeted or re-rolled because a target or attacker was defeated after commitment, and nothing an Ultimate does in step 3 can change a stored outcome.
+5. Apply P-012 Health clamping to every damage application. Decide the battle result after all actions at the timestamp have resolved.
+6. None of this takes simulated time or pauses any Basic Attack timer (P-011).
+
+Full wording: `PROTOTYPE_RULESET_V0.md` section 11.1. The exact random-number order, covering side assignment, initiative and the commitment, Ultimate and resolution stages, is in section 9.2. The stored attack outcome is defined in section 9.3.
+
+### Basic Attack dice rolled at commitment — PROVISIONAL (P-014)
+Approved by the owner (Option A). A committed Basic Attack stores its target, then rolls its d20 at commitment. On a hit, it also rolls its damage dice and calculates and stores the complete damage from the inputs fixed at commitment. A miss rolls no damage dice (I-6). Health is not changed at commitment: the stored damage is applied, with P-012 clamping, only when the attack resolves after ready Ultimates have resolved (P-013). Intervening Ultimate resolutions, including their own random draws, cannot re-roll, alter or replace it.
+
+### Proposed simultaneous timestamp algorithm (PROPOSED; ordering SUPERSEDED by P-013)
+*SUPERSEDED in part:* this starter-package algorithm resolves Basic Attack damage first and only then adds newly ready Ultimates (step 9). For Ultimates already ready at a timestamp, that ordering is superseded by P-013 above. For Basic Attacks, step 3 ("resolve rolls") is superseded by P-014: their dice are rolled at commitment, before any Ultimate at that timestamp resolves, and never at resolution. The remaining steps (healing, shields, resource aggregation, survival and on-defeat triggers) stay PROPOSED for features beyond M1.
 1. Collect every action due at the timestamp.
 2. Snapshot the combat state and validate/commit eligible actions.
 3. Resolve rolls for all committed actions using the seeded RNG.
@@ -41,6 +59,8 @@ The established behavior implies a timed, simultaneous simulation rather than co
 8. Resolve on-defeat triggers with recursion protection.
 9. Add newly ready Ultimates to the priority queue.
 10. Resume scheduled combat time only after required resolution windows complete.
+
+Under P-011, these steps take no simulated time: an Ultimate that becomes ready during resolution resolves at the same timestamp (unless its ability defines a cast time), and "resume" in step 10 only means moving on to the next scheduled timestamp. No Basic Attack timer is paused or shifted. Where such an Ultimate falls relative to the P-013 stages is UNRESOLVED (`docs/OPEN_QUESTIONS.md`). The PROVISIONAL M1 subset (Basic Attacks only) is fixed in `PROTOTYPE_RULESET_V0.md` sections 7, 9.2 and 10.
 
 The exact interaction between simultaneous healing and lethal damage still requires a final explicit design decision (UNRESOLVED); do not invent a different rule per ability.
 
@@ -78,21 +98,31 @@ Note: the ability template and `examples/storm_vanguard.json` use `attack_commit
 - Class Resource is generated by class-specific events; e.g. Barbarian gains Rage whenever it takes damage. — CONFIRMED principle (C-006)
 - When resource reaches its target, the Ultimate triggers immediately; resource resets to zero with no excess carry-over. Resource resets at trigger time, not at resolution completion. — CONFIRMED (C-007)
 - Opening bonus Ultimate is separate from resource-triggered Ultimates. — CONFIRMED (C-008)
-- Ultimates have priority over Basic Attacks; Basic Attack timers pause during Ultimate activation/resolution and resume with progress preserved. — CONFIRMED (C-009). Whether all Champions' timers pause or only the caster's is UNRESOLVED.
+- **Ultimate timing — PROVISIONAL (P-011, "A + Visual only"):**
+  1. Basic Attack timers keep progressing while Ultimates activate and resolve.
+  2. An Ultimate activates and resolves immediately, at the timestamp its resource reaches its target, unless the ability explicitly defines a cast time.
+  3. No Ultimate pauses the caster's or any other Champion's Basic Attack timer.
+  4. Ultimate animations are presentation only and never advance, delay or pause the authoritative simulation.
+  5. Future abilities may define explicit cast times without pausing the battle; no cast-time or interruption system is defined yet.
+  6. Simultaneous actions resolve deterministically; ordering is never a reason to pause Basic Attack timers.
+  Full wording: `PROTOTYPE_RULESET_V0.md` section 11.
+- **Ultimate-first at a shared timestamp — PROVISIONAL (P-013):** ready Ultimates resolve before committed Basic Attacks at the same timestamp. Basic Attacks are committed first, so an Ultimate cannot cancel, retarget or re-roll them. See section 4 and `PROTOTYPE_RULESET_V0.md` section 11.1.
+- *SUPERSEDED (C-009, pause clause):* "Ultimates have priority over Basic Attacks; Basic Attack timers pause during Ultimate activation/resolution and resume with progress preserved." The pause clause no longer applies (P-011). The "priority" wording now has the provisional meaning given by P-013 (ordering only, no pause).
 - Intended average is about 1–3 normal Ultimate activations per Champion per battle, excluding the opening bonus. — design target
 
 ### Ultimate queue (CONFIRMED intent; details PROPOSED)
+The "queue" is a deterministic order for Ultimates that become ready at the same timestamp. Under P-011 it does not hold back or pause Basic Attacks. Under P-013 the whole queue resolves after Basic Attacks are committed and before they resolve.
 - Queue key: descending initiative. — CONFIRMED (C-010)
 - Before resolving each Ultimate, re-check caster state and target validity. — CONFIRMED (C-010)
 - Equal initiative: stable deterministic tie-break. The earlier proposal (instance ID, then board slot; C-011) is superseded by the provisional ordering in P-010.
-- If the caster is unable to act before its Ultimate begins resolution, skip it unless an explicit effect says otherwise. — PROPOSED
+- If the caster is unable to act before its Ultimate begins resolution, skip it unless an explicit effect says otherwise. — PROPOSED (relevant mainly to future explicit cast times; without a cast time the Ultimate resolves at its trigger timestamp)
 - Target invalidation behavior must be defined by the ability: retarget, resolve without target, or fail. — PROPOSED
 
 ## 7. Damage types
 The 13 types are Bludgeoning, Piercing, Slashing, Acid, Cold, Fire, Force, Lightning, Thunder, Necrotic, Poison, Psychic and Radiant. Each type should have mechanical identity (D-014). Example concepts include Acid reducing Armor, Cold slowing/freezing, Fire burning/spreading, Lightning chaining/conducting, and Thunder staggering/interruption. These are design examples; exact implementation belongs to approved per-type rules and explicit ability definitions. A damage type alone does not automatically apply a status unless the ability explicitly says so.
 
 ## 8. Overtime
-If a battle lasts more than 30 seconds, damage dealt by all units increases exponentially until a winner emerges. — CONFIRMED intent (C-018). The final escalation formula, cadence and cap are UNRESOLVED; a provisional prototype schedule and hard cap are defined by P-006.
+If a battle lasts more than 30 seconds, damage dealt by all units increases exponentially until a winner emerges. — CONFIRMED intent (C-018). The final escalation formula, cadence and cap are UNRESOLVED; a provisional prototype schedule and hard cap are defined by P-006, I-3 and I-4 (`PROTOTYPE_RULESET_V0.md` section 7).
 
 ## 9. Event recursion and safeguards (PROPOSED)
 - Effects default to not triggering themselves.
@@ -102,7 +132,7 @@ If a battle lasts more than 30 seconds, damage dealt by all units increases expo
 - Log rejected/limited triggers for debugging.
 
 ## 10. Combat event requirements
-The engine should emit typed, ordered events for at least: battle start, initiative roll, attack scheduled, attack roll, hit/miss, critical, damage, mitigation, shield change, effect applied/removed, resource change, Ultimate queued/started/resolved, Champion defeated, death-save event if implemented, overtime escalation, battle end and draw. The precise event list should be refined with the engine slice.
+The engine should emit typed, ordered events for at least: battle start, initiative roll, attack scheduled, attack roll, hit/miss, critical, damage (under P-012, any excess damage recorded as its own value, never as negative Health), mitigation, shield change, effect applied/removed, resource change, Ultimate queued/started/resolved, Champion defeated, death-save event if implemented, overtime escalation, battle end and draw. The precise event list should be refined with the engine slice.
 
 ## 11. Semantic validation beyond JSON Schema
 The full checklist lives in `semantic-validation.md`. The starter contract additionally required:

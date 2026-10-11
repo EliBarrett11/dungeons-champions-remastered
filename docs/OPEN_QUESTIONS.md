@@ -17,21 +17,17 @@ This list is intentionally honest about gaps. The presence of a proposal elsewhe
 
 ## Additional rules to settle before their relevant milestones
 
-### Prototype ruleset interpretations (confirm before or during M1)
-The approved provisional rules P-001 to P-010 left some implementation details open. `docs/COMBAT/PROTOTYPE_RULESET_V0.md` §11 records the interpretation chosen for each; please confirm or change:
-- I-1 Board slot numbering (front 0–2, middle 3–6, back 7–11).
-- I-2 Basic Attack interval `round(1000 / attacks per second)` ms; first attack after one full cycle.
-- I-3 Exact overtime multiplier per 5-second step (×2 from 30 s).
-- I-4 Whether actions at exactly 60 000 ms resolve before the hard cap.
-- I-5 Which team counts as "side A" in tie-breaks.
-- I-6 Random-number consumption order; critical hits multiply rather than roll extra dice.
-- I-7 Test units use Initiative Modifier +0.
-- I-8 Retargeting when a target is defeated.
-- I-9 Floating-point limits for outcome-affecting arithmetic.
+### Prototype ruleset (M1)
+- Interpretations I-1 to I-9 — RESOLVED (PROVISIONAL), accepted by the owner on 2026-10-11; see `DECISIONS.md` and `docs/COMBAT/PROTOTYPE_RULESET_V0.md` section 12.
+- Health below zero vs. the M1 acceptance criterion — RESOLVED (PROVISIONAL) by P-012 on 2026-10-11: Health is clamped at 0, excess damage may be logged separately from Health, and M1 acceptance item 4 now matches (`docs/COMBAT/PROTOTYPE_RULESET_V0.md` section 7).
 
 ### Combat
 - Exact event ordering for simultaneous damage, death checks and triggers beyond the prototype (P-002/P-006/P-010 cover Basic Attacks only).
-- Whether Basic Attack timers of **all** Champions pause during an Ultimate, or only the caster's (C-009 is silent).
+- Under P-011, what C-009's remaining wording "Ultimates take priority over Basic Attacks" means — RESOLVED (PROVISIONAL) by P-013 on 2026-10-11: ready Ultimates resolve before committed Basic Attacks at the same timestamp. Basic Attacks are committed first with fixed targets and inputs, and Ultimates see the battle as left by earlier Ultimates (`docs/COMBAT/PROTOTYPE_RULESET_V0.md` section 11.1).
+- Ultimates that become ready **during** resolution at a timestamp (e.g. from resource gained through damage dealt by an Ultimate or by a committed Basic Attack at that timestamp). P-011 says they resolve at that same timestamp, but P-013 only orders Ultimates that are ready before resolution starts. Where they fall relative to the P-013 stages, and how repeated chains are bounded, is not defined. Not needed for M1.
+- Random-number timing when Ultimates exist — RESOLVED (PROVISIONAL) by P-014 on 2026-10-11: committed Basic Attacks roll their d20 and damage dice at commitment, before any Ultimate at that timestamp resolves, and resolution draws nothing (`docs/COMBAT/PROTOTYPE_RULESET_V0.md` sections 9.2 and 9.3).
+- Where the opening bonus Ultimate's random draws (if any) fall in the section 9.2 order. This depends on the existing open question of when the opening Ultimate fires. Not needed for M1, which only records the opening winner.
+- Explicit cast times for future abilities (P-011 allows them without pausing the battle): timing, interruption and resource handling. Not needed for M1.
 - When the opening bonus Ultimate fires, and what `opening_bonus_ultimate_eligible` in the ability schema means (no decision says some Ultimates are ineligible).
 - Rogue critical range: does a natural 16–19 crit when the attack would otherwise miss? (Sorcerer has an explicit rule; Rogue does not.)
 - Sorcerer "qualifying" criticals and misses: do automatic natural 1–2 misses count?
@@ -45,8 +41,8 @@ The approved provisional rules P-001 to P-010 left some implementation details o
 - Exact damage-type mechanics for all 13 types.
 - Duration, stacking, refresh, cleansing and diminishing-return rules for effects.
 - Boss control resistance and fixed-board semantics for Root, Knockback and movement effects.
-- Ultimate animation/activation duration and precise pause/resume behavior.
-- Final overtime damage-escalation formula after 30 seconds (prototype schedule PROVISIONAL via P-006).
+- Ultimate animation/activation duration and precise pause/resume behavior — PROVISIONALLY RESOLVED by P-011: Ultimates resolve at their trigger timestamp, nothing pauses, animation is presentation only.
+- Final overtime damage-escalation formula after 30 seconds (prototype schedule PROVISIONAL via P-006, I-3 and I-4).
 - Stable tie-breaker for same-initiative Ultimate queue — PROVISIONALLY RESOLVED by P-010.
 - How initiative ties are handled when deciding the bottom half that skips the first Basic Attack — PROVISIONALLY RESOLVED by P-008.
 - Simultaneous healing versus lethal damage at the same timestamp.
