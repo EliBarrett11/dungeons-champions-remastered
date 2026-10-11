@@ -19,6 +19,12 @@ export type {
 export { validateBattleInput, assertValidBattleInput, InvalidBattleInputError } from './validate';
 export { setupBattle } from './battle/setup';
 export type { BattleSetup, SetupOptions, UnitState } from './battle/setup';
+export { runBattle } from './battle/run';
+export type { BattleResult } from './battle/run';
+export { nextMoment } from './battle/schedule';
+export type { NextMoment } from './battle/schedule';
+export { selectTarget, rowOfSlot } from './rules/targeting';
+export type { TargetCandidate } from './rules/targeting';
 export { LOG_VERSION } from './battle/events';
 export type {
   SetupEvent,
@@ -26,6 +32,15 @@ export type {
   SidesAssignedEvent,
   InitiativeRolledEvent,
   InitiativeResolvedEvent,
+  CombatEvent,
+  BattleEvent,
+  BattleOutcome,
+  OvertimeStepEvent,
+  AttackSkippedEvent,
+  AttackCommittedEvent,
+  AttackResolvedEvent,
+  UnitDefeatedEvent,
+  BattleEndEvent,
 } from './battle/events';
 export { parseDiceExpression, rollDiceExpression } from './dice/parse';
 export type { DiceExpression, DiceParseResult, DiceRoll } from './dice/parse';

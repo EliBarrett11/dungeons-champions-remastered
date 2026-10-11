@@ -26,6 +26,8 @@ export const M1_CONFIG = Object.freeze({
   attackSpeedDenominator: 1_000,
   /** Board slots per side; front 0-2, middle 3-6, back 7-11 (P-003, I-1). */
   boardSlots: 12,
+  /** First slot of each row, front to back (I-1): front 0-2, middle 3-6, back 7-11. */
+  boardRowStartSlots: Object.freeze([0, 3, 7] as const),
   /** Test units per side in M1 (roadmap M1 scope). */
   minUnitsPerSide: 1,
   maxUnitsPerSide: 5,

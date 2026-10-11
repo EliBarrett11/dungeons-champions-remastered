@@ -61,3 +61,80 @@ export interface InitiativeResolvedEvent {
 }
 
 export type SetupEvent = BattleStartEvent | SidesAssignedEvent | InitiativeRolledEvent | InitiativeResolvedEvent;
+
+/** I-3: logged at each overtime boundary reached while the battle is running (before commitments). */
+export interface OvertimeStepEvent {
+  readonly type: 'overtimeStep';
+  readonly t: number;
+  readonly multiplier: number;
+}
+
+/** P-008: a skipping unit's first timer expiry; no attack, no random draws. */
+export interface AttackSkippedEvent {
+  readonly type: 'attackSkipped';
+  readonly t: number;
+  readonly unitId: string;
+}
+
+/** P-013 step 2 / P-014: the stored outcome, fixed at commitment. Health is not changed here. */
+export interface AttackCommittedEvent {
+  readonly type: 'attackCommitted';
+  readonly t: number;
+  readonly attackerId: string;
+  readonly targetId: string;
+  readonly natural: number;
+  readonly attackTotal: number;
+  readonly armorClass: number;
+  readonly hit: boolean;
+  readonly critical: boolean;
+  /** Damage dice in rolling order; empty on a miss (no damage dice are drawn, I-6). */
+  readonly dice: readonly number[];
+  /** Dice-expression total including K (P-017); null on a miss. */
+  readonly diceTotal: number | null;
+  /** overtimeMultiplier(t) (I-3). */
+  readonly overtimeMultiplier: number;
+  /** Complete calculated damage (P-005); null on a miss. */
+  readonly damage: number | null;
+}
+
+/** P-013 step 4 / P-012: the stored outcome applied in P-010 order, Health clamped at 0. */
+export interface AttackResolvedEvent {
+  readonly type: 'attackResolved';
+  readonly t: number;
+  readonly attackerId: string;
+  readonly targetId: string;
+  readonly hit: boolean;
+  /** Stored damage (0 on a miss). */
+  readonly damage: number;
+  readonly healthBefore: number;
+  readonly healthRemoved: number;
+  readonly healthAfter: number;
+  /** Damage beyond the Health remaining when applied (P-012); never part of Health. */
+  readonly excessDamage: number;
+}
+
+export interface UnitDefeatedEvent {
+  readonly type: 'unitDefeated';
+  readonly t: number;
+  readonly unitId: string;
+}
+
+export type BattleOutcome =
+  | { readonly kind: 'win'; readonly winner: string; readonly winnerSide: Side }
+  | { readonly kind: 'draw'; readonly reason: 'mutualDefeat' | 'hardStop' };
+
+export interface BattleEndEvent {
+  readonly type: 'battleEnd';
+  readonly t: number;
+  readonly outcome: BattleOutcome;
+}
+
+export type CombatEvent =
+  | OvertimeStepEvent
+  | AttackSkippedEvent
+  | AttackCommittedEvent
+  | AttackResolvedEvent
+  | UnitDefeatedEvent
+  | BattleEndEvent;
+
+export type BattleEvent = SetupEvent | CombatEvent;

@@ -19,3 +19,25 @@ export class ScriptedRng implements Rng {
     return this.index;
   }
 }
+
+/** Test-only Rng: serves `prefix` once, then repeats `cycle` forever. */
+export class CyclingRng implements Rng {
+  private index = 0;
+
+  constructor(
+    private readonly prefix: readonly number[],
+    private readonly cycle: readonly number[],
+  ) {
+    if (cycle.length === 0) throw new Error('CyclingRng needs a non-empty cycle');
+  }
+
+  nextUint32(): number {
+    const i = this.index;
+    this.index += 1;
+    return i < this.prefix.length ? this.prefix[i]! : this.cycle[(i - this.prefix.length) % this.cycle.length]!;
+  }
+
+  get drawCount(): number {
+    return this.index;
+  }
+}
