@@ -1,6 +1,6 @@
 # Prototype Combat Ruleset v0
 
-**Status:** PROVISIONAL. Approved by the project owner on 2026-10-11 as provisional prototype rules: decisions P-001 to P-014 and accepted interpretations I-1 to I-9 in `docs/DECISIONS.md`.
+**Status:** PROVISIONAL. Approved by the project owner on 2026-10-11 as provisional prototype rules: decisions P-001 to P-016 and accepted interpretations I-1 to I-9 in `docs/DECISIONS.md`.
 
 **What PROVISIONAL means here**
 - These rules may be implemented in the first prototype milestone (M1, headless deterministic duel) and, for the Ultimate parts of P-011 and P-013, in the later Ultimate milestone.
@@ -25,11 +25,12 @@
 - A Champion that skips its first Basic Attack (section 6) waits through the first interval without attacking, then waits another full interval: its first actual attack is at `t = 2 × interval`.
 - Basic Attack timers are never paused by Ultimates (section 11).
 
-## 3. Board and targeting (P-003; I-1, I-8)
+## 3. Board and targeting (P-003, P-016; I-1, I-8)
 - Each side has a fixed fan-shaped formation of 12 slots: front row 3, middle row 4, back row 5.
 - **Slot numbering (I-1):** front row = slots 0, 1, 2; middle row = slots 3, 4, 5, 6; back row = slots 7, 8, 9, 10, 11. Within each row, slots are numbered left to right.
 - Champions do not move during combat.
 - **Basic Attack targeting (prototype only):** attack the enemy Champion in the frontmost occupied enemy row; within that row choose the lowest slot index. Keep that target until it is defeated, then select again with the same rule.
+- **Occupied (P-016):** for targeting, a slot is occupied only if it holds a non-defeated Champion. Defeated Champions are never selected as new targets, and a row containing only defeated Champions counts as unoccupied.
 - **Target switching (I-8):**
   - If the current target was defeated at an earlier timestamp, a new target is selected, using the rule above, when the attacker's next attack is committed.
   - An attack already committed at a timestamp keeps its original target, even if that target is defeated by another action at the same timestamp, including an Ultimate that resolves before it (sections 7 and 11.1).
@@ -78,6 +79,7 @@ Authoritative combat state never uses uncontrolled floating-point arithmetic. Eq
 
 ## 7. Defeat, simultaneous attacks, draws and battle end (P-006, P-012; I-3, I-4)
 - A Champion is defeated when its Health reaches 0. Death saves are not used in the prototype.
+- **Defeated attackers (P-016):** a defeated Champion cannot commit new Basic Attacks at any later moment. A Basic Attack it committed before it was defeated still resolves with its stored outcome and original target (below and section 11.1).
 - **Health clamping (P-012):**
   - A Champion's authoritative Health never falls below 0. When damage would reduce Health below 0, Health is set to 0.
   - Damage beyond the Health remaining at the moment it is applied is **excess damage**. It may be recorded in the combat event log for debugging or analysis, as a value separate from Health (for example: damage computed, Health removed, excess damage). It never produces negative Health in state or in any Health value in the log.
@@ -103,9 +105,11 @@ Authoritative combat state never uses uncontrolled floating-point arithmetic. Eq
 - **Hard stop (I-4):** the battle stops at `t = 60,000` **before** any combat action scheduled at that timestamp resolves. Actions scheduled after the cutoff never resolve either. If both teams still have a Champion standing, the battle is a draw. ×128 is therefore never applied.
 - The final overtime formula (CONFIRMED intent C-018) remains UNRESOLVED; this schedule exists so every prototype battle terminates.
 
-## 8. Test-unit stats (P-007; I-7)
+## 8. Test-unit stats and fixture Basic Attack (P-007, P-015; I-7)
 - M1 test units use the Role table in `docs/COMBAT/STAT_MODEL.md` at Rank 1, level 1.
 - These are **test fixtures**, not balance values. Rank multipliers and level growth are not applied.
+- **Battle-level tests** (for example the golden replay and the 1,000 seeded battles) use these Role-table stats. **Focused unit tests** may use custom stat blocks so that edge cases have exact expected results (P-015).
+- **Shared fixture Basic Attack (P-015):** every M1 test unit uses one placeholder Basic Attack: dice expression `1d8` (flat bonus 0), scaling stat Attack, scaling ratio 1.0 (10,000 basis points, section 5.1), physical damage. Its base damage amount (section 5, step 1) is `1d8 + Attack × 1.0`. The existing section 5 rules then apply, in order: critical hit ×2, Armor mitigation, overtime multiplier, one round-down, and the minimum of 1 damage on a hit. All physical types use the same Armor mitigation in M1, so no specific physical subtype is required. This is test-fixture data only, not the Basic Attack of any real Champion.
 - **Initiative modifier (I-7):** a missing Initiative Modifier defaults to `+0`. This default applies to prototype test fixtures only, not to authored Champion content.
 
 ## 9. Random numbers and seeds (P-009; I-5, I-6)
@@ -136,7 +140,7 @@ Every random number comes from the battle's generator in exactly this order. Not
    2. **Ultimate stage.** Any random numbers a ready Ultimate needs are drawn while it resolves, in the Ultimate resolution order. These draws always come after every commitment-stage draw at `t`. What an Ultimate draws is defined by its ability; none is defined yet.
    3. **Basic Attack resolution stage.** No draws. Each committed attack applies its stored damage to the target's current Health, with P-012 clamping.
 4. Critical hits multiply the entire pre-mitigation amount by the provisional ×2 (section 5); they never draw additional dice in M1.
-5. A Basic Attack that is not committed draws nothing. This covers a skipped first attack (section 6), the case where no enemy is alive (section 3), and anything at or after the hard stop (section 7).
+5. A Basic Attack that is not committed draws nothing. This covers a skipped first attack (section 6), the case where no enemy is alive (section 3), an attacker already defeated at an earlier moment (section 7, P-016), and anything at or after the hard stop (section 7).
 
 The P-010 order only decides which random numbers each attack receives and the order of event-log entries. It gives no attack an advantage in who acts first, because every committed attack's target, inputs, dice and calculated damage are fixed at commitment.
 
@@ -171,7 +175,7 @@ Approved by the owner as "A + Visual only". PROVISIONAL. It supersedes the Basic
 
 ### 11.1 Same-timestamp resolution: Ultimates first (P-013)
 Approved by the owner. PROVISIONAL. Ready Ultimates resolve before committed Basic Attacks at the same simulation timestamp. **Commitment and resolution are separate stages.** At each timestamp `t` before the 60,000 ms hard stop (section 7):
-1. **Identify** the eligible actions: ready Ultimates, and Basic Attacks whose timers expire at `t`.
+1. **Identify** the eligible actions: ready Ultimates, and Basic Attacks of non-defeated Champions whose timers expire at `t` (a Champion defeated at an earlier moment commits nothing, P-016).
 2. **Commit** every eligible Basic Attack before any action at `t` resolves. Commitment fixes the attack's target (section 3) and its inputs under the existing rules: attacker and target stats as they stand at the start of `t`, and the overtime multiplier for `t`. It also rolls the attack's d20 and, on a hit, its damage dice, calculates the hit's complete damage, and stores the outcome without changing any Health (P-014, sections 9.2 and 9.3).
 3. **Resolve ready Ultimates**, one at a time, in the deterministic order of C-010 and P-010. Before each one resolves, recheck caster and target validity as C-010 requires. What happens when a check fails is still PROPOSED (`RESOLUTION_CONTRACT.md` section 6). Each Ultimate sees the battle as left by the Ultimates before it.
 4. **Resolve committed Basic Attacks** after the ready Ultimates, in the P-010 order, using the target, inputs and stored outcome from step 2. No dice are rolled in this step, and the Ultimates resolved in step 3 cannot change any stored outcome.
@@ -185,7 +189,7 @@ The battle result is decided after step 4 (section 7). An Ultimate's resource re
 Open points P-011 and P-013 do not settle are listed in `docs/OPEN_QUESTIONS.md` (Combat). These include Ultimates that become ready during step 3 or step 4 at the same timestamp. When committed Basic Attacks draw their random numbers is settled by P-014 (section 9.2).
 
 ## 12. Accepted interpretations register
-The owner accepted all nine interpretations on 2026-10-11. Each is PROVISIONAL with the same standing as P-001 to P-014.
+The owner accepted all nine interpretations on 2026-10-11. Each is PROVISIONAL with the same standing as P-001 to P-016.
 
 | ID | Subject | Recorded in |
 |---|---|---|

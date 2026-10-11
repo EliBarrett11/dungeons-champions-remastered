@@ -80,7 +80,7 @@ Aligning the schema `status` enums themselves is tracked in `OPEN_QUESTIONS.md` 
 
 ## Provisional prototype rules
 
-Approved by the owner on 2026-10-11 as **provisional prototype rules** (audit decisions D-1 to D-10, then P-011, the accepted interpretations I-1 to I-9, P-012, P-013 and P-014). Full wording is in `COMBAT/PROTOTYPE_RULESET_V0.md`. None of these is a CONFIRMED final game rule.
+Approved by the owner on 2026-10-11 as **provisional prototype rules** (audit decisions D-1 to D-10, then P-011, the accepted interpretations I-1 to I-9, P-012 to P-014, and the M1 readiness decisions P-015 and P-016). Full wording is in `COMBAT/PROTOTYPE_RULESET_V0.md`. None of these is a CONFIRMED final game rule.
 
 | ID | Audit ref | Decision | Status |
 |---|---|---|---|
@@ -90,7 +90,7 @@ Approved by the owner on 2026-10-11 as **provisional prototype rules** (audit de
 | P-004 | D-4 | Hit roll: `d20 + Accuracy ≥ 10 + Evasion`; natural 1 misses, natural 20 hits and crits (C-012). | PROVISIONAL |
 | P-005 | D-5 | Damage per component: dice roll + (scaling stat × ratio); critical ×2 on the whole pre-mitigation amount; physical Armor mitigation `×100/(100+max(0,Armor))`; round down once at the end of each component; minimum 1 damage on a hit. | PROVISIONAL |
 | P-006 | D-6 | Defeat at Health ≤ 0, no death saves; attacks committed at the same timestamp all resolve; both teams wiped at the same timestamp is a draw; overtime ×2 after 30 s, doubling every 5 s; hard stop at 60 s counts as a draw. | PROVISIONAL; defeat wording refined by P-012 (Health clamped at 0) |
-| P-007 | D-7 | M1 test units use the `COMBAT/STAT_MODEL.md` Role table at Rank 1, level 1 as test fixtures, not balance. | PROVISIONAL |
+| P-007 | D-7 | M1 test units use the `COMBAT/STAT_MODEL.md` Role table at Rank 1, level 1 as test fixtures, not balance. | PROVISIONAL; fixture Basic Attack and custom stat blocks for focused unit tests added by P-015 |
 | P-008 | D-8 | Initiative ranks by total (d20 + modifier) across all Champions in the battle; bottom half = lowest floor(N/2); ties at the boundary do not skip; a skipped first attack means the first timer cycle completes with no attack. | PROVISIONAL |
 | P-009 | D-9 | One small in-repo seeded PRNG (sfc32 recommended) per battle; battle seed derived from match seed, round and pairing; documented consumption order; no `Math.random`. | PROVISIONAL |
 | P-010 | D-10 | Same-timestamp ordering: initiative total descending, then team side, then board slot index. Replaces the C-011 proposal. | PROVISIONAL |
@@ -98,6 +98,8 @@ Approved by the owner on 2026-10-11 as **provisional prototype rules** (audit de
 | P-012 | Owner decision A | Health clamping: authoritative Health never falls below 0; damage that would take it lower sets it to 0; excess damage may be logged separately from Health but never produces negative Health; a Champion at 0 Health is defeated; clamping applies to all damage and never cancels another attack already committed at the same timestamp. Refines the P-006 defeat wording "Health ≤ 0". | PROVISIONAL |
 | P-013 | Owner decision B | Ultimate-first same-timestamp resolution: identify eligible actions; commit all eligible Basic Attacks (fixing target and inputs); resolve ready Ultimates in the C-010/P-010 order with C-010 validity rechecks; then resolve committed Basic Attacks in P-010 order. Committed attacks keep their targets and are not cancelled by defeat of target or attacker after commitment; P-012 clamping applies throughout; nothing pauses the clock or any Basic Attack timer. Gives C-009's "priority over Basic Attacks" wording a provisional meaning; supersedes the ordering in the PROPOSED simultaneous-timestamp algorithm (`COMBAT/RESOLUTION_CONTRACT.md` section 4), which placed newly ready Ultimates after Basic Attack damage. | PROVISIONAL |
 | P-014 | Owner decision (Option A) | Basic Attack dice rolled at commitment: when a Basic Attack is committed, its target is stored, its d20 and all applicable damage dice (on a hit, per I-6) are rolled, and on a hit the complete damage is calculated from the inputs fixed at commitment; the outcome is stored. Health is not changed until the attack resolves. The stored outcome is resolved only after ready Ultimates have resolved (P-013). No intervening Ultimate resolution or random draw can re-roll, alter or replace it. Basic Attack resolution draws no random numbers. Rules for defeated attackers and targets (P-006, P-013), clamping (P-012), ordering (P-010), seeded randomness (P-009) and the hard stop (I-4) are unchanged. Full random-number order: `COMBAT/PROTOTYPE_RULESET_V0.md` section 9.2. | PROVISIONAL |
+| P-015 | M1 readiness decision D2 | Shared placeholder Basic Attack for M1 test fixtures: dice expression `1d8` (flat bonus 0), scaling stat Attack, scaling ratio 1.0 (10,000 basis points), physical damage. Base damage amount (P-005 step 1): `1d8 + Attack × 1.0`; P-005 then applies, in order, critical hit ×2, Armor mitigation, overtime multiplier, one round-down and the minimum of 1 damage on a hit. Battle-level tests use Role-table stats (P-007); focused unit tests may use custom stat blocks so edge cases have exact expected results. Test-fixture data only; not the Basic Attack of any real Champion. | PROVISIONAL (test fixtures only) |
+| P-016 | M1 readiness decision D4 | Targeting and defeated attackers: for targeting, an occupied slot is one occupied by a non-defeated Champion; a defeated Champion cannot commit new Basic Attacks at later moments; a Basic Attack already committed before its attacker or target is defeated still resolves with its stored outcome and original target (P-006, P-012, P-013, P-014 unchanged). | PROVISIONAL |
 
 ### Accepted interpretations
 The owner accepted all nine on 2026-10-11, including the safeguards and clarifications discussed. Each is PROVISIONAL with the same standing as the P- rules. Full wording: `COMBAT/PROTOTYPE_RULESET_V0.md` (section given).
@@ -128,6 +130,14 @@ Effects on earlier entries: C-003 boundary ties → P-008; C-009 pause → super
 | T-006 | First prototype board uses a 3×4 board per side and six placeholder Champions. | Board shape SUPERSEDED by P-003; placeholder count still PROPOSED |
 | T-007 | The project should defer database and complex infrastructure until persistence is demonstrably needed. | PROPOSED |
 
+## Approved technical decisions for M1
+Approved by the owner on 2026-10-11 (M1 readiness decisions D1 and D3). They apply to M1 only and do **not** approve the full-game architecture: T-001 to T-007 above remain PROPOSED except where these rows say otherwise.
+
+| ID | Audit ref | Decision | Status |
+|---|---|---|---|
+| T-008 | M1 readiness decision D1 | M1 stack: TypeScript for a headless combat-engine package and Vitest for automated tests. `npm run check` must run type-checking and the tests. No React, Vite, server, browser UI or multiplayer in M1. No other dependency may be added without a concrete, identified need and the approval repository policy requires. This approves only the engine-package part of T-001/T-002 for M1. | PROVISIONAL (M1 only) |
+| T-009 | M1 readiness decision D3 | M1 content check (roadmap M1 acceptance item 7). **Fail** on: invalid JSON; a schema that is invalid or cannot be compiled; any template or example that fails validation against its applicable schema. **Warn, but do not fail**, on: the known missing placeholder references and the known `attack_commit` resolution-window mismatch. Use the existing Python `jsonschema` tooling if suitable; no new validator dependency without concrete justification and approval. Schema-validation failures and known content-data warnings are reported separately. Details: `IMPLEMENTATION/ROADMAP.md` M1. | PROVISIONAL (M1 only) |
+
 ## Repository decision
 The repository audit reports the actual remote as `github.com/EliBarrett11/dungeons-champions-remastered`. Use that remote. The earlier shorthand `EliBarrett/dungeons-champions-remastered` was inaccurate.
 
@@ -136,6 +146,7 @@ The repository audit reports the actual remote as `github.com/EliBarrett11/dunge
 - 2026-10-11: Owner accepted interpretations I-1 to I-9 and chose the Ultimate timing model "A + Visual only" (P-011). Recorded as PROVISIONAL; the C-009 pause is marked SUPERSEDED rather than deleted.
 - 2026-10-11: Owner approved Health clamping (P-012) and Ultimate-first same-timestamp resolution (P-013). Recorded as PROVISIONAL.
 - 2026-10-11: Owner approved Option A, Basic Attack dice rolled at commitment (P-014). Recorded as PROVISIONAL, following the convention for owner-approved prototype rules.
+- 2026-10-11: Owner approved the four M1 readiness decisions from the implementation-readiness audit: D1 → T-008 (M1 stack), D2 → P-015 (fixture Basic Attack), D3 → T-009 (content check), D4 → P-016 (targeting and defeated attackers). New IDs follow the existing T- and P- series; nothing was renumbered.
 
 ## Change process
 When the user explicitly approves or changes a decision:
