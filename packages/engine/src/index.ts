@@ -7,7 +7,16 @@ export type { Rng } from './rng/rng';
 export { rollDie, rollDice } from './rng/dice';
 export { drawSideAssignment } from './rng/sides';
 export type { SideAssignment } from './rng/sides';
-export type { Side } from './types';
+export type {
+  Side,
+  BattleInput,
+  ParticipantInput,
+  UnitInput,
+  UnitStats,
+  BasicAttackInput,
+  ValidationError,
+} from './types';
+export { validateBattleInput, assertValidBattleInput, InvalidBattleInputError } from './validate';
 export { parseDiceExpression, rollDiceExpression } from './dice/parse';
 export type { DiceExpression, DiceParseResult, DiceRoll } from './dice/parse';
 export { attackIntervalMs, firstActualAttackAtMs } from './rules/interval';

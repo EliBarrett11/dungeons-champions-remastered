@@ -2,9 +2,9 @@ import { M1_CONFIG } from '../config';
 
 export interface HitDamageInput {
   /**
-   * P-005's "dice roll": the total of the attack's dice expression, i.e. the sum of the dice
-   * plus the expression's flat modifier K. Interpretation recorded in the step 3 report: the
-   * authoring guide defines NdM+K as adding K to the roll; P-015's fixture has K = 0.
+   * P-005's "dice roll": the complete dice-expression total, i.e. the sum of the dice plus the
+   * expression's flat modifier K (P-017, owner-confirmed). A critical hit doubles it with the rest
+   * of the base: `1d8+3` gives (d8 + 3) x 2 before Armor, overtime, rounding and the minimum.
    */
   readonly diceTotal: number;
   /** The scaling stat's value (Attack for the P-015 fixture). */

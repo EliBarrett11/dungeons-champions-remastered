@@ -1,6 +1,6 @@
 # Prototype Combat Ruleset v0
 
-**Status:** PROVISIONAL. Approved by the project owner on 2026-10-11 as provisional prototype rules: decisions P-001 to P-016 and accepted interpretations I-1 to I-9 in `docs/DECISIONS.md`.
+**Status:** PROVISIONAL. Approved by the project owner on 2026-10-11 as provisional prototype rules: decisions P-001 to P-017 and accepted interpretations I-1 to I-9 in `docs/DECISIONS.md`.
 
 **What PROVISIONAL means here**
 - These rules may be implemented in the first prototype milestone (M1, headless deterministic duel) and, for the Ultimate parts of P-011 and P-013, in the later Ultimate milestone.
@@ -43,10 +43,10 @@
 - For standard Champions, only a natural 20 is a critical hit.
 - Rogue and Sorcerer critical rules (C-013 to C-017) are CONFIRMED but excluded from M1.
 
-## 5. Damage, critical hits, mitigation and rounding (P-005)
+## 5. Damage, critical hits, mitigation and rounding (P-005, P-017)
 For each damage component, in this order:
-1. `base = dice roll + (scaling stat × scaling ratio)`
-2. On a critical hit: `base × 2`. The whole pre-mitigation amount is multiplied; no extra dice are rolled (I-6). The ×2 is the standard critical multiplier, PROVISIONAL.
+1. `base = dice roll + (scaling stat × scaling ratio)`. The dice roll is the complete dice-expression total, including any flat modifier K (P-017, owner-confirmed): `1d8+3` contributes `d8 + 3`.
+2. On a critical hit: `base × 2`. The whole pre-mitigation amount is multiplied, including K (for example `(d8 + 3) × 2` for `1d8+3` with no scaling); no extra dice are rolled (I-6). The ×2 is the standard critical multiplier, PROVISIONAL.
 3. Physical damage (Bludgeoning, Piercing, Slashing): `× 100 / (100 + max(0, Armor))`.
 4. Overtime multiplier (section 7), if active.
 5. Round down once, at the end of the component.
@@ -60,7 +60,7 @@ Authoritative combat state never uses uncontrolled floating-point arithmetic. Eq
 - **Attack speed** is represented as an integer number of thousandths of an attack per second (`a`; e.g. 0.65 → 650). Values that are not exact to three decimal places are rejected by configuration/content validation. The interval is `max(1, floor((2 × 1,000,000 + a) / (2 × a)))` ms, which equals `round(1000 / attacks_per_second)` with halves rounded up.
 - **Scaling ratios** are represented as exact integers in basis points (`r`, ten-thousandths; e.g. 1 → 10,000, 0.25 → 2,500). Ratios that are not exact in basis points are rejected by configuration/content validation.
 - **Damage component as an exact fraction.** Each component is carried as an integer numerator `n` over an integer denominator `d`, and divided only once at the end:
-  1. `n = dice × 10,000 + stat × r`, `d = 10,000`
+  1. `n = dice × 10,000 + stat × r`, `d = 10,000`, where `dice` is the dice-expression total including K (P-017)
   2. critical hit: `n = n × 2`
   3. physical mitigation: `n = n × 100`, `d = d × (100 + max(0, Armor))`
   4. overtime: `n = n × multiplier` (an integer power of two, section 7)
@@ -189,7 +189,7 @@ The battle result is decided after step 4 (section 7). An Ultimate's resource re
 Open points P-011 and P-013 do not settle are listed in `docs/OPEN_QUESTIONS.md` (Combat). These include Ultimates that become ready during step 3 or step 4 at the same timestamp. When committed Basic Attacks draw their random numbers is settled by P-014 (section 9.2).
 
 ## 12. Accepted interpretations register
-The owner accepted all nine interpretations on 2026-10-11. Each is PROVISIONAL with the same standing as P-001 to P-016.
+The owner accepted all nine interpretations on 2026-10-11. Each is PROVISIONAL with the same standing as P-001 to P-017.
 
 | ID | Subject | Recorded in |
 |---|---|---|

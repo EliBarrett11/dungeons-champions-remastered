@@ -33,6 +33,15 @@ export const M1_CONFIG = Object.freeze({
   maxDiceCount: 100,
   maxDieSides: 1_000,
   maxDiceModifier: 1_000_000,
+  /**
+   * Input limits (technical safety limits, not game rules). Every stat's absolute value is at most
+   * maxStatMagnitude so that sums such as d20 + Accuracy and Health arithmetic stay exact.
+   * Attack speed is limited to 1,000,000 thousandths (an interval of 1 ms). Scaling ratios are
+   * limited to 50,000 basis points (x5.0, the ability schema's scaling_ratio maximum).
+   */
+  maxStatMagnitude: 1_000_000_000,
+  maxAttackSpeedMilli: 1_000_000,
+  maxScalingRatioBp: 50_000,
 });
 
 export type M1Config = typeof M1_CONFIG;
