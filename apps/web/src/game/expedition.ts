@@ -5,7 +5,7 @@ import { EXPEDITION_CONFIG } from './config';
 import type { ExpeditionContent } from './content';
 import type { EncounterFixture } from './fixtures';
 import { applyGoldChange, goldAccountProblems, startingGoldAccount } from './gold';
-import { NO_SHOP, economyConfigProblems } from './shop';
+import { NO_SHOP, SHOP_ROOT_OUTPUT, economyConfigProblems, generateShop } from './shop';
 import type { EconomySettings, ShopState } from './shop';
 import { formationProblems, isLegalSlot } from './formation';
 import type { Placement } from './formation';
@@ -84,9 +84,9 @@ export interface ExpeditionState {
   readonly battlesFought: number;
   /** Reward offers per encounter, fixed when the Expedition is created. */
   readonly offers: readonly (readonly RewardOffer[])[];
-  /** M4: the Tavern on display (P-023). Empty until shop generation exists (checkpoint C). */
+  /** M4: the Tavern on display (P-023): shop 0 from creation, a fresh shop each Monster Round. */
   readonly shop: ShopState;
-  /** M4: shop number k for the next successful shop generation (P-029); starts at 0. */
+  /** M4: shop number k for the next successful shop generation (P-029); 1 after creation. */
   readonly nextShopNumber: number;
 }
 
@@ -118,6 +118,11 @@ export function contentProblems(content: ExpeditionContent, economy: EconomySett
     problems.push(`The roster has ${content.champions.length} playable Champions; an Expedition draws ${needed}.`);
   }
   problems.push(...economyConfigProblems(economy));
+  // P-029: outputs 1..encounterCount are battle seeds and output encounterCount + 1 seeds the
+  // roster draw; both must stay below the shop stream's root output.
+  if (economy.encounterCount + 1 >= SHOP_ROOT_OUTPUT) {
+    problems.push(`${economy.encounterCount} encounters would make the roster draw collide with the shop stream (output ${SHOP_ROOT_OUTPUT}).`);
+  }
   // P-028 / P-031: a shop must be fillable even with a full collection and every reward reserved.
   const reserved = needed - economy.startingBenchSize;
   const eligible = Math.max(0, content.champions.length - economy.maxOwnedChampions - reserved);
@@ -207,7 +212,7 @@ export function createExpedition(seed: number, content: ExpeditionContent): Expe
       return { id: bundle.id, gold: bundle.gold, champions };
     }),
   );
-  return {
+  const created: ExpeditionState = {
     seed,
     phase: 'preparation',
     encounterIndex: 0,
@@ -223,6 +228,23 @@ export function createExpedition(seed: number, content: ExpeditionContent): Expe
     shop: NO_SHOP,
     nextShopNumber: 0,
   };
+  // P-023: shop 0 is on offer for Round 1 preparation.
+  return withNewShop(created, content);
+}
+
+/** Eligible shop Champions in roster order: not owned (P-028), not reserved for rewards (P-031). */
+export function shopCandidates(state: ExpeditionState, content: ExpeditionContent): { id: string; costRank: number }[] {
+  const owned = new Set(state.bench.map((entry) => entry.championId));
+  const reserved = reservedRewardChampions(state);
+  return content.champions
+    .filter((champion) => !owned.has(champion.id) && !reserved.has(champion.id))
+    .map((champion) => ({ id: champion.id, costRank: champion.proposed.cost_rank }));
+}
+
+/** Generates the next shop (number `nextShopNumber`) and advances the shop numbering by one. */
+function withNewShop(state: ExpeditionState, content: ExpeditionContent): ExpeditionState {
+  const shop = generateShop(state.seed, state.nextShopNumber, shopCandidates(state, content));
+  return { ...state, shop, nextShopNumber: state.nextShopNumber + 1 };
 }
 
 /** The six (in general: all) Champions reserved for this Expedition's reward choices (P-031). */
@@ -263,6 +285,7 @@ export function economyStateProblems(state: ExpeditionState, content: Expedition
     const champion = content.champions.find((entry) => entry.id === slot.championId);
     if (!champion) problems.push(`${label} offers unknown Champion "${slot.championId}".`);
     else if (slot.price !== champion.proposed.cost_rank) problems.push(`${label}: price ${slot.price} is not the cost rank ${champion.proposed.cost_rank} (P-024).`);
+    if (slot.priceStatus !== 'provisional') problems.push(`${label}: prices must be marked provisional (P-024).`);
     if (offered.has(slot.championId)) problems.push(`${label} repeats ${slot.championId}.`);
     offered.add(slot.championId);
     if (reserved.has(slot.championId)) problems.push(`${label} offers reserved reward Champion ${slot.championId} (P-031).`);
@@ -429,7 +452,8 @@ export function transition(
     case 'continue': {
       if (state.phase !== 'decision') return wrongPhase(state, action);
       // The formation is kept so the player can adjust it; the finished battle is cleared.
-      return accept({ ...state, phase: 'preparation', encounterIndex: state.encounterIndex + 1, battle: null });
+      // P-023: the Tavern refreshes automatically for the new Monster Round.
+      return accept(withNewShop({ ...state, phase: 'preparation', encounterIndex: state.encounterIndex + 1, battle: null }, content));
     }
 
     case 'endExpedition': {

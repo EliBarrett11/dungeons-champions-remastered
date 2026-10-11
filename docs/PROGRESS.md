@@ -27,7 +27,7 @@ Update this file at the end of each approved milestone.
 - [x] M3 reviewed and merged into `main` (PR #7, merge commit `062da77`, 2026-10-11).
 - [x] M4 economy audit completed and prototype economy decisions P-023 to P-029 recorded (2026-10-11).
 - [x] M4 decisions P-030 and P-031 recorded and the M4 implementation plan (checkpoints A–F) approved by the owner (2026-10-11).
-- [ ] M4 implemented (checkpoints A–F). Checkpoint A done and approved (`8a78e42`); checkpoint B done 2026-10-11, awaiting owner review.
+- [ ] M4 implemented (checkpoints A–F). Checkpoints A (`8a78e42`) and B (`3f81232`) done and approved; checkpoint C done 2026-10-11, awaiting owner review.
 
 ## Session log
 
@@ -221,6 +221,14 @@ Update this file at the end of each approved milestone.
   - `expedition.ts`: state fields `goldEarned` and `goldSpent`; a new Expedition starts with 3 / 0 / 0; reward claims add their bundle Gold through `applyGoldChange`; `economyStateProblems` includes the reconciliation.
   - Tests: new `gold.test.ts`. Existing Gold expectations in `expedition.test.ts`, `run-flow.test.ts` and the smoke test raised by exactly 3, as P-025 requires, and one expected reconciliation message added in `economy-state.test.ts`. No assertion was removed or loosened.
 - **Results:** see the checkpoint B report.
+
+### 2026-10-11 — M4 checkpoint C: deterministic shop generation and provisional prices
+- **Scope:** shop generation only. No buying, rerolling, Gold spending, shop UI or reward changes. The engine, roster data, monsters, reward values, starting Gold 3 and Gold accounting, the 12 cap and fielding 1–3 are unchanged.
+- **Changes:**
+  - `shop.ts`: the P-029 stream (`SHOP_ROOT_OUTPUT` 5; `shopRootSeed` = output 5 of `Sfc32(seed)`; `shopSeed(k)` = output k+1 of `Sfc32(root)`); `generateShop` (six different Champions by a partial Fisher–Yates shuffle with the engine's `rollDie` and `BattleRng(shopSeed(k))`); slots carry `priceStatus: 'provisional'` and price = proposed cost rank.
+  - `expedition.ts`: `shopCandidates` (roster order, minus owned, minus all six reserved); shop 0 generated with the Expedition; a fresh shop on every accepted continue; the shop number advances only on generation; `economyStateProblems` checks the provisional marker; the content check refuses a round count whose roster draw would reach output 5.
+  - Tests: new `shop.test.ts`. `economy-state.test.ts` updated where checkpoint A asserted "no shop yet" (now shop 0 and next number 1); its invariant cases start from a shop-less copy, so each still checks exactly one problem; a provisional-marker case was added.
+- **Results:** see the checkpoint C report.
 
 ## Required end-of-task report
 - Milestone and scope

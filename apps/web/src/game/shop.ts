@@ -1,10 +1,11 @@
+import { BattleRng, Sfc32, rollDie } from '@dc/engine';
 import { EXPEDITION_CONFIG } from './config';
 
 /**
- * M4 economy state model (checkpoint A): the Tavern's slots and its shop numbering (P-023, P-029).
+ * M4 Tavern: state model (checkpoint A) and deterministic generation with provisional prices
+ * (checkpoint C; P-023, P-024, P-028, P-029, P-031). Purchases and rerolls arrive in checkpoint D.
  *
- * Shop generation, pricing, purchases and rerolls arrive in later checkpoints. Here the state only
- * records which shop is showing and which number the next generated shop will use:
+ * Shop numbering:
  * - `ShopState.number` is the shop number k of the offers on display (null before any shop exists);
  * - `ExpeditionState.nextShopNumber` is the k the next successful generation will use. Only a
  *   successful generation advances it; a rejected action never does (P-029).
@@ -13,8 +14,10 @@ import { EXPEDITION_CONFIG } from './config';
 export interface ShopSlot {
   /** Roster Champion id (DC-001 …). */
   readonly championId: string;
-  /** Provisional price in Gold: the Champion's PROPOSED cost rank (P-024). */
+  /** Price in Gold: the Champion's PROPOSED cost rank, 1–5 (P-024). Not a final balance value. */
   readonly price: number;
+  /** P-024: every shop price is provisional. */
+  readonly priceStatus: 'provisional';
   /** True once bought; a sold slot stays visible until the next refresh or reroll. */
   readonly sold: boolean;
 }
@@ -30,7 +33,7 @@ export const NO_SHOP: ShopState = Object.freeze({ number: null, slots: Object.fr
 
 /** The economy settings that other settings depend on (plain numbers, so tests can vary them). */
 export type EconomySettings = {
-  readonly [K in 'shopSlots' | 'rerollCost' | 'maxOwnedChampions' | 'startingGold' | 'startingBenchSize' | 'maxTeamSize']: number;
+  readonly [K in 'shopSlots' | 'rerollCost' | 'maxOwnedChampions' | 'startingGold' | 'startingBenchSize' | 'maxTeamSize' | 'encounterCount']: number;
 };
 
 const isWhole = (value: number) => Number.isSafeInteger(value);
@@ -52,4 +55,67 @@ export function economyConfigProblems(config: EconomySettings = EXPEDITION_CONFI
     }
   }
   return problems;
+}
+
+/**
+ * P-029 shop random stream. The Expedition seed's sfc32 outputs are already used as follows:
+ * outputs 1–3 are the battle seeds and output 4 seeds the starting bench and reward draw (P-022).
+ * The shop stream's root seed R is output 5 of a fresh Sfc32(expeditionSeed). Every derivation
+ * builds its own fresh generator, so nothing here can change the battle seeds or the roster draw.
+ */
+export const SHOP_ROOT_OUTPUT = 5;
+
+/** Output `n` (1-based) of a fresh sfc32 generator seeded with `seed`. */
+function nthOutput(seed: number, n: number): number {
+  const generator = new Sfc32(seed);
+  let value = 0;
+  for (let i = 0; i < n; i += 1) value = generator.nextUint32();
+  return value;
+}
+
+/** R: the root seed of an Expedition's shop stream (output 5 of Sfc32(expeditionSeed)). */
+export function shopRootSeed(expeditionSeed: number): number {
+  return nthOutput(expeditionSeed, SHOP_ROOT_OUTPUT);
+}
+
+/** The seed of shop number k (0-based): output k + 1 of a fresh Sfc32(R). */
+export function shopSeed(expeditionSeed: number, shopNumber: number): number {
+  if (!Number.isSafeInteger(shopNumber) || shopNumber < 0) throw new RangeError(`Shop number must be a whole number, 0 or more; received ${shopNumber}`);
+  return nthOutput(shopRootSeed(expeditionSeed), shopNumber + 1);
+}
+
+/** A Champion the shop may offer, with its PROPOSED cost rank. */
+export interface ShopCandidate {
+  readonly id: string;
+  readonly costRank: number;
+}
+
+/**
+ * Generates shop number `shopNumber` (P-023, P-024, P-029). `candidates` must be the eligible
+ * Champions in roster order: owned (P-028) and reserved reward Champions (P-031) already removed.
+ * Draws `slots` different Champions by a partial Fisher–Yates shuffle with the engine's rollDie,
+ * using new BattleRng(shopSeed(expeditionSeed, shopNumber)). Pure and deterministic.
+ */
+export function generateShop(
+  expeditionSeed: number,
+  shopNumber: number,
+  candidates: readonly ShopCandidate[],
+  slots: number = EXPEDITION_CONFIG.shopSlots,
+): ShopState {
+  if (candidates.length < slots) throw new RangeError(`Only ${candidates.length} Champions are eligible; the shop needs ${slots}.`);
+  const pool = [...candidates];
+  const rng = new BattleRng(shopSeed(expeditionSeed, shopNumber));
+  for (let i = 0; i < slots; i += 1) {
+    const j = i + rollDie(rng, pool.length - i) - 1;
+    [pool[i], pool[j]] = [pool[j]!, pool[i]!];
+  }
+  return {
+    number: shopNumber,
+    slots: pool.slice(0, slots).map((candidate) => ({
+      championId: candidate.id,
+      price: candidate.costRank,
+      priceStatus: 'provisional' as const,
+      sold: false,
+    })),
+  };
 }

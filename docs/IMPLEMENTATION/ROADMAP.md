@@ -101,7 +101,7 @@ Build in small vertical slices. Every milestone should end with a runnable resul
   - restarting resets the shop and the shop number;
   - a pre-M4 seed baseline (battle seeds, bench, reward draws, round-1 log hash) is pinned.
 
-**B. Starting Gold and single-path Gold accounting** (done 2026-10-11, awaiting owner review)
+**B. Starting Gold and single-path Gold accounting** (done 2026-10-11, commit `3f81232`, approved by the owner)
 - **Modules:** one Gold helper, `applyGoldChange` in a new `gold.ts` (income kind `reward`; spending kinds `purchase` and `reroll` prepared but unused until D), used by reward claims; state fields `goldEarned` and `goldSpent`; the reconciliation check in `economyStateProblems`; `startingGold` 3 in `config.ts`.
 - **Edge cases:** reward bundles still give 1, 1 or 3 Gold; Gold carries into the next round; restart gives 3 again.
 - **Tests:**
@@ -110,8 +110,8 @@ Build in small vertical slices. Every milestone should end with a runnable resul
   - Gold equals 3 + reward Gold − spending at every step;
   - Gold is never negative.
 
-**C. Deterministic six-slot shop, provisional prices, refresh timing**
-- **Modules:** `shop.ts` (`shopRootSeed`, `shopSeed(k)`, `generateShop`); `expedition.ts` (create and continue).
+**C. Deterministic six-slot shop, provisional prices, refresh timing** (done 2026-10-11, awaiting owner review)
+- **Modules:** `shop.ts` (`SHOP_ROOT_OUTPUT` = 5, `shopRootSeed`, `shopSeed(k)`, `generateShop`; shop slots carry `priceStatus: 'provisional'`); `expedition.ts` (`shopCandidates`; shop 0 on creation, a refresh on continue; the content check refuses a round count whose roster draw would reach output 5).
 - **Edge cases:** owned and all six reserved Champions excluded; refresh only on continue; no shop changes in other phases.
 - **Tests:**
   - the same seed and actions give identical shops;

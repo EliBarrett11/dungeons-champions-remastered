@@ -13,7 +13,10 @@ import {
 import type { ExpeditionState, ShopSlot } from '../src/game/index';
 import { act, deepFreeze, newExpedition, placeStandardTeam } from './support/play';
 
-/** M4 checkpoint A: economy configuration and state model (P-023 to P-031). No behaviour yet. */
+/**
+ * M4 economy configuration and state model (checkpoint A), updated in checkpoint C: an
+ * Expedition now opens with shop 0 (P-023), so the next shop number after creation is 1.
+ */
 
 describe('economy configuration (P-023, P-027)', () => {
   it('holds the owner-approved values and leaves the prototype limits unchanged', () => {
@@ -54,12 +57,12 @@ describe('economy configuration (P-023, P-027)', () => {
 });
 
 describe('Expedition economy state', () => {
-  it('starts with no shop and shop number 0 for every seed', () => {
+  it('starts with shop 0 (six offers) and next shop number 1 for every seed', () => {
     for (const seed of [0, 1, 24, 26, 4294967295]) {
       const state = newExpedition(seed);
-      expect(state.shop).toBe(NO_SHOP);
-      expect(state.shop).toEqual({ number: null, slots: [] });
-      expect(state.nextShopNumber).toBe(0);
+      expect(state.shop.number).toBe(0);
+      expect(state.shop.slots).toHaveLength(6);
+      expect(state.nextShopNumber).toBe(1);
       expect(economyStateProblems(state, PROTOTYPE_CONTENT)).toEqual([]);
     }
   });
@@ -68,20 +71,22 @@ describe('Expedition economy state', () => {
     let state = act(act(placeStandardTeam(newExpedition(24)), { type: 'startBattle' }), { type: 'finishBattle' });
     state = act(state, { type: 'chooseReward', bundleId: 'e1-gold' });
     state = act(state, { type: 'endExpedition' });
-    const dirty: ExpeditionState = { ...state, nextShopNumber: 7, shop: { number: 6, slots: [{ championId: 'DC-002', price: 2, sold: true }] } };
+    const dirty: ExpeditionState = { ...state, nextShopNumber: 7, shop: { number: 6, slots: [{ championId: 'DC-002', price: 2, priceStatus: 'provisional', sold: true }] } };
     const restarted = act(dirty, { type: 'newExpedition', seed: 24 });
-    expect(restarted.shop).toBe(NO_SHOP);
-    expect(restarted.nextShopNumber).toBe(0);
+    expect(restarted.shop).toEqual(newExpedition(24).shop);
+    expect(restarted.shop.number).toBe(0);
+    expect(restarted.nextShopNumber).toBe(1);
     expect(restarted).toEqual(newExpedition(24));
   });
 
-  it('keeps the economy consistent through a whole Expedition (no economy action exists yet)', () => {
+  it('keeps the economy consistent through a whole Expedition, with one new shop per round', () => {
     let state = placeStandardTeam(newExpedition(24));
-    for (const bundle of ['e1-champion-a', 'e2-gold']) {
+    for (const [round, bundle] of ['e1-champion-a', 'e2-gold'].entries()) {
       state = act(act(act(state, { type: 'startBattle' }), { type: 'finishBattle' }), { type: 'chooseReward', bundleId: bundle });
       expect(economyStateProblems(state, PROTOTYPE_CONTENT)).toEqual([]);
       state = act(state, { type: 'continue' });
-      expect([state.shop, state.nextShopNumber]).toEqual([NO_SHOP, 0]);
+      expect([state.shop.number, state.nextShopNumber]).toEqual([round + 1, round + 2]);
+      expect(economyStateProblems(state, PROTOTYPE_CONTENT)).toEqual([]);
     }
   });
 
@@ -107,11 +112,12 @@ describe('reserved reward Champions (P-031)', () => {
 });
 
 describe('economyStateProblems (invariant checker for later checkpoints)', () => {
-  const base = newExpedition(24);
+  // A shop-less copy of a new Expedition, so each case below adds exactly one shop to check.
+  const base: ExpeditionState = { ...newExpedition(24), shop: NO_SHOP, nextShopNumber: 0 };
   const owned = base.bench[0]!.championId;
   const reserved = base.offers[0]![0]!.champions[0]!;
   const free = PROTOTYPE_CONTENT.champions.find((c) => !base.bench.some((b) => b.championId === c.id) && !reservedRewardChampions(base).has(c.id))!;
-  const slot = (championId: string, price: number, sold = false): ShopSlot => ({ championId, price, sold });
+  const slot = (championId: string, price: number, sold = false): ShopSlot => ({ championId, price, priceStatus: 'provisional', sold });
   const priceOf = (id: string) => PROTOTYPE_CONTENT.champions.find((c) => c.id === id)!.proposed.cost_rank;
   const sixFree = PROTOTYPE_CONTENT.champions
     .filter((c) => !base.bench.some((b) => b.championId === c.id) && !reservedRewardChampions(base).has(c.id))
@@ -156,6 +162,10 @@ describe('economyStateProblems (invariant checker for later checkpoints)', () =>
       `Shop slot 5 offers reserved reward Champion ${reserved} (P-031).`,
       `Shop slot 6 offers owned Champion ${owned} (P-028).`,
     ]);
+    // Every price must carry the provisional marker (P-024).
+    const unmarked = [...sixFree];
+    unmarked[2] = { ...sixFree[2]!, priceStatus: 'final' as unknown as 'provisional' };
+    expect(economyStateProblems(withShop(unmarked), PROTOTYPE_CONTENT)).toEqual(['Shop slot 3: prices must be marked provisional (P-024).']);
     // A slot the player just bought is owned and sold: that is consistent.
     const bought = [...sixFree];
     bought[0] = slot(owned, priceOf(owned), true);
