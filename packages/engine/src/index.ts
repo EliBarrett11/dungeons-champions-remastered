@@ -17,6 +17,16 @@ export type {
   ValidationError,
 } from './types';
 export { validateBattleInput, assertValidBattleInput, InvalidBattleInputError } from './validate';
+export { setupBattle } from './battle/setup';
+export type { BattleSetup, SetupOptions, UnitState } from './battle/setup';
+export { LOG_VERSION } from './battle/events';
+export type {
+  SetupEvent,
+  BattleStartEvent,
+  SidesAssignedEvent,
+  InitiativeRolledEvent,
+  InitiativeResolvedEvent,
+} from './battle/events';
 export { parseDiceExpression, rollDiceExpression } from './dice/parse';
 export type { DiceExpression, DiceParseResult, DiceRoll } from './dice/parse';
 export { attackIntervalMs, firstActualAttackAtMs } from './rules/interval';
