@@ -24,7 +24,11 @@ Update this file at the end of each approved milestone.
 - [x] M2 first playable Expedition implemented and tested (2026-10-11) on branch `claude/modest-hamilton-ngoiru`; its two pending P-018 details were confirmed in the M3 review (R-003, R-004).
 - [x] M2 reviewed and merged into `main` (PR #6, merge commit `b00e885`, 2026-10-11).
 - [x] Approved 135-Champion roster recorded (D-017 to D-021, superseding D-003 and D-013) and integrated as M3 (P-022), 2026-10-11, on branch `claude/modest-hamilton-ngoiru`.
-- [ ] M3 reviewed and merged into `main`.
+- [x] M3 reviewed and merged into `main` (PR #7, merge commit `062da77`, 2026-10-11).
+- [x] M4 economy audit completed and prototype economy decisions P-023 to P-029 recorded (2026-10-11).
+- [x] M4 decisions P-030 and P-031 recorded and the M4 implementation plan (checkpoints A–F) approved by the owner (2026-10-11).
+- [x] M4 economy and recruitment implemented and tested (checkpoints A–F, 2026-10-11): A `8a78e42`, B `3f81232`, C `8774c13`, D `823d368`, E `abe8b8e` approved; F awaiting owner review.
+- [ ] M4 reviewed and merged into `main`.
 
 ## Session log
 
@@ -188,6 +192,84 @@ Update this file at the end of each approved milestone.
   - team capacity stays 12, the bench of four and 1–3 fielding are unchanged, and Renown is not implemented (R-005).
   No code or rule values changed as a result.
 - **Next smallest task:** review and merge of the M3 pull request. M4 is not started.
+
+### 2026-10-11 — M4 economy decisions recorded (documentation only)
+- **Scope:** recorded the owner's M4 prototype economy decisions after the M4 audit. Source code, tests, configuration, roster data and schemas were not changed. Nothing was committed.
+- **Decisions:** P-023 (Tavern: 6 slots, auto-refresh, 2-Gold reroll of all six), P-024 (price = provisional cost rank 1–5, not final balance), P-025 (starting Gold 3), P-026 (reward choices unchanged; no base income, interest or streaks; Gold carries between rounds), P-027 (12 owned Champions from all sources; starting four and fielding 1–3 unchanged), P-028 (no owned or reserved reward Champions in the shop; no combining), P-029 (separate seeded shop stream).
+- **Documents changed:** `DECISIONS.md`, `GAMEPLAY/ECONOMY.md`, `GAMEPLAY/DUNGEON_AND_REWARDS.md`, `GLOSSARY.md`, `OPEN_QUESTIONS.md`, `IMPLEMENTATION/ROADMAP.md` (M4 checkpoints A–F, proposed), this file.
+- **Follow-up review (same day):**
+  - P-030: Champion bundles disabled at the 12 cap, 3-Gold bundle always available;
+  - P-031: all six reward Champions reserved for the whole Expedition;
+  - the shop-stream derivation approved in principle, with acceptance tests showing unchanged seeds, bench, reward draws and battle logs, and rejected actions never using a shop number;
+  - checkpoints A–F approved;
+  - two-player matches, the bot, player Health and match-end rules moved to M8 with their requirements kept.
+- **Next:** M4 checkpoint A when the owner has reviewed this documentation. No code has changed yet.
+
+### 2026-10-11 — M4 checkpoint A: economy configuration and state model
+- **Scope:** settings and state only. There is no Gold accounting, shop generation, purchase, reroll or UI change. The engine, battle seeds, bench and reward draws, reward values and roster data are unchanged. Starting Gold stays 0 until checkpoint B, which adds the P-025 value of 3.
+- **Changes:**
+  - `config.ts`: `shopSlots` 6, `rerollCost` 2, `maxOwnedChampions` 12.
+  - New `shop.ts`: shop slot and shop types, the empty shop, settings validation.
+  - `expedition.ts`: state fields `shop` (number and slots) and `nextShopNumber`, initialised empty and 0 and reset on a new Expedition; `reservedRewardChampions` (all six, for the whole Expedition); `economyStateProblems` (consistency checks for Gold, the cap, duplicates, shop numbering, slot count, prices, and reserved or owned offers); the content check also validates the settings and that a six-slot shop can always be filled (117 eligible with a full collection).
+  - Tests: new `economy-state.test.ts` and `seed-baseline.test.ts`, and one expected-message addition in `expedition.test.ts`.
+- **Results:** see the checkpoint A report. Every check passes, and 9 deliberate bugs were each caught by the tests.
+
+### 2026-10-11 — M4 checkpoint B: starting Gold and single-path Gold accounting
+- **Scope:** Gold only. No shop generation, purchases, rerolls or shop UI. The engine, roster data, monsters, reward bundles and values, the 12 cap, fielding 1–3, and the battle, bench and reward draws are unchanged.
+- **Changes:**
+  - `config.ts`: `startingGold` 3 (P-025).
+  - New `gold.ts`: `applyGoldChange`, the one function that changes Gold. Income kind `reward`; spending kinds `purchase` and `reroll` are prepared but unused. Spending more than is held, or a negative or fractional amount, is refused without changing anything. Also `startingGoldAccount` and `goldAccountProblems` (Gold = 3 + earned − spent, nothing negative).
+  - `expedition.ts`: state fields `goldEarned` and `goldSpent`; a new Expedition starts with 3 / 0 / 0; reward claims add their bundle Gold through `applyGoldChange`; `economyStateProblems` includes the reconciliation.
+  - Tests: new `gold.test.ts`. Existing Gold expectations in `expedition.test.ts`, `run-flow.test.ts` and the smoke test raised by exactly 3, as P-025 requires, and one expected reconciliation message added in `economy-state.test.ts`. No assertion was removed or loosened.
+- **Results:** see the checkpoint B report.
+
+### 2026-10-11 — M4 checkpoint C: deterministic shop generation and provisional prices
+- **Scope:** shop generation only. No buying, rerolling, Gold spending, shop UI or reward changes. The engine, roster data, monsters, reward values, starting Gold 3 and Gold accounting, the 12 cap and fielding 1–3 are unchanged.
+- **Changes:**
+  - `shop.ts`: the P-029 stream (`SHOP_ROOT_OUTPUT` 5; `shopRootSeed` = output 5 of `Sfc32(seed)`; `shopSeed(k)` = output k+1 of `Sfc32(root)`); `generateShop` (six different Champions by a partial Fisher–Yates shuffle with the engine's `rollDie` and `BattleRng(shopSeed(k))`); slots carry `priceStatus: 'provisional'` and price = proposed cost rank.
+  - `expedition.ts`: `shopCandidates` (roster order, minus owned, minus all six reserved); shop 0 generated with the Expedition; a fresh shop on every accepted continue; the shop number advances only on generation; `economyStateProblems` checks the provisional marker; the content check refuses a round count whose roster draw would reach output 5.
+  - Tests: new `shop.test.ts`. `economy-state.test.ts` updated where checkpoint A asserted "no shop yet" (now shop 0 and next number 1); its invariant cases start from a shop-less copy, so each still checks exactly one problem; a provisional-marker case was added.
+- **Results:** see the checkpoint C report.
+
+### 2026-10-11 — M4 checkpoint D: purchases, rerolls and capacity
+- **Scope:** game logic only; no browser shop panel (checkpoint E). The engine, reward values, monsters, roster data, starting four and fielding 1–3 are unchanged.
+- **Changes (`expedition.ts`):**
+  - Action `buy` (slot 0–5), preparation only. Checks run in order: phase, slot exists, not sold, fewer than 12 owned, Champion data exists, enough Gold. The provisional price is spent through `applyGoldChange` ('purchase'); the Champion is added once as a new instance, not placed on the board; the slot is marked sold; the shop number is unchanged.
+  - Action `reroll`, preparation only. It spends 2 Gold through `applyGoldChange` ('reroll'), then generates the next numbered shop (all six slots replaced; the shop number advances once).
+  - Reward claims: at 12 owned, Champion bundles are refused, and the 3-Gold bundle stays available (P-030).
+  - Every rejection returns the identical state: Gold, accounting, collection, offers, sold flags and shop numbering are unchanged.
+- **Tests:** new `purchase.test.ts`. No existing test was changed.
+- **Results:** see the checkpoint D report.
+
+### 2026-10-11 — M4 checkpoint E: browser Tavern
+- **Scope:** UI only, plus a pure helper for button states. No new rules: selling, duplicates, combining, interest, streaks, XP and levels stay out; reward values, monsters, the engine and roster data are unchanged.
+- **Changes:**
+  - New `apps/web/src/game/shopView.ts`: `priceLabel` ("Price: N Gold · provisional"), `buyAvailability`, `rerollAvailability` and `rewardAvailability`. They give "Sold", "Need N Gold (you have M)", "Collection full (12)", "Reroll: need 2 Gold (you have M)" and "Available during preparation".
+  - `ui/app.ts`: a Tavern panel on the preparation screen only (six cards with name, price, card details and a Buy button; a "Reroll all six (2 Gold)" button; a summary of Gold and owned count). Unavailable buttons are disabled and say why in words, with accessible labels. Reward cards are disabled at the cap with "Collection full (12)" (the 3-Gold card stays). The reward screen says Gold carries over and can be spent in the Tavern.
+  - `ui/styles.css`: price and sold styles; a sold card's name also reads "(sold)".
+  - Tests: new `shop-view.test.ts`, including over 1,000 button states checked against `transition`. The smoke test gains a Tavern flow and a mobile check. The existing M3 trait-line check is scoped to the bench, because Tavern cards reuse the same card details; it still requires exactly four bench cards.
+- **Not covered in the browser:** the "Collection full (12)" states, which need 12 owned. That isn't reachable in a short scripted run; unit tests cover the labels and the button-to-rule agreement.
+- **Results:** see the checkpoint E report.
+
+### 2026-10-11 — M4 checkpoint F: regression, browser verification and documentation
+- **Audit of checkpoints A–E against P-023 to P-031:**
+  - Starting Gold 3, reset on a new Expedition; Gold carries between rounds and reconciles (3 + earned − spent).
+  - The six-slot Tavern is generated only on creation, on continue and on an accepted reroll.
+  - Prices equal the proposed cost ranks and are marked provisional.
+  - Purchases and rerolls spend only through `applyGoldChange`; no other code changes Gold (also enforced by a source-scan test).
+  - Owned Champions and all six reserved reward Champions are never offered.
+  - The 12 cap applies to purchases and Champion rewards; the 3-Gold reward stays available at the cap.
+  - Reward bundles and values are unchanged; fielding stays 1–3.
+  - No selling, combining, levels, interest, streaks, XP or multiplayer code exists (only comments saying they are excluded).
+  - Rejected actions return the identical state and never advance the shop number.
+  - The P-029 derivation is unchanged (root = output 5; shop k = output k+1).
+  - The engine and roster data are unchanged since `main`.
+  - **No rule violations found.**
+- **Gaps closed (tests):**
+  - New `m4-regression.test.ts`: the 12-Champion reward state reached by real play with seed 79 (cheapest purchases and 3-Gold rewards, no Gold injected), with purchase refusals that must name the cap; restart after purchases equals a fresh Expedition and replays identically; and a property test with random actions of every type over 80 seeds (over 1,000 rejections, each returning the identical state; accepted actions advance the shop number only for continue, reroll and new Expedition).
+  - The browser smoke test gains the same seed-79 path: 12 owned, "Collection full (12)" offers, disabled Champion reward cards, the 3-Gold reward clearing the Expedition, then a restart.
+- **Documentation fixed:** `ECONOMY.md` and `GLOSSARY.md` no longer say "not yet implemented"; the roadmap's M4 status now says implemented and tested but not merged; `CHAMPIONS.md` notes that the full-game shared pool, selling and combining are not in the prototype. Provisional and prototype labels are unchanged; nothing was promoted to a final rule.
+- **Results:** see the checkpoint F report.
 
 ## Required end-of-task report
 - Milestone and scope

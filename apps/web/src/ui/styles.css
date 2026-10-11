@@ -135,3 +135,7 @@ button:focus-visible { outline: 3px solid var(--player); outline-offset: 2px; }
 details { font-size: 0.85rem; color: var(--muted); }
 details summary { cursor: pointer; }
 .proposed { margin: 4px 0 0; padding-left: 18px; }
+
+.tavern .price { font-weight: 700; margin: 0; }
+.card.sold { opacity: 0.7; }
+.card.sold h3::after { content: " (sold)"; font-weight: 400; }

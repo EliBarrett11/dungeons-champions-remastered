@@ -35,3 +35,14 @@
 
 ## Provisional streak schedule (NOT APPROVED)
 A prior proposal was: 1 win +0; 2–3 wins +1; 4–5 wins +2; 6–7 wins +3; 8+ wins +3 (cap). Keep this in configuration only if the user approves a provisional prototype value.
+
+## Prototype economy for the single-player Expedition (M4, PROVISIONAL)
+Owner-approved on 2026-10-11 as prototype rules (`DECISIONS.md` P-023 to P-031). **Implemented in M4** (the browser Tavern on the preparation screen). They are PROVISIONAL prototype rules, not final balance. They apply to the browser Expedition only and do not settle the match economy above (Gold income after PvP Rounds, interest, streaks, shared pool and shop odds remain as documented or unresolved).
+- **Tavern:** six slots; refreshed automatically each Monster Round; reroll ("Purchase a Drink") 2 Gold, replacing all six slots (P-023).
+- **Prices:** shop price = the Champion's PROPOSED roster cost rank, 1–5 Gold. Provisional; not final balance (P-024).
+- **Starting Gold:** 3 per new Expedition; resets to 3 when a new Expedition begins (P-025).
+- **Income:** only the existing victory reward choices (unchanged: 1 Gold + Champion, 1 Gold + Champion, or 3 Gold). No base income, interest or streak bonuses in the prototype. Gold carries between rounds within an Expedition (P-026).
+- **Capacity:** at most 12 owned Champions from all sources; starting collection 4; fielding 1–3 (P-027). At 12, the Champion reward bundles are disabled and the 3-Gold bundle stays available (P-030).
+- **Duplicates:** owned Champions and all six of the Expedition's reserved reward Champions (for the whole Expedition, including ones passed up) are never offered; no combining (P-028, P-031).
+- **Randomness:** a separate seeded shop stream; existing battles, bench, reward draws and replays unchanged; a rejected action never changes the shop or its numbering (P-029).
+- **Out of scope:** selling, duplicate combining, interest, streak bonuses, XP and levels.

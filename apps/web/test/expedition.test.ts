@@ -22,9 +22,9 @@ function rejected(state: ExpeditionState, action: Parameters<typeof transition>[
 }
 
 describe('createExpedition', () => {
-  it('starts in preparation with the starting bench, no board, no Gold and no battle', () => {
+  it('starts in preparation with the starting bench, no board, 3 Gold (P-025) and no battle', () => {
     const state = newExpedition(7);
-    expect(state).toMatchObject({ seed: 7, phase: 'preparation', encounterIndex: 0, formation: [], gold: 0, battle: null, history: [] });
+    expect(state).toMatchObject({ seed: 7, phase: 'preparation', encounterIndex: 0, formation: [], gold: 3, battle: null, history: [] });
     expect(state.bench.map((b) => b.instanceId)).toEqual(['c1', 'c2', 'c3', 'c4']);
     for (const b of state.bench) expect(PROTOTYPE_CONTENT.champions.some((c) => c.id === b.championId)).toBe(true);
   });
@@ -100,6 +100,7 @@ describe('invalid content and engine validation (AC-08)', () => {
     };
     expect(contentProblems(broken)).toEqual([
       'The roster has 5 playable Champions; an Expedition draws 8.',
+      'Only 0 Champions could be offered with a full collection; the shop has 6 slots.',
       'Encounter 1 has 0 monsters; the engine allows 1-5.',
       'Encounter 1 offers 2 reward bundles; P-019 requires exactly 3.',
       'Encounter 1: bundle "a" has invalid Gold.',

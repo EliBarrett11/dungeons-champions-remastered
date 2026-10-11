@@ -29,7 +29,9 @@ Definitions are taken from the existing documentation; the source is given for e
 | **Fame** | Persistent resource that determines Renown; e.g. "Play my song" costs 4 Gold and grants 4 Fame. Thresholds UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
 | **Renown** | Starts at 1, capped at 12 (D-019). Not implemented in the prototype. A player may field one Champion per Renown level. Whether it also acts as "player level" for shop odds: UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
 | **Tavern** | The shop: six slots, refreshes automatically every Round. Each player's interaction is private; offers are visible to all and reserve nothing. | `GAMEPLAY/ECONOMY.md`, D-009 |
-| **Drink ("Purchase a Drink")** | Costs 2 Gold and rerolls all six Tavern slots. | `GAMEPLAY/ECONOMY.md` |
+| **Drink ("Purchase a Drink")** | Costs 2 Gold and rerolls all six Tavern slots. Adopted for the prototype Expedition by P-023 and implemented in M4 (2 Gold, replaces all six offers). | `GAMEPLAY/ECONOMY.md`, P-023 |
+| **Reserved reward Champions (prototype)** | The six roster Champions drawn when an Expedition starts for its victory reward choices (two per Monster Round). Reserved for the whole Expedition, including ones passed up; the M4 shop never offers them. Not related to the shared pool (D-009). | P-022, P-028, P-031 |
+| **Owned Champions / collection (prototype)** | Every Champion the player owns in an Expedition (the UI calls it the bench). Starts at four; at most 12 from all sources (P-027, P-030). Fielding is limited separately to 1–3. | P-020, P-027, P-030 |
 
 ## Champions
 

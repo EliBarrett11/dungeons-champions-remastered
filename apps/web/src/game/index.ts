@@ -17,6 +17,9 @@ export {
   currentEncounter,
   currentOffers,
   drawRosterChampions,
+  economyStateProblems,
+  reservedRewardChampions,
+  shopCandidates,
   encounterSeed,
   parseSeed,
   playerOutcome,
@@ -38,3 +41,9 @@ export { buildBattleView, eventCountAt, outcomeText, snapshotAfter } from './bat
 export type { BattleView, LogLine, Team, UnitSnapshot, ViewUnit } from './battleView';
 export { DOCUMENTED_ROLES, ROSTER_RULES, TRAIT_CANON, validateRoster } from './roster';
 export type { ProposedChampionContent, Roster, RosterChampion, RosterValidation, TraitCanon } from './roster';
+export { NO_SHOP, SHOP_ROOT_OUTPUT, economyConfigProblems, generateShop, shopRootSeed, shopSeed } from './shop';
+export type { EconomySettings, ShopCandidate, ShopSlot, ShopState } from './shop';
+export { applyGoldChange, goldAccountProblems, startingGoldAccount } from './gold';
+export type { GoldAccount, GoldChange, GoldIncome, GoldResult, GoldSpending } from './gold';
+export { buyAvailability, priceLabel, rerollAvailability, rewardAvailability } from './shopView';
+export type { Availability } from './shopView';

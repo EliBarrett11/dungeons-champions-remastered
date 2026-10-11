@@ -19,6 +19,7 @@ There are exactly 135 Champions (D-017); each Race+Class+Origin combination is u
 - Selling returns all copies to the shared pool and returns the Champion's full sell value; the precise meaning of “full value” and the sell-value formula need specification.
 - When a player is eliminated, all owned Champions/copies return to the shared pool.
 - Buying at level 10 and overflow-copy behavior remain unresolved.
+- **Prototype (M4) note:** the browser Expedition has no shared pool, no selling and no combining. Its Tavern never offers a Champion the player owns or one reserved for rewards (P-028, P-031), so these full-game rules are not exercised or implemented there.
 
 ## Fielding progression
 - Consecutive Rounds fielded progress a Champion's level.

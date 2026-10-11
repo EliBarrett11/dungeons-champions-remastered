@@ -2,6 +2,10 @@ import type { UnitStats } from '@dc/engine';
 import {
   EXPEDITION_CONFIG,
   boardRows,
+  buyAvailability,
+  priceLabel,
+  rerollAvailability,
+  rewardAvailability,
   buildBattleView,
   championOf,
   createExpedition,
@@ -238,7 +242,57 @@ export class ExpeditionApp {
         : h('p', { class: 'warning' }, 'Encounter data is missing.'),
     );
 
-    return h('div', { class: 'prep' }, enemy, board, bench);
+    return h('div', { class: 'prep' }, enemy, board, bench, this.tavernPanel());
+  }
+
+  /** M4 Tavern (P-023 to P-031). Rendered only on the preparation screen. */
+  private tavernPanel(): Node {
+    const { state, content } = this;
+    const reroll = rerollAvailability(state);
+    return h(
+      'section',
+      { class: 'panel tavern', 'data-testid': 'tavern' },
+      h('h2', {}, 'Tavern'),
+      h(
+        'p',
+        { class: 'hint', 'data-testid': 'tavern-summary' },
+        `You have ${state.gold} Gold and own ${state.bench.length} of ${EXPEDITION_CONFIG.maxOwnedChampions} Champions. `,
+        'Offers refresh each Monster Round. Prices are provisional (each Champion\'s proposed cost). Bought Champions join your collection; place them on the board yourself.',
+      ),
+      h(
+        'ul',
+        { class: 'cards' },
+        state.shop.slots.map((slot, index) => {
+          const champion = content.champions.find((c) => c.id === slot.championId);
+          const name = champion?.name ?? slot.championId;
+          const buy = buyAvailability(state, index);
+          return h(
+            'li',
+            { class: `card shop${slot.sold ? ' sold' : ''}`, 'data-testid': `shop-slot-${index}` },
+            h('h3', {}, name),
+            h('p', { class: 'price', 'data-testid': `price-${index}` }, priceLabel(slot)),
+            champion ? this.championDetails(champion) : h('p', { class: 'warning' }, 'Champion data missing.'),
+            button(buy.label, () => this.dispatch({ type: 'buy', slot: index }), {
+              class: buy.available ? 'primary' : '',
+              disabled: !buy.available,
+              'aria-label': buy.available ? `Buy ${name} for ${slot.price} Gold` : `${name}: ${buy.label}`,
+              'data-testid': `buy-${index}`,
+            }),
+          );
+        }),
+      ),
+      h(
+        'div',
+        { class: 'actions' },
+        button(reroll.label, () => this.dispatch({ type: 'reroll' }), {
+          disabled: !reroll.available,
+          'aria-label': reroll.available
+            ? `Reroll all six Tavern offers for ${EXPEDITION_CONFIG.rerollCost} Gold`
+            : reroll.label,
+          'data-testid': 'reroll',
+        }),
+      ),
+    );
   }
 
   private championDetails(champion: PlayableChampion): Node {
@@ -403,7 +457,11 @@ export class ExpeditionApp {
       'section',
       { class: 'panel' },
       h('h2', {}, 'Choose one reward'),
-      h('p', { class: 'hint' }, 'Gold is tracked but cannot be spent yet in this prototype. New Champions join your bench.'),
+      h(
+        'p',
+        { class: 'hint', 'data-testid': 'reward-hint' },
+        `You have ${this.state.gold} Gold. Gold carries over to the next round and can be spent in the Tavern during preparation. New Champions join your collection (at most ${EXPEDITION_CONFIG.maxOwnedChampions}).`,
+      ),
       h('ul', { class: 'cards' }, currentOffers(this.state).map((bundle) => this.bundleCard(bundle))),
     );
   }
@@ -420,10 +478,13 @@ export class ExpeditionApp {
           ? h('div', {}, h('p', {}, h('strong', {}, `Champion: ${champion.name}`)), this.championDetails(champion))
           : h('p', { class: 'warning' }, `Unknown Champion ${bundle.champions[index]}`),
       ),
-      button('Choose this reward', () => this.dispatch({ type: 'chooseReward', bundleId: bundle.id }), {
-        class: 'primary',
-        'data-testid': `choose-${bundle.id}`,
-      }),
+      ((choice) =>
+        button(choice.label, () => this.dispatch({ type: 'chooseReward', bundleId: bundle.id }), {
+          class: choice.available ? 'primary' : '',
+          disabled: !choice.available,
+          'aria-label': choice.available ? `Choose: +${bundle.gold} Gold${bundle.champions.length ? ' and a Champion' : ''}` : choice.label,
+          'data-testid': `choose-${bundle.id}`,
+        }))(rewardAvailability(this.state, bundle)),
     );
   }
 
