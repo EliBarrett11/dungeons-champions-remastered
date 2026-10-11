@@ -14,7 +14,8 @@ Update this file at the end of each approved milestone.
 - [x] Health-below-zero vs. M1 acceptance item 4 resolved by P-012 Health clamping (2026-10-11).
 - [x] Ultimate-first same-timestamp resolution P-013 recorded (2026-10-11).
 - [x] Basic Attack dice rolled and stored at commitment P-014 recorded (2026-10-11).
-- [ ] Architecture / tech stack (T-001, T-002) and minimal dev dependencies approved.
+- [x] M1 tech stack approved: TypeScript + Vitest headless engine package (T-008, 2026-10-11). Full-game architecture T-001 to T-007 remains PROPOSED.
+- [x] M1 readiness decisions recorded: fixture Basic Attack P-015, content-check rules T-009, targeting/defeated attackers P-016 (2026-10-11).
 - [ ] Schema fixes from the audit applied.
 - [ ] M1 headless deterministic duel implemented and tested.
 
@@ -47,6 +48,11 @@ Update this file at the end of each approved milestone.
 - **Scope:** record P-014 (Option A). No code, schemas, templates, examples or dependencies changed.
 - **Changes:** `COMBAT/PROTOTYPE_RULESET_V0.md` (section 9.2 rewritten as the full random-number order; new section 9.3 on the stored attack outcome; sections 7, 10, 11.1 and 12 aligned); `COMBAT/RESOLUTION_CONTRACT.md` (section 4: P-013 steps, P-014 summary, old algorithm's roll step marked superseded); `DECISIONS.md` (P-014 and notes on earlier entries); `OPEN_QUESTIONS.md` (random-number timing resolved; opening-Ultimate draw placement added); `IMPLEMENTATION/ROADMAP.md` (M1 scope and tests; M4 Ultimate tests); `GLOSSARY.md` (Commitment).
 - **Next smallest task:** owner approves the M1 tech stack and dependencies; then implement M1.
+
+### 2026-10-11 — M1 readiness decisions (documentation only)
+- **Scope:** record the four decisions approved after the M1 implementation-readiness audit. No code, schemas, templates, examples or dependencies changed.
+- **Changes:** `DECISIONS.md` (T-008, T-009, P-015, P-016; P-007 note); `COMBAT/PROTOTYPE_RULESET_V0.md` (sections 3, 7, 8, 9.2, 11.1, 12 and header); `COMBAT/RESOLUTION_CONTRACT.md` (section 4); `IMPLEMENTATION/ROADMAP.md` (M0 status, M1 scope, acceptance item 7, required tests); `OPEN_QUESTIONS.md` (headless-first question resolved for M1; content-check note).
+- **Next smallest task:** implement M1, starting with the package scaffold and `npm run check`, when the owner asks.
 
 ## Required end-of-task report
 - Milestone and scope

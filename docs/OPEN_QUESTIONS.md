@@ -88,12 +88,13 @@ This list is intentionally honest about gaps. The presence of a proposal elsewhe
 - How "last-placed player" is defined for Monster Round difficulty (Health? placement?), including on Floor 1 before any PvP Round.
 
 ### Technical/product
-- Whether the initial vertical slice should be headless-only before browser UI.
+- Whether the initial vertical slice should be headless-only before browser UI — RESOLVED for M1 by T-008 (headless TypeScript engine, no UI in M1). Later milestones follow the roadmap.
 - Board rendering technology (Canvas vs DOM) after prototype evidence.
 - Persistence/authentication requirements and whether matches are private rooms or matchmaking.
 - Deployment provider, telemetry, accessibility and browser support.
 
 ### Schema and content-data issues (found by the 2026-10-11 audit; schemas not yet edited)
+For M1, T-009 decides how the content check treats these: the missing placeholder references and the `attack_commit` mismatch are warnings, not failures. The issues themselves remain open.
 All 9 JSON files parse and the 3 schemas are valid JSON Schema Draft 2020-12; all templates and examples validate against their schemas. The following were found and still need fixing in `docs/COMBAT/schemas/`, `docs/COMBAT/templates/` and `docs/COMBAT/examples/`:
 - Resolution window name mismatch: `docs/COMBAT/templates/ability-template.json` and `docs/COMBAT/examples/storm_vanguard.json` use `attack_commit`; the effect schema and resolution contract use `action_commit`. The ability schema accepts any string for `resolution_window`.
 - Status enums differ: ability/effect `established|proposed|illustrative|deprecated`; champion `proposed|approved|implemented|deprecated`. See the mapping in `DECISIONS.md`.

@@ -35,8 +35,8 @@ The established behavior implies a timed, simultaneous simulation rather than co
 
 ### Same-timestamp resolution order — PROVISIONAL (P-013)
 Commitment and resolution are separate stages. At each timestamp before the 60,000 ms hard stop (`PROTOTYPE_RULESET_V0.md` section 7):
-1. Identify eligible actions: ready Ultimates and Basic Attacks whose timers expire at that timestamp.
-2. Commit every eligible Basic Attack before anything resolves, one at a time in the P-010 order. Commitment fixes its target and inputs (state at the start of the timestamp), rolls its d20 and, on a hit, its damage dice, calculates the hit's complete damage from the fixed inputs, and stores the outcome. Health is not changed at commitment (P-014).
+1. Identify eligible actions: ready Ultimates and Basic Attacks of non-defeated Champions whose timers expire at that timestamp. A Champion defeated at an earlier moment commits no new Basic Attacks (P-016).
+2. Commit every eligible Basic Attack before anything resolves, one at a time in the P-010 order. Only non-defeated Champions commit; for targeting, only slots holding a non-defeated Champion count as occupied (P-016). Commitment fixes its target and inputs (state at the start of the timestamp), rolls its d20 and, on a hit, its damage dice, calculates the hit's complete damage from the fixed inputs, and stores the outcome. Health is not changed at commitment (P-014).
 3. Resolve ready Ultimates one at a time, in the C-010/P-010 order, rechecking caster and target validity before each (C-010).
 4. Resolve committed Basic Attacks in the P-010 order with their fixed targets, inputs and stored outcomes. No dice are rolled at this stage. They are not cancelled, retargeted or re-rolled because a target or attacker was defeated after commitment, and nothing an Ultimate does in step 3 can change a stored outcome.
 5. Apply P-012 Health clamping to every damage application. Decide the battle result after all actions at the timestamp have resolved.
