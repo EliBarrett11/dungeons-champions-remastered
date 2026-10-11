@@ -297,6 +297,48 @@ async function main() {
     await page.getByTestId('tavern').waitFor();
     check((await text(page, 'status-gold')) === '3' && (await page.locator('[data-testid^="shop-slot-"]').count()) === 6, 'restart resets Gold to 3 with a fresh six-slot Tavern');
 
+    // ---- Flow 6 (M4 checkpoint F): the 12-Champion cap reached by real play (seed 79). The
+    // standard team wins every round while the cheapest offers are bought and the 3-Gold reward
+    // is taken (same script as m4-regression.test.ts). ----
+    const roundTo = async (bundle) => {
+      await page.getByTestId('start-battle').click();
+      await page.getByTestId('screen-battle').waitFor();
+      await page.getByTestId('skip-battle').click();
+      await page.getByTestId('finish-battle').click();
+      await page.getByTestId('screen-reward').waitFor();
+      if (bundle) {
+        await page.getByTestId(`choose-${bundle}`).click();
+        await page.getByTestId('continue').click();
+        await page.getByTestId('tavern').waitFor();
+      }
+    };
+    await page.goto(`${BASE}?seed=79`);
+    await placeTeam(page);
+    for (const slot of [1, 2, 3]) await page.getByTestId(`buy-${slot}`).click();
+    await roundTo('e1-gold');
+    for (const slot of [2, 5]) await page.getByTestId(`buy-${slot}`).click();
+    await roundTo('e2-gold');
+    for (const slot of [0, 1, 3]) await page.getByTestId(`buy-${slot}`).click();
+    check((await text(page, 'status-bench')) === '12' && (await text(page, 'status-gold')) === '1', 'real play reaches 12 owned Champions with 1 Gold (seed 79)');
+    const fullLabels = await page.locator('[data-testid^="shop-slot-"]').evaluateAll((cards) =>
+      cards.filter((card) => !card.className.includes('sold')).map((card) => card.querySelector('[data-testid^="buy-"]').textContent),
+    );
+    check(fullLabels.length > 0 && fullLabels.every((label) => label === 'Collection full (12)'), `every unsold offer says "Collection full (12)" (${fullLabels.join(' | ')})`);
+    await roundTo(null);
+    check(
+      (await page.getByTestId('choose-e3-champion-a').isDisabled()) && (await text(page, 'choose-e3-champion-a')) === 'Collection full (12)' &&
+        (await page.getByTestId('choose-e3-champion-b').isDisabled()),
+      'at 12 owned, both Champion reward cards are disabled and say "Collection full (12)"',
+    );
+    check(await page.getByTestId('choose-e3-gold').isEnabled(), 'at 12 owned, the 3-Gold reward stays available');
+    await shot(page, '12-reward-at-cap');
+    await page.getByTestId('choose-e3-gold').click();
+    await page.getByTestId('screen-ended').waitFor();
+    check((await text(page, 'end-title')) === 'Expedition cleared!' && (await text(page, 'status-gold')) === '4', 'the 3-Gold reward at the cap clears the Expedition with 4 Gold');
+    await page.getByTestId('new-expedition').click();
+    await page.getByTestId('tavern').waitFor();
+    check((await text(page, 'status-gold')) === '3' && (await text(page, 'status-bench')) === '4', 'restart after the cap run resets to 3 Gold and 4 Champions');
+
     // ---- Narrow viewport renders without horizontal scrolling. ----
     await page.setViewportSize({ width: 375, height: 800 });
     await page.goto(`${BASE}?seed=24`);

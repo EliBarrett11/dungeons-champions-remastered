@@ -37,7 +37,7 @@
 A prior proposal was: 1 win +0; 2–3 wins +1; 4–5 wins +2; 6–7 wins +3; 8+ wins +3 (cap). Keep this in configuration only if the user approves a provisional prototype value.
 
 ## Prototype economy for the single-player Expedition (M4, PROVISIONAL)
-Owner-approved on 2026-10-11 as prototype rules (`DECISIONS.md` P-023 to P-031). **Not yet implemented.** They apply to the browser Expedition only and do not settle the match economy above (Gold income after PvP Rounds, interest, streaks, shared pool and shop odds remain as documented or unresolved).
+Owner-approved on 2026-10-11 as prototype rules (`DECISIONS.md` P-023 to P-031). **Implemented in M4** (the browser Tavern on the preparation screen). They are PROVISIONAL prototype rules, not final balance. They apply to the browser Expedition only and do not settle the match economy above (Gold income after PvP Rounds, interest, streaks, shared pool and shop odds remain as documented or unresolved).
 - **Tavern:** six slots; refreshed automatically each Monster Round; reroll ("Purchase a Drink") 2 Gold, replacing all six slots (P-023).
 - **Prices:** shop price = the Champion's PROPOSED roster cost rank, 1–5 Gold. Provisional; not final balance (P-024).
 - **Starting Gold:** 3 per new Expedition; resets to 3 when a new Expedition begins (P-025).

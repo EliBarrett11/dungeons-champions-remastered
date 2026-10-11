@@ -74,7 +74,7 @@ Build in small vertical slices. Every milestone should end with a runnable resul
 ## M4 — Economy and recruitment (prototype Expedition)
 **Goal:** a functional Gold economy in the single-player Expedition: a seeded six-slot Tavern, buying roster Champions, and rerolls, under the owner-approved prototype rules P-023 to P-031 (2026-10-11). The M1 engine, battle seeds, the initial bench and reward draw (P-022), monsters and reward bundles stay unchanged.
 
-**Status (2026-10-11):** decisions P-023 to P-031 recorded; implementation plan (checkpoints A–F) **approved by the owner**. **Not yet implemented.** Each checkpoint is reported before the next one starts.
+**Status (2026-10-11):** decisions P-023 to P-031 recorded; implementation plan (checkpoints A–F) approved by the owner. **Implemented and tested** (commits `8a78e42` to the checkpoint F commit, on `claude/modest-hamilton-ngoiru`); not yet reviewed as a whole or merged into `main`. Prices remain provisional (P-024), and every M4 rule is a prototype rule, not a final game rule.
 
 **Excluded:** selling, combining duplicates, Champion levels and XP, interest, base income, win- or loss-streak bonuses, shop odds by rank or level, a shared pool, locking offers, "Play my song", Fame and Renown, monster or reward retuning, any change to the starting four or the 1–3 fielding limit.
 
@@ -135,12 +135,12 @@ Build in small vertical slices. Every milestone should end with a runnable resul
   - a full-Expedition replay with purchases is deterministic;
   - deliberately breaking each guard makes a test fail.
 
-**E. Browser UI** (done 2026-10-11, awaiting owner review)
+**E. Browser UI** (done 2026-10-11, commit `abe8b8e`, approved by the owner)
 - **Modules:** `apps/web/src/ui/app.ts` (a Tavern panel in preparation, Gold display) and `styles.css`.
 - **Edge cases:** disabled Buy showing "Need N Gold", "Sold" or "Collection full (12)"; disabled Reroll showing "Need 2 Gold"; prices labelled "Price N Gold (provisional)"; Champion reward bundles disabled at the cap; any rejection message shown.
 - **Tests:** the screens type-check, plus the smoke test in F.
 
-**F. Regression tests, browser smoke test, documentation**
+**F. Regression tests, browser smoke test, documentation** (done 2026-10-11, awaiting owner review)
 - **Checks:** `npm run check` (engine 449 unchanged, plus web), `content-check`, `content-check:test`, `roster:check`, `build`.
 - **Browser smoke test:** the shop appears with six priced offers; buying; an unaffordable purchase; a reroll; a double click; restart resets Gold to 3 and the shop; a seeded replay with purchases; 375 px width; no console errors.
 - **Docs:** PROGRESS, this roadmap and DECISIONS updated with the measured effect on clear rate (reported, not retuned; R-001).

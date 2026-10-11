@@ -27,7 +27,8 @@ Update this file at the end of each approved milestone.
 - [x] M3 reviewed and merged into `main` (PR #7, merge commit `062da77`, 2026-10-11).
 - [x] M4 economy audit completed and prototype economy decisions P-023 to P-029 recorded (2026-10-11).
 - [x] M4 decisions P-030 and P-031 recorded and the M4 implementation plan (checkpoints A–F) approved by the owner (2026-10-11).
-- [ ] M4 implemented (checkpoints A–F). Checkpoints A (`8a78e42`), B (`3f81232`), C (`8774c13`) and D (`823d368`) done and approved; checkpoint E done 2026-10-11, awaiting owner review.
+- [x] M4 economy and recruitment implemented and tested (checkpoints A–F, 2026-10-11): A `8a78e42`, B `3f81232`, C `8774c13`, D `823d368`, E `abe8b8e` approved; F awaiting owner review.
+- [ ] M4 reviewed and merged into `main`.
 
 ## Session log
 
@@ -249,6 +250,26 @@ Update this file at the end of each approved milestone.
   - Tests: new `shop-view.test.ts`, including over 1,000 button states checked against `transition`. The smoke test gains a Tavern flow and a mobile check. The existing M3 trait-line check is scoped to the bench, because Tavern cards reuse the same card details; it still requires exactly four bench cards.
 - **Not covered in the browser:** the "Collection full (12)" states, which need 12 owned. That isn't reachable in a short scripted run; unit tests cover the labels and the button-to-rule agreement.
 - **Results:** see the checkpoint E report.
+
+### 2026-10-11 — M4 checkpoint F: regression, browser verification and documentation
+- **Audit of checkpoints A–E against P-023 to P-031:**
+  - Starting Gold 3, reset on a new Expedition; Gold carries between rounds and reconciles (3 + earned − spent).
+  - The six-slot Tavern is generated only on creation, on continue and on an accepted reroll.
+  - Prices equal the proposed cost ranks and are marked provisional.
+  - Purchases and rerolls spend only through `applyGoldChange`; no other code changes Gold (also enforced by a source-scan test).
+  - Owned Champions and all six reserved reward Champions are never offered.
+  - The 12 cap applies to purchases and Champion rewards; the 3-Gold reward stays available at the cap.
+  - Reward bundles and values are unchanged; fielding stays 1–3.
+  - No selling, combining, levels, interest, streaks, XP or multiplayer code exists (only comments saying they are excluded).
+  - Rejected actions return the identical state and never advance the shop number.
+  - The P-029 derivation is unchanged (root = output 5; shop k = output k+1).
+  - The engine and roster data are unchanged since `main`.
+  - **No rule violations found.**
+- **Gaps closed (tests):**
+  - New `m4-regression.test.ts`: the 12-Champion reward state reached by real play with seed 79 (cheapest purchases and 3-Gold rewards, no Gold injected), with purchase refusals that must name the cap; restart after purchases equals a fresh Expedition and replays identically; and a property test with random actions of every type over 80 seeds (over 1,000 rejections, each returning the identical state; accepted actions advance the shop number only for continue, reroll and new Expedition).
+  - The browser smoke test gains the same seed-79 path: 12 owned, "Collection full (12)" offers, disabled Champion reward cards, the 3-Gold reward clearing the Expedition, then a restart.
+- **Documentation fixed:** `ECONOMY.md` and `GLOSSARY.md` no longer say "not yet implemented"; the roadmap's M4 status now says implemented and tested but not merged; `CHAMPIONS.md` notes that the full-game shared pool, selling and combining are not in the prototype. Provisional and prototype labels are unchanged; nothing was promoted to a final rule.
+- **Results:** see the checkpoint F report.
 
 ## Required end-of-task report
 - Milestone and scope

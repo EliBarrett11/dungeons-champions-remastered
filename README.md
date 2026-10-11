@@ -5,7 +5,7 @@
 **Target repository:** `EliBarrett11/dungeons-champions-remastered`  
 **Package status:** Draft baseline assembled from established design discussions. Not every game rule is final.
 
-The repository contains the documentation and specifications, a headless deterministic combat engine (M1, `packages/engine`), a small browser prototype (M2, `apps/web`) and a content checker (`tools/`). The prototype uses the approved 135-Champion roster (M3) with temporary stats, and fixture monsters, with Basic Attacks only; it is not the full game.
+The repository contains the documentation and specifications, a headless deterministic combat engine (M1, `packages/engine`), a small browser prototype (M2, `apps/web`) and a content checker (`tools/`). The prototype uses the approved 135-Champion roster (M3) with temporary stats, fixture monsters and Basic Attacks only, and a single-player Tavern economy (M4: starting Gold, a six-slot shop with provisional prices, purchases and rerolls). It is not the full game.
 
 ## Run it
 
@@ -47,7 +47,7 @@ CLAUDE.md
 README.md
 package.json     npm workspaces root (scripts: check, dev, build, preview, content-check)
 packages/engine/ headless deterministic combat engine (M1)
-apps/web/        browser prototype (M2): src/game (pure rules), src/ui (DOM)
+apps/web/        browser prototype (M2–M4): src/game (pure rules), src/ui (DOM)
 tools/           content_check.py (T-009) and its tests; import_roster.py (M3)
 content/roster/  approved 135-Champion roster: champions.json and its source workbook
 docs/
