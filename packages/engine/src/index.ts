@@ -19,6 +19,7 @@ export type {
 export { validateBattleInput, assertValidBattleInput, InvalidBattleInputError } from './validate';
 export { setupBattle } from './battle/setup';
 export type { BattleSetup, SetupOptions, UnitState } from './battle/setup';
+export { canonicalJson, serializeEvents } from './log/serialize';
 export { runBattle } from './battle/run';
 export type { BattleResult } from './battle/run';
 export { nextMoment } from './battle/schedule';
