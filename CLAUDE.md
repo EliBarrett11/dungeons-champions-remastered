@@ -6,7 +6,9 @@ Build Dungeons & Champions from scratch as a browser-based, eight-player auto-ba
 ## Source-of-truth rules
 - Read relevant documentation before changing code.
 - Treat `CONFIRMED` rules as binding.
-- Never silently promote `PROPOSED`, `TUNABLE`, `DRAFT` or `UNRESOLVED` material to confirmed rules.
+- `PROVISIONAL` rules (see `docs/COMBAT/PROTOTYPE_RULESET_V0.md`) may be implemented for the prototype, with their values in config. They are not final game rules; do not extend them beyond their wording.
+- Never silently promote `PROPOSED`, `TUNABLE`, `DRAFT` or `UNRESOLVED` material to confirmed or provisional rules.
+- Status labels and older-label mappings are defined in `docs/DECISIONS.md`.
 - When rules conflict, stop and report the conflict; do not guess.
 - Update `docs/DECISIONS.md` when the user approves a meaningful design decision.
 - Track unresolved implementation blockers in `docs/OPEN_QUESTIONS.md`.
@@ -29,10 +31,16 @@ Build Dungeons & Champions from scratch as a browser-based, eight-player auto-ba
 
 ## Project map
 - `docs/PROJECT_BRIEF.md` — product intent and core constraints.
-- `docs/DECISIONS.md` — approved decisions and proposed defaults.
+- `docs/DECISIONS.md` — status vocabulary, confirmed decisions, provisional prototype rules and proposed defaults.
 - `docs/OPEN_QUESTIONS.md` — blockers and unresolved rules.
+- `docs/GLOSSARY.md` — game terms (Match, Round, Floor, Run, Renown, …).
+- `docs/PROGRESS.md` — progress ledger; update at the end of each milestone.
 - `docs/GAMEPLAY/` — match and gameplay systems.
 - `docs/COMBAT/` — combat rules, schemas and effect concepts.
+  - `docs/COMBAT/RESOLUTION_CONTRACT.md` — combined combat contract.
+  - `docs/COMBAT/PROTOTYPE_RULESET_V0.md` — provisional rules for the first prototype.
+  - `docs/COMBAT/schemas/`, `docs/COMBAT/templates/`, `docs/COMBAT/examples/` — JSON content contracts and samples.
 - `docs/TECHNICAL/ARCHITECTURE.md` — proposed system design.
 - `docs/IMPLEMENTATION/ROADMAP.md` — milestone plan.
 - `docs/CLAUDE_CODE/` — prompts and workflow.
+- `docs/proposals/0001-initial-plan.md` — SUPERSEDED; history only.
