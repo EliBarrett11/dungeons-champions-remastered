@@ -1,0 +1,13 @@
+{
+  "name": "@dc/engine",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Headless deterministic combat engine for Dungeons & Champions (M1).",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.test.json",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run test"
+  }
+}

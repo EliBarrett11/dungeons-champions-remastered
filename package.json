@@ -1,0 +1,21 @@
+{
+  "name": "dungeons-champions",
+  "private": true,
+  "description": "Dungeons & Champions monorepo. M1: headless deterministic combat engine (T-008).",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "check": "npm run check --workspace @dc/engine",
+    "test": "npm run test --workspace @dc/engine",
+    "content-check": "python3 -I tools/content_check.py",
+    "content-check:test": "python3 -I tools/test_content_check.py"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vitest": "5.0.3"
+  }
+}

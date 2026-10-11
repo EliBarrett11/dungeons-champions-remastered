@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Engine source sees only the ECMAScript standard library:
+    // no DOM globals and no Node globals or modules (M1 acceptance 6).
+    "lib": ["ES2022"],
+    "types": []
+  },
+  "include": ["src/**/*.ts"]
+}

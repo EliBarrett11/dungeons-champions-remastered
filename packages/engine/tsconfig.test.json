@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Tests keep the same restricted globals as the engine; they import the
+    // Vitest API explicitly and use Vite's import.meta.glob (declared in
+    // test/support/env.d.ts) instead of Node file-system APIs.
+    "lib": ["ES2022"],
+    "types": []
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts", "vitest.config.ts"]
+}
