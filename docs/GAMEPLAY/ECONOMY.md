@@ -18,7 +18,7 @@
 
 ## Fame and Renown
 - Fame and Renown persist across Runs.
-- Renown begins at 1 and is capped at 10.
+- Renown begins at 1 and is capped at 12 (D-019: maximum team size 12; formerly 10).
 - A player may field one Champion per Renown level.
 - Fame determines Renown, but exact thresholds are unresolved.
 - Tavern Bard action “Play my song” costs 4 Gold and grants 4 Fame.

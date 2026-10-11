@@ -77,7 +77,7 @@ Do not infer approval from the presence of a value in this package. Values expli
 
 ## Package limits
 
-This package is a structured baseline, not a claim that all 120 Champions, all 43 Traits, all 45 item recipes, or all 240 conceptual effects have been fully authored. It documents the known rules, points to the existing combat schemas and examples, and identifies what remains to be specified.
+This package is a structured baseline, not a claim that all 135 Champions' abilities, all 45 Traits, all 45 item recipes, or all 240 conceptual effects have been fully authored. It documents the known rules, points to the existing combat schemas and examples, and identifies what remains to be specified.
 
 ## Repository correction
 

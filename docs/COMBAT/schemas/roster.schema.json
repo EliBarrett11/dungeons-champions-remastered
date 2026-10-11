@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dungeons-and-champions.local/schemas/roster.schema.json",
+  "title": "Dungeons & Champions Champion Roster",
+  "description": "The approved Champion roster (D-017 to D-021). The canonical Class, Race and Origin names live in $defs and are the single source for every validator. Everything under `proposed` is PROPOSED design content, not a confirmed rule.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "approval", "source", "champions"],
+  "properties": {
+    "format": { "const": "dc-roster-v1" },
+    "approval": { "type": "string", "minLength": 1 },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "sheet", "sha256"],
+      "properties": {
+        "file": { "type": "string", "minLength": 1 },
+        "sheet": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "champions": {
+      "type": "array",
+      "minItems": 135,
+      "maxItems": 135,
+      "items": { "$ref": "#/$defs/champion" }
+    }
+  },
+  "$defs": {
+    "className": {
+      "enum": [
+        "Artificer", "Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Gunslinger", "Monk",
+        "Monster Hunter", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"
+      ]
+    },
+    "raceName": {
+      "enum": [
+        "Aasimar", "Dragonborn", "Dwarf", "Elf", "Genasi", "Githyanki", "Gnome", "Goblin",
+        "Half-Elf", "Halfling", "Human", "Orc", "Shifter", "Tiefling", "Warforged"
+      ]
+    },
+    "originName": {
+      "enum": [
+        "Acolyte", "Arcane", "Cultist", "Fey-Touched", "Gladiator", "Knight", "Mercenary", "Noble",
+        "Outlaw", "Pirate", "Scholar", "Tribal", "Undead", "Underdark", "Witch"
+      ]
+    },
+    "proposedText": { "type": "string", "pattern": "\\S" },
+    "champion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "class", "race", "origin", "proposed"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^DC-[0-9]{3}$" },
+        "name": { "type": "string", "pattern": "\\S" },
+        "class": { "$ref": "#/$defs/className" },
+        "race": { "$ref": "#/$defs/raceName" },
+        "origin": { "$ref": "#/$defs/originName" },
+        "proposed": {
+          "description": "PROPOSED design content from the source workbook. Not confirmed; not executed by the engine.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cost_rank", "rarity", "role", "basic_attack", "passive", "ultimate", "feat_milestone_1", "design_status", "notes"],
+          "properties": {
+            "cost_rank": { "type": "integer", "minimum": 1, "maximum": 5 },
+            "rarity": { "$ref": "#/$defs/proposedText" },
+            "role": { "$ref": "#/$defs/proposedText" },
+            "basic_attack": { "$ref": "#/$defs/proposedText" },
+            "passive": { "$ref": "#/$defs/proposedText" },
+            "ultimate": { "$ref": "#/$defs/proposedText" },
+            "feat_milestone_1": { "$ref": "#/$defs/proposedText" },
+            "feat_milestone_2": { "$ref": "#/$defs/proposedText" },
+            "design_status": { "$ref": "#/$defs/proposedText" },
+            "notes": { "$ref": "#/$defs/proposedText" }
+          }
+        },
+        "excluded": {
+          "description": "Source fields deliberately left out of the playable data, with the reason (D-020: Multi-Class is excluded).",
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "feat_milestone_2": { "const": "Multi-Class Feat text excluded (D-020)" }
+          }
+        }
+      }
+    }
+  }
+}

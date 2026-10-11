@@ -27,7 +27,7 @@ Definitions are taken from the existing documentation; the source is given for e
 | **Gold** | Match currency used in the Tavern. Persists across Runs. Earned as baseline income, win-streak bonus and interest. | `GAMEPLAY/ECONOMY.md` |
 | **Interest** | `min(5, floor(Gold held immediately before Round income / 10))`. | `GAMEPLAY/ECONOMY.md` |
 | **Fame** | Persistent resource that determines Renown; e.g. "Play my song" costs 4 Gold and grants 4 Fame. Thresholds UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
-| **Renown** | Starts at 1, capped at 10. A player may field one Champion per Renown level. Whether it also acts as "player level" for shop odds: UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
+| **Renown** | Starts at 1, capped at 12 (D-019). A player may field one Champion per Renown level. Whether it also acts as "player level" for shop odds: UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
 | **Tavern** | The shop: six slots, refreshes automatically every Round. Each player's interaction is private; offers are visible to all and reserve nothing. | `GAMEPLAY/ECONOMY.md`, D-009 |
 | **Drink ("Purchase a Drink")** | Costs 2 Gold and rerolls all six Tavern slots. | `GAMEPLAY/ECONOMY.md` |
 
@@ -41,7 +41,9 @@ Definitions are taken from the existing documentation; the source is given for e
 | **Copy** | One purchasable instance of a Champion in the shared pool. Buying a copy of an owned Champion combines immediately. | `GAMEPLAY/CHAMPIONS.md` |
 | **Shared pool** | The common supply of Champion copies all players buy from. Sizes UNRESOLVED. | `GAMEPLAY/CHAMPIONS.md` |
 | **Fielding / fielding progression** | Having a Champion on the board in a Round. Consecutive fielded Rounds progress its level; not fielding pauses (does not reset) progress. | D-005, `GAMEPLAY/CHAMPIONS.md` |
-| **Trait** | Race (16), Class (12) or Origin (15). Each Champion has exactly one of each. Bracket targets: Origins 2/4/6/8/10, Races 2/4/6/8, Classes 3/5/7/9. | D-002, D-003, D-013, `GAMEPLAY/TRAITS.md` |
+| **Trait** | Class (15), Race (15) or Origin (15). Each Champion has exactly one of each, and each Trait has 9 Champions. Bracket targets: Classes 2/4/6/8, Races 3/5/7/9, Origins 3/5/7/9. | D-002, D-017, D-018, `GAMEPLAY/TRAITS.md` |
+| **Multi-Class** | A Champion counting as a second Class. Excluded (D-020); not implemented. | D-020 |
+| **Roster** | The 135 approved Champions in `content/roster/champions.json`; assignments approved, other fields PROPOSED. | D-021 |
 | **Role** | One of nine archetypes (Tank, Bruiser, Assassin, Skirmisher, Marksman, Artillery, Mage, Controller, Support). Not a Trait. | D-002 |
 | **Feat** | A choice offered at each of a Champion's two Feat milestones. Milestone levels UNRESOLVED. | D-004 |
 | **Component / Item** | Nine Components; any two combine automatically into one of 45 completed Items. Max three completed Items per Champion. | D-010, D-011, `GAMEPLAY/ITEMS.md` |

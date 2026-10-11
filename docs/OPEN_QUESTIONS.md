@@ -67,10 +67,12 @@ This list is intentionally honest about gaps. The presence of a proposal elsewhe
 - Names/effects of all nine Components and all 45 completed Items.
 - How Components are equipped before automatic combination; temporary component slots and invalid-combination UX.
 - Exact item stats, stacking and Champion item eligibility.
-- Exact effects and numbers for all 43 Traits and each bracket.
+- Exact effects and numbers for all 45 Traits and each bracket.
 - Rules for hybrid builds, duplicate Trait counts, trait effects on non-matching units and minimum/maximum brackets.
-- **Trait bracket arithmetic.** With 120 Champions, Origins average 8 Champions each but the top Origin bracket is 10 (15 × 10 = 150 > 120), and Races average 7.5 against a top bracket of 8 (16 × 8 = 128 > 120). Not every Origin or Race can reach its top bracket unless the roster is uneven or Traits can be granted (e.g. by Items). This conflicts with "every Trait should have a viable vertical build" if "vertical" means the top bracket. Classes are fine (12 × 9 = 108). The Renown cap of 10 also means an Origin-10 team is the whole field.
-- Final mapping of all 120 Champions to Race, Class, Origin, Role, abilities and Feats.
+- **Trait bracket arithmetic** — RESOLVED by D-017/D-018 (2026-10-11): 135 Champions give exactly 9 per Class, Race and Origin, so every top bracket (Classes 8, Races 9, Origins 9) is reachable; the earlier 120-Champion shortfall no longer applies.
+- Champion mapping: Class/Race/Origin assignments for all 135 Champions are approved (D-021). Still PROPOSED: names' final form, Roles, cost ranks, abilities and Feats.
+- **Roster Roles outside the Role list.** The roster's proposed Roles include "Fighter" (11 Champions) and "Ranger" (11), which are not among the nine documented Roles (Tank, Bruiser, Assassin, Skirmisher, Marksman, Artillery, Mage, Controller, Support), and no Champion uses Skirmisher, Marksman or Artillery. The M3 prototype gives Fighter- and Ranger-Role Champions a clearly labelled temporary placeholder stat block (owner instruction, 2026-10-11). Needs a decision: add the Roles, or remap those Champions.
+- **Champion combat schema** (`champion-combat.schema.json`): its `class` enum was updated to the 15 approved Classes (M3). Its `role` enum still has the nine documented Roles and so cannot describe Fighter/Ranger-Role Champions until the question above is settled. No roster Champion has a full combat definition yet.
 
 ### Dungeon and match
 - Exact floor count and the round schedule for each Floor after Floor 1.

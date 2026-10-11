@@ -37,7 +37,7 @@ Aligning the schema `status` enums themselves is tracked in `OPEN_QUESTIONS.md` 
 |---|---|---|
 | D-001 | The game is an eight-player browser-based auto-battler with automated battles. | CONFIRMED |
 | D-002 | Each Champion has exactly one Race, one Class and one Origin Trait; each has one Role. | CONFIRMED |
-| D-003 | Planned roster size is 120 Champions and 43 Traits: 16 Races, 12 Classes, 15 Origins. | CONFIRMED |
+| D-003 | Planned roster size is 120 Champions and 43 Traits: 16 Races, 12 Classes, 15 Origins. | SUPERSEDED by D-017 (2026-10-11) |
 | D-004 | Champions have Basic Attack, Passive, Ultimate and two Feat milestones with choices. | CONFIRMED |
 | D-005 | Champion levels span 1–10; duplicate combining and consecutive-round fielding progression are intended. | CONFIRMED; detailed rules unresolved |
 | D-006 | Players start at 100 Health; elimination occurs at 0 Health; last player standing wins. | CONFIRMED |
@@ -47,10 +47,15 @@ Aligning the schema `status` enums themselves is tracked in `OPEN_QUESTIONS.md` 
 | D-010 | Every pair of nine Item Components yields a unique completed Item: 45 recipes total, including identical pairs. | CONFIRMED |
 | D-011 | A Champion can hold at most three completed Items; completed Items cannot be unequipped while that Champion is owned. | CONFIRMED |
 | D-012 | Selling a Champion returns completed Items to the owner's inventory; elimination destroys that player's items/components rather than transferring them. | CONFIRMED |
-| D-013 | Trait bracket design targets Origins 2/4/6/8/10, Races 2/4/6/8, Classes 3/5/7/9. | CONFIRMED design target; individual trait effects unresolved |
+| D-013 | Trait bracket design targets Origins 2/4/6/8/10, Races 2/4/6/8, Classes 3/5/7/9. | SUPERSEDED by D-018 (2026-10-11) |
 | D-014 | Every damage type should have a meaningful mechanical identity; a damage type does not apply a status automatically unless the ability says so. | CONFIRMED |
 | D-015 | Combat uses a shared effect catalogue and machine-readable effect/ability/Champion schemas. | CONFIRMED direction; schema review required |
 | D-016 | The game should be built incrementally, with a deterministic engine and tests before full content and multiplayer. | APPROVED DEVELOPMENT APPROACH |
+| D-017 | The roster has exactly 135 Champions and 45 Traits: 15 Classes (Artificer, Barbarian, Bard, Cleric, Druid, Fighter, Gunslinger, Monk, Monster Hunter, Paladin, Ranger, Rogue, Sorcerer, Warlock, Wizard), 15 Races (Aasimar, Dragonborn, Dwarf, Elf, Genasi, Githyanki, Gnome, Goblin, Half-Elf, Halfling, Human, Orc, Shifter, Tiefling, Warforged) and 15 Origins (Acolyte, Arcane, Cultist, Fey-Touched, Gladiator, Knight, Mercenary, Noble, Outlaw, Pirate, Scholar, Tribal, Undead, Underdark, Witch). Each Class, Race and Origin is assigned to exactly 9 Champions, and every Champion's Class/Race/Origin combination is unique. Supersedes D-003 (Half-Orc removed; Artificer, Gunslinger and Monster Hunter added). Canonical names: `COMBAT/schemas/roster.schema.json`. | CONFIRMED (owner, 2026-10-11) |
+| D-018 | Trait bracket design targets: Classes 2 / 4 / 6 / 8 (no 10-Champion Class bracket in this version); Races 3 / 5 / 7 / 9; Origins 3 / 5 / 7 / 9. Supersedes D-013. Trait effects remain UNRESOLVED and are not implemented. | CONFIRMED design target (owner, 2026-10-11); effects unresolved |
+| D-019 | Maximum team size: 12 Champions fielded. The source workbook states it as "Maximum Renown / team size: 12", so the Renown cap (formerly 10, `GAMEPLAY/ECONOMY.md`) is now 12, keeping one fielded Champion per Renown level. The M2 prototype's bench of 4 and fielding limit of 1–3 (P-020) are unchanged; this decision does not change them. | CONFIRMED (owner, 2026-10-11); prototype limits unchanged |
+| D-020 | Multi-Class is excluded: each Champion has exactly one primary Class, and no Feat, Trait or other mechanic grants a second Class. Multi-Class Feat text in the source workbook is not imported as playable data. It may be revisited later. | CONFIRMED (owner, 2026-10-11) |
+| D-021 | The approved roster is `content/roster/champions.json`, imported from `content/roster/source/Dungeons_and_Champions_Roster_135_Option_A_Unique_Combinations.xlsx` (SHA-256 `a3b302cd…9bfe`): Champion IDs DC-001 to DC-135, names, and Class/Race/Origin assignments are approved. Proposed abilities (Basic Attack, Passive, Ultimate, Feats), cost ranks, rarities, Roles and balance values stay PROPOSED: stored under `proposed`, shown as proposals, and not executed. | CONFIRMED for assignments (owner, 2026-10-11); other fields PROPOSED |
 
 ## Combat decisions established in design discussions
 
@@ -160,6 +165,7 @@ The repository audit reports the actual remote as `github.com/EliBarrett11/dunge
 - 2026-10-11: Owner approved Option A, Basic Attack dice rolled at commitment (P-014). Recorded as PROVISIONAL, following the convention for owner-approved prototype rules.
 - 2026-10-11: Owner approved the four M1 readiness decisions from the implementation-readiness audit: D1 → T-008 (M1 stack), D2 → P-015 (fixture Basic Attack), D3 → T-009 (content check), D4 → P-016 (targeting and defeated attackers). New IDs follow the existing T- and P- series; nothing was renumbered.
 - 2026-10-11: Owner confirmed the critical-hit interpretation raised in M1 step 3: the dice roll includes the flat modifier K, so a critical hit doubles it (P-017). Recorded as PROVISIONAL, like the P-005 rule it clarifies.
+- 2026-10-11: Owner approved the 135-Champion roster (M3): D-017 to D-021 recorded, superseding D-003 and D-013. The Renown cap moved from 10 to 12 to match the approved team size (D-019). The source workbook's proposed Roles include "Fighter" and "Ranger", which are not among the nine documented Roles; they stay PROPOSED (`OPEN_QUESTIONS.md`).
 - 2026-10-11: Owner redefined M2 as a browser-playable Expedition and approved the four M2 prototype decisions (T-010, P-018, P-019, P-020), choosing the recommended option each time; P-021 records the fixture content those options described. Two P-018 details are marked confirmation pending. The roadmap's later milestones were renumbered; no earlier ID was changed.
 
 ## Change process

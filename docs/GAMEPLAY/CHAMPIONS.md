@@ -9,7 +9,7 @@ Every Champion has:
 - Cost Rank from 1 to 5.
 - Level from 1 to 10.
 
-There are 120 planned Champions. Each Race+Class+Origin combination must be unique.
+There are exactly 135 Champions (D-017); each Race+Class+Origin combination is unique and each Trait has 9 Champions. Multi-Class is excluded (D-020). The approved roster is `content/roster/champions.json` (D-021); its Roles, costs and ability texts are PROPOSED. The proposed Roles include "Fighter" and "Ranger", which are not in the Role list above (open question).
 
 ## Shared pool and copies
 - Champions are bought from a shared pool.

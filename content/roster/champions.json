@@ -1,0 +1,2624 @@
+{
+  "format": "dc-roster-v1",
+  "approval": "Roster IDs, names and Class/Race/Origin assignments: approved by the owner on 2026-10-11 (DECISIONS.md D-017 to D-021). Everything under `proposed` (cost, rarity, Role, ability and Feat text, design status, notes) is PROPOSED content: preserved from the workbook, not confirmed, and not executed by the engine.",
+  "source": {
+    "file": "content/roster/source/Dungeons_and_Champions_Roster_135_Option_A_Unique_Combinations.xlsx",
+    "sheet": "Champion Roster",
+    "sha256": "a3b302cdac63d45235309530c8b76b4748ea640a52c42b61db612ed99ef49bfe"
+  },
+  "champions": [
+    {
+      "id": "DC-001",
+      "name": "Aerin Ashford 001",
+      "class": "Artificer",
+      "race": "Aasimar",
+      "origin": "Acolyte",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-002",
+      "name": "Bram Ironwood 002",
+      "class": "Barbarian",
+      "race": "Dragonborn",
+      "origin": "Arcane",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-003",
+      "name": "Celia Proudmoore 003",
+      "class": "Bard",
+      "race": "Dwarf",
+      "origin": "Cultist",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-004",
+      "name": "Dain Windrider 004",
+      "class": "Cleric",
+      "race": "Elf",
+      "origin": "Fey-Touched",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-005",
+      "name": "Elara Northwind 005",
+      "class": "Druid",
+      "race": "Genasi",
+      "origin": "Gladiator",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-006",
+      "name": "Fen Goldleaf 006",
+      "class": "Fighter",
+      "race": "Githyanki",
+      "origin": "Knight",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-007",
+      "name": "Galen Nightwell 007",
+      "class": "Gunslinger",
+      "race": "Gnome",
+      "origin": "Mercenary",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "feat_milestone_2": "Tactical Guard: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-008",
+      "name": "Hesta Umber 008",
+      "class": "Monk",
+      "race": "Goblin",
+      "origin": "Noble",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-009",
+      "name": "Ilyan Highwater 009",
+      "class": "Monster Hunter",
+      "race": "Half-Elf",
+      "origin": "Outlaw",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-010",
+      "name": "Jora Emberfall 010",
+      "class": "Paladin",
+      "race": "Halfling",
+      "origin": "Pirate",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-011",
+      "name": "Kael Larkspur 011",
+      "class": "Ranger",
+      "race": "Human",
+      "origin": "Scholar",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-012",
+      "name": "Liora Stormborn 012",
+      "class": "Rogue",
+      "race": "Orc",
+      "origin": "Tribal",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "feat_milestone_2": "Dread Presence: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-013",
+      "name": "Marek Everflame 013",
+      "class": "Sorcerer",
+      "race": "Shifter",
+      "origin": "Undead",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-014",
+      "name": "Nessa Blackthorn 014",
+      "class": "Warlock",
+      "race": "Tiefling",
+      "origin": "Underdark",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-015",
+      "name": "Orin Juniper 015",
+      "class": "Wizard",
+      "race": "Warforged",
+      "origin": "Witch",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-016",
+      "name": "Pella Quickwater 016",
+      "class": "Artificer",
+      "race": "Dragonborn",
+      "origin": "Cultist",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-017",
+      "name": "Quin Brightforge 017",
+      "class": "Barbarian",
+      "race": "Dwarf",
+      "origin": "Fey-Touched",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "feat_milestone_2": "Inner Balance: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-018",
+      "name": "Rhea Redwyne 018",
+      "class": "Bard",
+      "race": "Elf",
+      "origin": "Gladiator",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-019",
+      "name": "Soren Holloway 019",
+      "class": "Cleric",
+      "race": "Genasi",
+      "origin": "Knight",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-020",
+      "name": "Talia Oakenshield 020",
+      "class": "Druid",
+      "race": "Githyanki",
+      "origin": "Mercenary",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-021",
+      "name": "Ulric Valeheart 021",
+      "class": "Fighter",
+      "race": "Gnome",
+      "origin": "Noble",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "feat_milestone_2": "Dread Presence: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-022",
+      "name": "Veya Mistwood 022",
+      "class": "Gunslinger",
+      "race": "Goblin",
+      "origin": "Outlaw",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-023",
+      "name": "Wyst Frostvale 023",
+      "class": "Monk",
+      "race": "Half-Elf",
+      "origin": "Pirate",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-024",
+      "name": "Xara Moonbrook 024",
+      "class": "Monster Hunter",
+      "race": "Halfling",
+      "origin": "Scholar",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-025",
+      "name": "Yorin Thornfield 025",
+      "class": "Paladin",
+      "race": "Human",
+      "origin": "Tribal",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "feat_milestone_2": "Consecrated Ground: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-026",
+      "name": "Zella Greymantle 026",
+      "class": "Ranger",
+      "race": "Orc",
+      "origin": "Undead",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-027",
+      "name": "Arden Dawnmere 027",
+      "class": "Rogue",
+      "race": "Shifter",
+      "origin": "Underdark",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "feat_milestone_2": "Dread Presence: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-028",
+      "name": "Brisa Kingshade 028",
+      "class": "Sorcerer",
+      "race": "Tiefling",
+      "origin": "Witch",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "feat_milestone_2": "Consecrated Ground: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-029",
+      "name": "Corin Ravenscar 029",
+      "class": "Warlock",
+      "race": "Warforged",
+      "origin": "Acolyte",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-030",
+      "name": "Dara Duskwalker 030",
+      "class": "Wizard",
+      "race": "Aasimar",
+      "origin": "Arcane",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-031",
+      "name": "Eamon Ashford 031",
+      "class": "Artificer",
+      "race": "Dwarf",
+      "origin": "Gladiator",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "feat_milestone_2": "Tactical Guard: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-032",
+      "name": "Fiora Ironwood 032",
+      "class": "Barbarian",
+      "race": "Elf",
+      "origin": "Knight",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-033",
+      "name": "Garrick Proudmoore 033",
+      "class": "Bard",
+      "race": "Genasi",
+      "origin": "Mercenary",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-034",
+      "name": "Helia Windrider 034",
+      "class": "Cleric",
+      "race": "Githyanki",
+      "origin": "Noble",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-035",
+      "name": "Isen Northwind 035",
+      "class": "Druid",
+      "race": "Gnome",
+      "origin": "Outlaw",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "feat_milestone_2": "Tactical Guard: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-036",
+      "name": "Jarek Goldleaf 036",
+      "class": "Fighter",
+      "race": "Goblin",
+      "origin": "Pirate",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-037",
+      "name": "Kira Nightwell 037",
+      "class": "Gunslinger",
+      "race": "Half-Elf",
+      "origin": "Scholar",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-038",
+      "name": "Lucan Umber 038",
+      "class": "Monk",
+      "race": "Halfling",
+      "origin": "Tribal",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-039",
+      "name": "Mira Highwater 039",
+      "class": "Monster Hunter",
+      "race": "Human",
+      "origin": "Undead",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-040",
+      "name": "Nikol Emberfall 040",
+      "class": "Paladin",
+      "race": "Orc",
+      "origin": "Underdark",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-041",
+      "name": "Osha Larkspur 041",
+      "class": "Ranger",
+      "race": "Shifter",
+      "origin": "Witch",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-042",
+      "name": "Perrin Stormborn 042",
+      "class": "Rogue",
+      "race": "Tiefling",
+      "origin": "Acolyte",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-043",
+      "name": "Riven Everflame 043",
+      "class": "Sorcerer",
+      "race": "Warforged",
+      "origin": "Arcane",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "feat_milestone_2": "Inner Balance: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-044",
+      "name": "Sylvi Blackthorn 044",
+      "class": "Warlock",
+      "race": "Aasimar",
+      "origin": "Cultist",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-045",
+      "name": "Toren Juniper 045",
+      "class": "Wizard",
+      "race": "Dragonborn",
+      "origin": "Fey-Touched",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "feat_milestone_2": "Tactical Guard: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-046",
+      "name": "Una Quickwater 046",
+      "class": "Artificer",
+      "race": "Elf",
+      "origin": "Mercenary",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-047",
+      "name": "Varek Brightforge 047",
+      "class": "Barbarian",
+      "race": "Genasi",
+      "origin": "Noble",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "feat_milestone_2": "Consecrated Ground: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-048",
+      "name": "Wren Redwyne 048",
+      "class": "Bard",
+      "race": "Githyanki",
+      "origin": "Outlaw",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-049",
+      "name": "Yara Holloway 049",
+      "class": "Cleric",
+      "race": "Gnome",
+      "origin": "Pirate",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-050",
+      "name": "Zeph Oakenshield 050",
+      "class": "Druid",
+      "race": "Goblin",
+      "origin": "Scholar",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-051",
+      "name": "Aerin Windrider 051",
+      "class": "Fighter",
+      "race": "Half-Elf",
+      "origin": "Tribal",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "feat_milestone_2": "Inner Balance: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-052",
+      "name": "Bram Northwind 052",
+      "class": "Gunslinger",
+      "race": "Halfling",
+      "origin": "Undead",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-053",
+      "name": "Celia Goldleaf 053",
+      "class": "Monk",
+      "race": "Human",
+      "origin": "Underdark",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-054",
+      "name": "Dain Nightwell 054",
+      "class": "Monster Hunter",
+      "race": "Orc",
+      "origin": "Witch",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-055",
+      "name": "Elara Umber 055",
+      "class": "Paladin",
+      "race": "Shifter",
+      "origin": "Acolyte",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-056",
+      "name": "Fen Highwater 056",
+      "class": "Ranger",
+      "race": "Tiefling",
+      "origin": "Arcane",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-057",
+      "name": "Galen Emberfall 057",
+      "class": "Rogue",
+      "race": "Warforged",
+      "origin": "Cultist",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-058",
+      "name": "Hesta Larkspur 058",
+      "class": "Sorcerer",
+      "race": "Aasimar",
+      "origin": "Fey-Touched",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-059",
+      "name": "Ilyan Stormborn 059",
+      "class": "Warlock",
+      "race": "Dragonborn",
+      "origin": "Gladiator",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-060",
+      "name": "Jora Everflame 060",
+      "class": "Wizard",
+      "race": "Dwarf",
+      "origin": "Knight",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-061",
+      "name": "Kael Blackthorn 061",
+      "class": "Artificer",
+      "race": "Genasi",
+      "origin": "Outlaw",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-062",
+      "name": "Liora Juniper 062",
+      "class": "Barbarian",
+      "race": "Githyanki",
+      "origin": "Pirate",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-063",
+      "name": "Marek Quickwater 063",
+      "class": "Bard",
+      "race": "Gnome",
+      "origin": "Scholar",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "feat_milestone_2": "Dread Presence: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-064",
+      "name": "Nessa Brightforge 064",
+      "class": "Cleric",
+      "race": "Goblin",
+      "origin": "Tribal",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-065",
+      "name": "Orin Redwyne 065",
+      "class": "Druid",
+      "race": "Half-Elf",
+      "origin": "Undead",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-066",
+      "name": "Pella Holloway 066",
+      "class": "Fighter",
+      "race": "Halfling",
+      "origin": "Underdark",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-067",
+      "name": "Quin Oakenshield 067",
+      "class": "Gunslinger",
+      "race": "Human",
+      "origin": "Witch",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-068",
+      "name": "Rhea Valeheart 068",
+      "class": "Monk",
+      "race": "Orc",
+      "origin": "Acolyte",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "feat_milestone_2": "Tactical Guard: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-069",
+      "name": "Soren Mistwood 069",
+      "class": "Monster Hunter",
+      "race": "Shifter",
+      "origin": "Arcane",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-070",
+      "name": "Talia Frostvale 070",
+      "class": "Paladin",
+      "race": "Tiefling",
+      "origin": "Cultist",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "feat_milestone_2": "Inner Balance: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-071",
+      "name": "Ulric Moonbrook 071",
+      "class": "Ranger",
+      "race": "Warforged",
+      "origin": "Fey-Touched",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-072",
+      "name": "Veya Thornfield 072",
+      "class": "Rogue",
+      "race": "Aasimar",
+      "origin": "Gladiator",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-073",
+      "name": "Wyst Greymantle 073",
+      "class": "Sorcerer",
+      "race": "Dragonborn",
+      "origin": "Knight",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "feat_milestone_2": "Consecrated Ground: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-074",
+      "name": "Xara Dawnmere 074",
+      "class": "Warlock",
+      "race": "Dwarf",
+      "origin": "Mercenary",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-075",
+      "name": "Yorin Kingshade 075",
+      "class": "Wizard",
+      "race": "Elf",
+      "origin": "Noble",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-076",
+      "name": "Zella Ravenscar 076",
+      "class": "Artificer",
+      "race": "Githyanki",
+      "origin": "Scholar",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-077",
+      "name": "Arden Duskwalker 077",
+      "class": "Barbarian",
+      "race": "Gnome",
+      "origin": "Tribal",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-078",
+      "name": "Brisa Ashford 078",
+      "class": "Bard",
+      "race": "Goblin",
+      "origin": "Undead",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "feat_milestone_2": "Inner Balance: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-079",
+      "name": "Corin Ironwood 079",
+      "class": "Cleric",
+      "race": "Half-Elf",
+      "origin": "Underdark",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-080",
+      "name": "Dara Proudmoore 080",
+      "class": "Druid",
+      "race": "Halfling",
+      "origin": "Witch",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-081",
+      "name": "Eamon Windrider 081",
+      "class": "Fighter",
+      "race": "Human",
+      "origin": "Acolyte",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "feat_milestone_2": "Tactical Guard: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-082",
+      "name": "Fiora Northwind 082",
+      "class": "Gunslinger",
+      "race": "Orc",
+      "origin": "Arcane",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-083",
+      "name": "Garrick Goldleaf 083",
+      "class": "Monk",
+      "race": "Shifter",
+      "origin": "Cultist",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-084",
+      "name": "Helia Nightwell 084",
+      "class": "Monster Hunter",
+      "race": "Tiefling",
+      "origin": "Fey-Touched",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "feat_milestone_2": "Dread Presence: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-085",
+      "name": "Isen Umber 085",
+      "class": "Paladin",
+      "race": "Warforged",
+      "origin": "Gladiator",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-086",
+      "name": "Jarek Highwater 086",
+      "class": "Ranger",
+      "race": "Aasimar",
+      "origin": "Knight",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "feat_milestone_2": "Inner Balance: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-087",
+      "name": "Kira Emberfall 087",
+      "class": "Rogue",
+      "race": "Dragonborn",
+      "origin": "Mercenary",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-088",
+      "name": "Lucan Larkspur 088",
+      "class": "Sorcerer",
+      "race": "Dwarf",
+      "origin": "Noble",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-089",
+      "name": "Mira Stormborn 089",
+      "class": "Warlock",
+      "race": "Elf",
+      "origin": "Outlaw",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-090",
+      "name": "Nikol Everflame 090",
+      "class": "Wizard",
+      "race": "Genasi",
+      "origin": "Pirate",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "feat_milestone_2": "Tactical Guard: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-091",
+      "name": "Osha Blackthorn 091",
+      "class": "Artificer",
+      "race": "Gnome",
+      "origin": "Undead",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-092",
+      "name": "Perrin Juniper 092",
+      "class": "Barbarian",
+      "race": "Goblin",
+      "origin": "Underdark",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-093",
+      "name": "Riven Quickwater 093",
+      "class": "Bard",
+      "race": "Half-Elf",
+      "origin": "Witch",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-094",
+      "name": "Sylvi Brightforge 094",
+      "class": "Cleric",
+      "race": "Halfling",
+      "origin": "Acolyte",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "feat_milestone_2": "Dread Presence: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-095",
+      "name": "Toren Redwyne 095",
+      "class": "Druid",
+      "race": "Human",
+      "origin": "Arcane",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-096",
+      "name": "Una Holloway 096",
+      "class": "Fighter",
+      "race": "Orc",
+      "origin": "Cultist",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-097",
+      "name": "Varek Oakenshield 097",
+      "class": "Gunslinger",
+      "race": "Shifter",
+      "origin": "Fey-Touched",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-098",
+      "name": "Wren Valeheart 098",
+      "class": "Monk",
+      "race": "Tiefling",
+      "origin": "Gladiator",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-099",
+      "name": "Yara Mistwood 099",
+      "class": "Monster Hunter",
+      "race": "Warforged",
+      "origin": "Knight",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-100",
+      "name": "Zeph Frostvale 100",
+      "class": "Paladin",
+      "race": "Aasimar",
+      "origin": "Mercenary",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Controller",
+        "basic_attack": "Thorn Lash — Magical damage; scales with Spell Power.",
+        "passive": "At intervals, heals the most injured ally slightly. (PROPOSED)",
+        "ultimate": "Primal Tempest: damages enemies and applies a brief slow. (PROPOSED)",
+        "feat_milestone_1": "Verdant Bond: healing also grants brief Armor. (PROPOSED)",
+        "feat_milestone_2": "Circle Keeper: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-101",
+      "name": "Aerin Nightwell 101",
+      "class": "Ranger",
+      "race": "Dragonborn",
+      "origin": "Noble",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-102",
+      "name": "Bram Umber 102",
+      "class": "Rogue",
+      "race": "Dwarf",
+      "origin": "Outlaw",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "feat_milestone_2": "Inner Balance: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-103",
+      "name": "Celia Highwater 103",
+      "class": "Sorcerer",
+      "race": "Elf",
+      "origin": "Pirate",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-104",
+      "name": "Dain Emberfall 104",
+      "class": "Warlock",
+      "race": "Genasi",
+      "origin": "Scholar",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-105",
+      "name": "Elara Larkspur 105",
+      "class": "Wizard",
+      "race": "Githyanki",
+      "origin": "Tribal",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "feat_milestone_2": "Tactical Guard: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-106",
+      "name": "Fen Stormborn 106",
+      "class": "Artificer",
+      "race": "Goblin",
+      "origin": "Witch",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-107",
+      "name": "Galen Everflame 107",
+      "class": "Barbarian",
+      "race": "Half-Elf",
+      "origin": "Acolyte",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-108",
+      "name": "Hesta Blackthorn 108",
+      "class": "Bard",
+      "race": "Halfling",
+      "origin": "Arcane",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "feat_milestone_2": "Beacon of Hope: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-109",
+      "name": "Ilyan Juniper 109",
+      "class": "Cleric",
+      "race": "Human",
+      "origin": "Cultist",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-110",
+      "name": "Jora Quickwater 110",
+      "class": "Druid",
+      "race": "Orc",
+      "origin": "Fey-Touched",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-111",
+      "name": "Kael Brightforge 111",
+      "class": "Fighter",
+      "race": "Shifter",
+      "origin": "Gladiator",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-112",
+      "name": "Liora Redwyne 112",
+      "class": "Gunslinger",
+      "race": "Tiefling",
+      "origin": "Knight",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-113",
+      "name": "Marek Holloway 113",
+      "class": "Monk",
+      "race": "Warforged",
+      "origin": "Mercenary",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-114",
+      "name": "Nessa Oakenshield 114",
+      "class": "Monster Hunter",
+      "race": "Aasimar",
+      "origin": "Noble",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Mage",
+        "basic_attack": "Arc Spark — Magical damage; scales with Spell Power.",
+        "passive": "Ultimate resource gain is slightly increased. (PROPOSED)",
+        "ultimate": "Prismatic Cataclysm: area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Resonant Casting: improves resource generation. (PROPOSED)",
+        "feat_milestone_2": "Spell Echo: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-115",
+      "name": "Orin Valeheart 115",
+      "class": "Paladin",
+      "race": "Dragonborn",
+      "origin": "Outlaw",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "feat_milestone_2": "Consecrated Ground: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-116",
+      "name": "Pella Mistwood 116",
+      "class": "Ranger",
+      "race": "Dwarf",
+      "origin": "Pirate",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-117",
+      "name": "Quin Frostvale 117",
+      "class": "Rogue",
+      "race": "Elf",
+      "origin": "Scholar",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-118",
+      "name": "Rhea Moonbrook 118",
+      "class": "Sorcerer",
+      "race": "Genasi",
+      "origin": "Tribal",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Sanctified Blow — Magical damage; scales with Spell Power.",
+        "passive": "The lowest-Health ally receives a small shield at battle start. (PROPOSED)",
+        "ultimate": "Sanctuary: heals and shields the two most injured allies. (PROPOSED)",
+        "feat_milestone_1": "Guardian's Prayer: shield strength increases. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-119",
+      "name": "Soren Thornfield 119",
+      "class": "Warlock",
+      "race": "Githyanki",
+      "origin": "Undead",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Fighter",
+        "basic_attack": "Measured Cut — Physical damage; scales with Attack.",
+        "passive": "Every third Basic Attack gains a small damage bonus. (PROPOSED)",
+        "ultimate": "Battlefield Sweep: strikes several enemies in the front rows. (PROPOSED)",
+        "feat_milestone_1": "Adaptive Stance: choose a small Attack or Armor bonus. (PROPOSED)",
+        "feat_milestone_2": "Tactical Guard: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-120",
+      "name": "Talia Greymantle 120",
+      "class": "Wizard",
+      "race": "Gnome",
+      "origin": "Underdark",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-121",
+      "name": "Ulric Dawnmere 121",
+      "class": "Artificer",
+      "race": "Half-Elf",
+      "origin": "Arcane",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-122",
+      "name": "Veya Kingshade 122",
+      "class": "Barbarian",
+      "race": "Halfling",
+      "origin": "Cultist",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Mage",
+        "basic_attack": "Pact Bolt — Magical damage; scales with Spell Power.",
+        "passive": "A portion of damage dealt restores a small amount of Health. (PROPOSED)",
+        "ultimate": "Abyssal Grasp: magical damage and a brief weaken effect. (PROPOSED)",
+        "feat_milestone_1": "Deepened Pact: improves sustain effect. (PROPOSED)",
+        "feat_milestone_2": "Dread Presence: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-123",
+      "name": "Wyst Ravenscar 123",
+      "class": "Bard",
+      "race": "Human",
+      "origin": "Fey-Touched",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-124",
+      "name": "Xara Duskwalker 124",
+      "class": "Cleric",
+      "race": "Orc",
+      "origin": "Gladiator",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-125",
+      "name": "Yorin Ashford 125",
+      "class": "Druid",
+      "race": "Shifter",
+      "origin": "Knight",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-126",
+      "name": "Zella Ironwood 126",
+      "class": "Fighter",
+      "race": "Tiefling",
+      "origin": "Mercenary",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      },
+      "excluded": {
+        "feat_milestone_2": "Multi-Class Feat text excluded (D-020)"
+      }
+    },
+    {
+      "id": "DC-127",
+      "name": "Arden Proudmoore 127",
+      "class": "Gunslinger",
+      "race": "Warforged",
+      "origin": "Noble",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Assassin",
+        "basic_attack": "Flurry Palm — Physical damage; scales with Attack.",
+        "passive": "After dodging or avoiding an attack, gains brief Attack Speed. (PROPOSED)",
+        "ultimate": "Sevenfold Strike: rapid sequence against a priority enemy. (PROPOSED)",
+        "feat_milestone_1": "Unbroken Flow: improves dodge-related benefit. (PROPOSED)",
+        "feat_milestone_2": "Inner Balance: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-128",
+      "name": "Brisa Windrider 128",
+      "class": "Monk",
+      "race": "Aasimar",
+      "origin": "Outlaw",
+      "proposed": {
+        "cost_rank": 4,
+        "rarity": "Epic",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-129",
+      "name": "Corin Northwind 129",
+      "class": "Monster Hunter",
+      "race": "Dragonborn",
+      "origin": "Pirate",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Bruiser",
+        "basic_attack": "Rending Strike — Physical damage; scales with Attack.",
+        "passive": "When below 50% Health, gain a small Attack bonus. (PROPOSED)",
+        "ultimate": "Ragequake: deals heavy physical damage to the frontmost enemies. (PROPOSED)",
+        "feat_milestone_1": "Relentless: gain durability after defeating an enemy. (PROPOSED)",
+        "feat_milestone_2": "Unbreakable: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-130",
+      "name": "Dara Goldleaf 130",
+      "class": "Paladin",
+      "race": "Dwarf",
+      "origin": "Scholar",
+      "proposed": {
+        "cost_rank": 1,
+        "rarity": "Common",
+        "role": "Support",
+        "basic_attack": "Dissonant Note — Magical damage; scales with Attack or Spell Power (balance pending).",
+        "passive": "Periodically grants a nearby ally a small resource bonus. (PROPOSED)",
+        "ultimate": "Grand Finale: damages enemies and grants allies a brief offensive buff. (PROPOSED)",
+        "feat_milestone_1": "Inspiring Cadence: allies gain a small defensive bonus. (PROPOSED)",
+        "feat_milestone_2": "Battle Hymn: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-131",
+      "name": "Eamon Nightwell 131",
+      "class": "Ranger",
+      "race": "Elf",
+      "origin": "Tribal",
+      "proposed": {
+        "cost_rank": 2,
+        "rarity": "Uncommon",
+        "role": "Tank",
+        "basic_attack": "Oathstrike — Physical damage; scales with Attack; radiant rider is a proposal.",
+        "passive": "Begins combat with a protective shield. (PROPOSED)",
+        "ultimate": "Dawn's Verdict: damages an enemy and shields the weakest ally. (PROPOSED)",
+        "feat_milestone_1": "Unyielding Oath: improves shield duration. (PROPOSED)",
+        "feat_milestone_2": "Consecrated Ground: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-132",
+      "name": "Fiora Umber 132",
+      "class": "Rogue",
+      "race": "Genasi",
+      "origin": "Undead",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Ranger",
+        "basic_attack": "Hunter's Shot — Physical damage; scales with Attack.",
+        "passive": "Deals bonus damage to the current lowest-Health enemy. (PROPOSED)",
+        "ultimate": "Rain of Arrows: damages enemies in a selected row. (PROPOSED)",
+        "feat_milestone_1": "Keen Pursuit: improves marked-target damage. (PROPOSED)",
+        "feat_milestone_2": "Deadeye: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-133",
+      "name": "Garrick Highwater 133",
+      "class": "Sorcerer",
+      "race": "Githyanki",
+      "origin": "Underdark",
+      "proposed": {
+        "cost_rank": 3,
+        "rarity": "Rare",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-134",
+      "name": "Helia Emberfall 134",
+      "class": "Warlock",
+      "race": "Gnome",
+      "origin": "Witch",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Assassin",
+        "basic_attack": "Quick Stab — Physical damage; scales with Attack.",
+        "passive": "First attack against a new target has bonus critical chance. (PROPOSED)",
+        "ultimate": "Death from Shadow: heavy damage to the lowest-Health enemy. (PROPOSED)",
+        "feat_milestone_1": "Calculated Opening: improves first-strike benefit. (PROPOSED)",
+        "feat_milestone_2": "Smoke and Mirrors: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    },
+    {
+      "id": "DC-135",
+      "name": "Isen Larkspur 135",
+      "class": "Wizard",
+      "race": "Goblin",
+      "origin": "Acolyte",
+      "proposed": {
+        "cost_rank": 5,
+        "rarity": "Legendary",
+        "role": "Controller",
+        "basic_attack": "Arcane Dart — Magical damage; scales with Spell Power.",
+        "passive": "After casting an Ultimate, gains a brief Spell Power bonus. (PROPOSED)",
+        "ultimate": "Meteor Script: delayed area magical damage. (PROPOSED)",
+        "feat_milestone_1": "Arcane Preparation: improves post-Ultimate bonus. (PROPOSED)",
+        "feat_milestone_2": "Runic Barrier: improves class identity. (PROPOSED)",
+        "design_status": "DRAFT — needs design review",
+        "notes": "Names, kit effects, costs and Trait identities are proposals; validate against authoritative game rules."
+      }
+    }
+  ]
+}

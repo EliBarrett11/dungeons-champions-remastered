@@ -23,6 +23,8 @@ EFFECT_TEMPLATE = "docs/COMBAT/templates/effect-template.json"
 STORM = "docs/COMBAT/examples/storm_vanguard.json"
 ROGUE = "docs/COMBAT/examples/rogue_critical_passive.json"
 ABILITY_SCHEMA = "docs/COMBAT/schemas/ability.schema.json"
+ROSTER = "content/roster/champions.json"
+ROSTER_SCHEMA = "docs/COMBAT/schemas/roster.schema.json"
 
 
 def run_checker(root: Path) -> subprocess.CompletedProcess[str]:
@@ -34,6 +36,7 @@ class ContentCheckTest(unittest.TestCase):
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name)
         shutil.copytree(REPO / "docs", self.root / "docs")
+        shutil.copytree(REPO / "content", self.root / "content")
 
     def tearDown(self) -> None:
         self._tmp.cleanup()
@@ -98,6 +101,35 @@ class ContentCheckTest(unittest.TestCase):
     def test_missing_mapped_template_fails(self) -> None:
         (self.root / EFFECT_TEMPLATE).unlink()
         self.assertFails(run_checker(self.root), f"missing template/example: {EFFECT_TEMPLATE}")
+
+    def test_missing_roster_fails(self) -> None:
+        (self.root / ROSTER).unlink()
+        self.assertFails(run_checker(self.root), f"missing roster: {ROSTER}")
+
+    def test_malformed_roster_json_fails(self) -> None:
+        (self.root / ROSTER).write_text('{"format": ', encoding="utf-8")
+        self.assertFails(run_checker(self.root), f"invalid JSON: {ROSTER}")
+
+    def test_roster_with_unknown_class_fails(self) -> None:
+        self.edit_json(ROSTER, lambda d: d["champions"][0].update({"class": "Half-Orc"}))
+        self.assertFails(run_checker(self.root), f"schema validation failed: {ROSTER} against roster.schema.json: champions/0/class:")
+
+    def test_roster_with_wrong_size_fails(self) -> None:
+        self.edit_json(ROSTER, lambda d: d["champions"].pop())
+        self.assertFails(run_checker(self.root), f"schema validation failed: {ROSTER} against roster.schema.json: champions:")
+
+    def test_roster_with_blank_name_fails(self) -> None:
+        self.edit_json(ROSTER, lambda d: d["champions"][3].update({"name": "   "}))
+        self.assertFails(run_checker(self.root), f"schema validation failed: {ROSTER} against roster.schema.json: champions/3/name:")
+
+    def test_roster_with_multi_class_field_fails(self) -> None:
+        self.edit_json(ROSTER, lambda d: d["champions"][0].update({"secondary_class": "Monk"}))
+        self.assertFails(run_checker(self.root), f"schema validation failed: {ROSTER} against roster.schema.json: champions/0:")
+
+    def test_invalid_roster_schema_fails(self) -> None:
+        self.edit_json(ROSTER_SCHEMA, lambda s: s.update({"type": 7}))
+        result = run_checker(self.root)
+        self.assertFails(result, f"invalid Draft 2020-12 schema: {ROSTER_SCHEMA}", f"cannot validate {ROSTER}")
 
     # --- warnings that must not fail (exit code 0) ---------------------------------------
 
