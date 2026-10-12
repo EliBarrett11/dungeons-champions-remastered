@@ -30,6 +30,7 @@ Build Dungeons & Champions from scratch as a browser-based, eight-player auto-ba
 - Before a milestone, state its scope and acceptance criteria. After it, report changed files, checks run, results, limitations and the next smallest step.
 
 ## Project map
+- `docs/rules/` — **canonical rulebooks**: start at `00-INDEX.md`. Every rule has a status and an implementation tag; `12-unresolved-decisions.md` is the owner decision queue.
 - `docs/PROJECT_BRIEF.md` — product intent and core constraints.
 - `docs/DECISIONS.md` — status vocabulary, confirmed decisions, provisional prototype rules and proposed defaults.
 - `docs/OPEN_QUESTIONS.md` — blockers and unresolved rules.

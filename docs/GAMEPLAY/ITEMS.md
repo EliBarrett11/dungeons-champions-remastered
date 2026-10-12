@@ -1,5 +1,7 @@
 # Items and Components
 
+> **Rulebook summary:** [`docs/rules/04-champions.md`](../rules/04-champions.md) §8. This file remains the canonical Items source.
+
 ## Confirmed rules
 - There are exactly nine Item Components.
 - Each Component is focused on one Role.

@@ -1,5 +1,7 @@
 # Champions, Ranks, Copies, Levels and Feats
 
+> **Canonical rulebook:** [`docs/rules/04-champions.md`](../rules/04-champions.md) now organises these rules with a status and implementation tag on each, and records later owner decisions. This file is kept as design background; where the two differ, the rulebook says which source wins.
+
 ## Champion definition
 Every Champion has:
 - Unique identity and name.
@@ -16,6 +18,7 @@ There are exactly 135 Champions (D-017); each Race+Class+Origin combination is u
 - Copy counts decrease as Rank increases, but the exact counts are unresolved.
 - Multiple players may level the same Champion.
 - Buying a copy of a Champion already owned immediately combines it and levels the Champion.
+- **Initial ruleset (D-027):** a player owns at most 12 Champions and there is no selling. The selling rules below describe a later ruleset.
 - Selling returns all copies to the shared pool and returns the Champion's full sell value; the precise meaning of “full value” and the sell-value formula need specification.
 - When a player is eliminated, all owned Champions/copies return to the shared pool.
 - Buying at level 10 and overflow-copy behavior remain unresolved.

@@ -27,16 +27,17 @@ Add `?seed=123` to the prototype URL to replay an Expedition exactly. The browse
 ## Start here
 
 1. `CLAUDE.md` — concise operating instructions for Claude Code.
-2. `docs/PROJECT_BRIEF.md` — product vision and confirmed core constraints.
-3. `docs/DECISIONS.md` — status vocabulary, confirmed decisions, provisional prototype rules and explicit proposals.
-4. `docs/OPEN_QUESTIONS.md` — blockers and unresolved mechanics.
-5. `docs/GLOSSARY.md` — meaning of Match, Round, Floor, Run, Renown and other game terms.
-6. `docs/IMPLEMENTATION/ROADMAP.md` — milestone sequence and acceptance gates.
-7. `docs/TECHNICAL/ARCHITECTURE.md` — recommended architecture, pending approval.
-8. `docs/GAMEPLAY/` — match, economy, roster, traits, items, dungeon and progression rules.
-9. `docs/COMBAT/` — combat contract, provisional prototype ruleset, stat proposals, effect catalogue, authoring and validation guidance, and the JSON Schemas (`docs/COMBAT/schemas/`), templates and examples.
-10. `docs/CLAUDE_CODE/` — initialization prompt and reusable milestone prompt.
-11. `docs/PROGRESS.md` — progress ledger.
+2. `docs/rules/00-INDEX.md` — **canonical rulebooks**: the rule for each mechanic, its status (approved, provisional, proposed, unresolved) and whether it is implemented.
+3. `docs/PROJECT_BRIEF.md` — product vision and confirmed core constraints.
+4. `docs/DECISIONS.md` — status vocabulary, confirmed decisions, provisional prototype rules and explicit proposals.
+5. `docs/OPEN_QUESTIONS.md` — blockers and unresolved mechanics.
+6. `docs/GLOSSARY.md` — meaning of Match, Round, Floor, Run, Renown and other game terms.
+7. `docs/IMPLEMENTATION/ROADMAP.md` — milestone sequence and acceptance gates.
+8. `docs/TECHNICAL/ARCHITECTURE.md` — recommended architecture, pending approval.
+9. `docs/GAMEPLAY/` — match, economy, roster, traits, items, dungeon and progression rules.
+10. `docs/COMBAT/` — combat contract, provisional prototype ruleset, stat proposals, effect catalogue, authoring and validation guidance, and the JSON Schemas (`docs/COMBAT/schemas/`), templates and examples.
+11. `docs/CLAUDE_CODE/` — initialization prompt and reusable milestone prompt.
+12. `docs/PROGRESS.md` — progress ledger.
 
 `docs/proposals/0001-initial-plan.md` is SUPERSEDED (P-001) and kept for history only.
 
@@ -52,6 +53,7 @@ tools/           content_check.py (T-009) and its tests; import_roster.py (M3)
 content/roster/  approved 135-Champion roster: champions.json and its source workbook
 docs/
   PROJECT_BRIEF.md  DECISIONS.md  OPEN_QUESTIONS.md  GLOSSARY.md  PROGRESS.md  PACKAGE_MANIFEST.json
+  rules/           canonical rulebooks 00-INDEX … 12-unresolved-decisions
   GAMEPLAY/        MATCH_FLOW, ECONOMY, DUNGEON_AND_REWARDS, CHAMPIONS, TRAITS, ITEMS
   COMBAT/          RESOLUTION_CONTRACT, PROTOTYPE_RULESET_V0, STAT_MODEL, effect catalogue,
                    authoring guide, semantic validation, schema review
