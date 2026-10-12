@@ -1,5 +1,7 @@
 # Match Flow and Player Rules
 
+> **Canonical rulebook:** [`docs/rules/10-match-flow.md`](../rules/10-match-flow.md) now organises these rules with a status and implementation tag on each, and records later owner decisions. This file is kept as design background; where the two differ, the rulebook says which source wins.
+
 **Status:** DRAFT specification assembled from established design discussions.
 
 ## Players and win condition
@@ -23,10 +25,11 @@
 - Route effects persist for that Floor and can modify rewards, PvP conditions, PvE opponents and difficulty.
 - Branches converge at the next Floor.
 - Floor 1 has three Monster Rounds before the first PvP Round.
+- Design target: five Floors and 23 Rounds; elimination decides the actual length (D-022, owner 2026-10-12).
 - The exact schedule for subsequent Floors is unresolved; do not hard-code a guessed schedule as final.
 
 ## Round loss and player damage
-- Damage to a player's Health is based on surviving enemy Champion Health and Round/Floor progression.
+- Damage to a player's Health is based on surviving enemy Champion Health and Round/Floor progression (concept confirmed by the owner as D-028: the Round and the remaining Health of the winning opponent's surviving Champions).
 - The exact formula is unresolved. A previously discussed candidate formula was `ceil(H/100 * [1 + 0.10*(R-1) + 0.25*(F-1)])`; this is only a PROPOSAL and must not be treated as approved.
 - Run loss and player elimination are distinct: losing a Round ends the player's current Run but does not by itself eliminate the player.
 

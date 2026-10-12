@@ -69,12 +69,12 @@ Build in small vertical slices. Every milestone should end with a runnable resul
 
 **Excluded:** Trait effects and bracket bonuses, economy, shop, purchases, rerolls, upgrades, Multi-Class, Champion-specific ability execution, changes to the bench of four or the 1–3 fielding limit, changes to the engine's rules.
 
-**M3 status (2026-10-11):** implemented and tested on branch `claude/modest-hamilton-ngoiru` (checkpoints A–D); owner review decisions R-001 to R-005 recorded; pull request open for review, not merged. Known limitation (R-001): with roster Champions the Expedition clears far less often until Champion mechanics exist. Results and caveats: `docs/PROGRESS.md`, "M3 approved roster integration".
+**M3 status (2026-10-11):** implemented and tested on branch `claude/modest-hamilton-ngoiru` (checkpoints A–D); owner review decisions R-001 to R-005 recorded; merged into `main` through PR #7 (merge commit `062da77`). Known limitation (R-001): with roster Champions the Expedition clears far less often until Champion mechanics exist. Results and caveats: `docs/PROGRESS.md`, "M3 approved roster integration".
 
 ## M4 — Economy and recruitment (prototype Expedition)
 **Goal:** a functional Gold economy in the single-player Expedition: a seeded six-slot Tavern, buying roster Champions, and rerolls, under the owner-approved prototype rules P-023 to P-031 (2026-10-11). The M1 engine, battle seeds, the initial bench and reward draw (P-022), monsters and reward bundles stay unchanged.
 
-**Status (2026-10-11):** decisions P-023 to P-031 recorded; implementation plan (checkpoints A–F) approved by the owner. **Implemented and tested** (commits `8a78e42` to the checkpoint F commit, on `claude/modest-hamilton-ngoiru`); not yet reviewed as a whole or merged into `main`. Prices remain provisional (P-024), and every M4 rule is a prototype rule, not a final game rule.
+**Status (2026-10-11):** decisions P-023 to P-031 recorded; implementation plan (checkpoints A–F) approved by the owner. **Implemented and tested** (commits `8a78e42` to `3c1aaf2`); merged into `main` through PR #8 (merge commit `d7794fc`). Prices remain provisional (P-024), and every M4 rule is a prototype rule, not a final game rule.
 
 **Excluded:** selling, combining duplicates, Champion levels and XP, interest, base income, win- or loss-streak bonuses, shop odds by rank or level, a shared pool, locking offers, "Play my song", Fame and Renown, monster or reward retuning, any change to the starting four or the 1–3 fielding limit.
 
@@ -140,7 +140,7 @@ Build in small vertical slices. Every milestone should end with a runnable resul
 - **Edge cases:** disabled Buy showing "Need N Gold", "Sold" or "Collection full (12)"; disabled Reroll showing "Need 2 Gold"; prices labelled "Price N Gold (provisional)"; Champion reward bundles disabled at the cap; any rejection message shown.
 - **Tests:** the screens type-check, plus the smoke test in F.
 
-**F. Regression tests, browser smoke test, documentation** (done 2026-10-11, awaiting owner review)
+**F. Regression tests, browser smoke test, documentation** (done 2026-10-11, commit `3c1aaf2`; merged with M4)
 - **Checks:** `npm run check` (engine 449 unchanged, plus web), `content-check`, `content-check:test`, `roster:check`, `build`.
 - **Browser smoke test:** the shop appears with six priced offers; buying; an unaffordable purchase; a reroll; a double click; restart resets Gold to 3 and the shop; a seeded replay with purchases; 375 px width; no console errors.
 - **Docs:** PROGRESS, this roadmap and DECISIONS updated with the measured effect on clear rate (reported, not retuned; R-001).
@@ -171,6 +171,72 @@ Add authoritative server, rooms, WebSocket actions, pairing and odd-player PvE r
 ## M9 — Balance, polish and deployment
 Run seeded simulations, tune config values, improve animation/accessibility, handle persistence only as required, and deploy.
 **Acceptance:** agreed performance, stability, browser support and match-length criteria pass.
+
+## Full-game roadmap (PROPOSED, 2026-10-12; awaiting owner approval)
+
+Written with the canonical rulebooks (`docs/rules/`). The milestones M5–M9 above stay the approved plan until the owner approves this order. Labels G0–G11 avoid renumbering them. The table at the end maps the two.
+
+**Why this order minimises rewrites.**
+1. The **match state** (players, Rounds, Gold, Fame, Renown, Tavern, ownership, reservations) is the frame that every other system plugs into. Built first, it fixes the shapes the other systems use: the player state, the action and transition contract, the per-purpose random streams, and the invariant checkers.
+2. The combat engine already has a stable boundary: `runBattle(input) → result + event log`. The match loop can drive it with today's Basic-Attack engine. Champion kits can then be added behind that boundary later without reworking the match.
+3. Content authoring (135 kits, Traits, Items) needs the ability runtime first, and Class by Class decisions. It can run in parallel once G3 exists.
+4. Networking, persistence and deployment wrap a working headless match, so they come last. Building them earlier would mean rebuilding them when the rules change.
+
+**The Expedition prototype.** It is frozen as a reference. New full-game code goes into a new pure package, not into the Expedition. Shared pieces are reused by import: the engine, the roster loader, the Gold path pattern, the shop draw pattern.
+
+### Tracks and milestones
+
+| Milestone | Track | Delivers | Minimum rules needed (rulebook IDs) | Depends on | Blocked by (rulebook 12) |
+|---|---|---|---|---|---|
+| **G0** Decision pack | Owner (no code) | Recorded values for the G1 (and then G2) blockers | — | — | is the unblocking step |
+| **G1** Match economy and progression kernel | Progression | A headless, deterministic per-player state for a whole match: Gold (3 + 5 per Round), Fame, Renown 3–12 and fielding capacity, a Tavern refreshed every preparation with rank odds and the exhausted-rank fallback, a 2-Gold reroll, "Play my song", the ownership cap of 12, no selling, and six reserved reward options per Monster Round. Driven by a scripted Round sequence. | CORE-10 to CORE-15; ECO-01 to ECO-44; FAME-01 to FAME-25; MON-21; DET-01 to DET-04, DET-30, DET-32, DET-40 to DET-44 | — | U-01, U-02, U-03, U-04, U-05, U-06, U-07, U-12, U-13 (Tavern eligibility), U-27, U-28, U-29, U-11 (reservation scope) |
+| **G2** Headless match loop with bots | PvP | Eight players; the 23-Round schedule; pairing; PvP via `runBattle`; loss damage; Runs and streaks; elimination; match end; simple deterministic bots; fixture monsters. Seeded batch simulation. | MATCH-*, PVP-*, MON-01 to MON-14, FLOW §1, DET-31 | G1 | U-08, U-09, U-10, U-15, U-24, U-25, U-26, U-33, U-35 |
+| **G3** Ability runtime | Engine | Ability and effect execution from schema data, Class Resources, Ultimates (P-011, P-013, opening Ultimate), Rogue and Sorcerer crits, damage types, a first status set, schema fixes. Uses the M5 test list above. | CMB-15 to CMB-20; CHMP-30 to CHMP-34 | — (parallel to G1/G2) | U-17, U-18, U-30, U-31 |
+| **G4** Champion kits | Content | The 135 Champion specification sheets (`rules/04-champions.md` §7), authored and validated Class by Class. Each Champion is implemented only when its sheet has no UNRESOLVED executable field. | CHMP-*; semantic validation | G3 | U-17, U-19 (per Champion) |
+| **G5** Traits | Content and engine | Trait counting on the active field, brackets, effects | TRT-* | G3 | U-20 |
+| **G6** Levels and copies | Progression | Shared pool, combining, fielding progression, levels 1–10, Feats | CHMP-40 to CHMP-42 | G1, G3 | U-13, U-21 |
+| **G7** Items | Content and engine | Nine Components, 45 Items, equip and combine | CHMP-60 to CHMP-63 | G3 | U-22 |
+| **G8** Dungeon | Progression | Routes, Monster roster and difficulty, full reward bundles, Run-End Upgrades, the Dragon | MATCH-40 to MATCH-42, MON-*, PVP-40, PVP-41 | G2 | U-11, U-16, U-23 |
+| **G9** Multiplayer | Multiplayer | An authoritative server, rooms, actions over the network, spectating, preparation timers, reconnects | CORE-04, CORE-05, DET-45 | G2 | U-36; T-003 (PROPOSED) |
+| **G10** Persistence | Persistence | Only what is shown to be needed (match records, accounts) | — | G9 | product questions (`OPEN_QUESTIONS.md` "Technical/product") |
+| **G11** Balance and deployment | Deployment | Seeded simulations, tuning, accessibility, hosting | — | G2 (simulation); G9 (hosting) | deployment provider, telemetry |
+
+Mapping to the current plan:
+- M5 ≈ G3 + G4 (start);
+- M6 ≈ G4 to G7;
+- M7 ≈ G8;
+- M8 ≈ G2 + G9 (M8 already holds the deferred two-player, bot, player Health and match-end scope);
+- M9 ≈ G10 + G11.
+
+### Recommended next milestone: G0, then G1
+
+**G0 (owner, no code).** Supply or decide the items listed in `rules/12-unresolved-decisions.md` §6 for G1:
+- the four recorded-elsewhere tables (U-01 to U-04);
+- confirmation of U-05;
+- baselines for U-06, U-07, U-12, U-13 (eligibility only), U-27, U-28, U-29 and the reservation scope in U-11.
+
+Each answer goes into `docs/DECISIONS.md` and the matching rulebook.
+
+**G1: Match economy and progression kernel.**
+
+*Scope:*
+- A new pure package (for example `packages/match`), with no DOM, Node or clocks. Its name and location need owner approval, because CLAUDE.md asks for approval before adding infrastructure.
+- Per-player state and a transition function covering one player's whole match timeline: preparation actions, a scripted battle-outcome input, and Round advancement.
+- All values in one configuration module.
+- No PvP pairing, no player Health, no networking, no UI, no change to the Expedition prototype or the engine.
+
+*Acceptance criteria:*
+1. `npm run check` passes. The engine's 449 tests and the existing web tests are unchanged and passing. The Expedition seed baselines are unchanged.
+2. A new match starts with Gold 3, Renown 3 and the approved starting collection (U-12). All values are read from configuration. Configuration validation rejects malformed tables: Fame thresholds not strictly increasing; rank probabilities that do not sum to the configured total for each level; a Round count other than 23.
+3. Income: exactly +5 Gold per qualifying Round at the approved timing (U-06), through a single Gold path. `gold = 3 + earned − spent` and `gold ≥ 0` after every step of a seeded property test.
+4. Tavern: six slots refreshed at every preparation phase (Monster and PvP Rounds in the scripted schedule). Reroll costs 2 and replaces all six. Over at least 10,000 seeded generations, rank frequencies match the approved table within a stated tolerance, and a locked rank never appears. The exhausted-rank fallback is exercised by a forced-empty rank and follows the approved text exactly.
+5. Fame and Renown: "Play my song" is −4 Gold and +4 Fame. Round Fame rewards follow the approved table. Renown follows the thresholds, stays between 3 and 12, and fielding capacity equals Renown.
+6. Ownership and rewards: never more than 12 owned on any path; no sell action exists; six fresh reward options per Monster Round; a reserved Champion is never offered in the Tavern for the rest of the match; a valid reward choice exists at the cap.
+7. Determinism: each random purpose has its own derived stream with pinned outputs (DET-32). The same seed and the same action script give an identical state sequence and log hash across 100 runs.
+8. Every rejected action (wrong phase, unaffordable, sold, full, over capacity) returns the identical state object. Removing each guard makes a test fail.
+9. The rulebooks' implementation tags are updated to IMPLEMENTED with file paths, and `docs/PROGRESS.md` records the checks.
+
+**If G0 is delayed.** G3 (ability runtime) is the work that can proceed partly without G0. But it needs U-18 and U-31 for each Class, so it is not decision-free either.
 
 ## Implementation discipline
 Do not skip milestones. If a milestone reveals a rules blocker, stop at the smallest reproducible case, record it, and ask for the decision instead of inventing a rule.

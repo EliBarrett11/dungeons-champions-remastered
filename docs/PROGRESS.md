@@ -27,8 +27,10 @@ Update this file at the end of each approved milestone.
 - [x] M3 reviewed and merged into `main` (PR #7, merge commit `062da77`, 2026-10-11).
 - [x] M4 economy audit completed and prototype economy decisions P-023 to P-029 recorded (2026-10-11).
 - [x] M4 decisions P-030 and P-031 recorded and the M4 implementation plan (checkpoints A–F) approved by the owner (2026-10-11).
-- [x] M4 economy and recruitment implemented and tested (checkpoints A–F, 2026-10-11): A `8a78e42`, B `3f81232`, C `8774c13`, D `823d368`, E `abe8b8e` approved; F awaiting owner review.
-- [ ] M4 reviewed and merged into `main`.
+- [x] M4 economy and recruitment implemented and tested (checkpoints A–F, 2026-10-11): A `8a78e42`, B `3f81232`, C `8774c13`, D `823d368`, E `abe8b8e` approved; F `3c1aaf2`.
+- [x] M4 reviewed and merged into `main` (PR #8, merge commit `d7794fc`).
+- [x] Canonical rulebooks created in `docs/rules/` (index and rulebooks 01–12), owner decisions D-022 to D-028 and P-032 recorded, and a full-game roadmap (G0–G11, PROPOSED) added (2026-10-12). Documentation only.
+- [ ] Owner decision pack G0 (`docs/rules/12-unresolved-decisions.md` §6).
 
 ## Session log
 
@@ -270,6 +272,14 @@ Update this file at the end of each approved milestone.
   - The browser smoke test gains the same seed-79 path: 12 owned, "Collection full (12)" offers, disabled Champion reward cards, the 3-Gold reward clearing the Expedition, then a restart.
 - **Documentation fixed:** `ECONOMY.md` and `GLOSSARY.md` no longer say "not yet implemented"; the roadmap's M4 status now says implemented and tested but not merged; `CHAMPIONS.md` notes that the full-game shared pool, selling and combining are not in the prototype. Provisional and prototype labels are unchanged; nothing was promoted to a final rule.
 - **Results:** see the checkpoint F report.
+
+### 2026-10-12 — Canonical rulebooks (documentation milestone)
+- **Scope:** documentation only, from `main` at `d7794fc`. No game mechanic, Champion data, balance value, test or published artifact changed.
+- **Created:** `docs/rules/00-INDEX.md` and rulebooks 01–12 (core rules, match structure, combat engine, Champions with the common ability-specification format, Traits, Fame and Renown, Tavern and economy, Monster encounters and rewards, PvP and elimination, full match flow, determinism contracts, unresolved decisions). Every rule carries a design status (APPROVED DESIGN / PROVISIONAL / DRAFT / PROPOSED / UNRESOLVED) and an implementation tag (IMPLEMENTED / PROTOTYPE / NOT IMPLEMENTED) verified against the source.
+- **Decisions recorded:** D-022 to D-028 and P-032 from the owner's 2026-10-12 brief. Values the brief calls approved but that no project record contains (Fame thresholds and round rewards, Tavern rank unlocks and probabilities, the exhausted-rank fallback) are UNRESOLVED (U-01 to U-04), not reconstructed. D-023 (Renown starts at 3) supersedes the earlier "begins at 1"; confirmation requested (U-05).
+- **Also updated:** pointers in `docs/GAMEPLAY/*` and `GLOSSARY.md`; `OPEN_QUESTIONS.md` (rulebook decision queue); `ROADMAP.md` (full-game roadmap G0–G11, PROPOSED, and stale M3/M4 merge statuses corrected); `CLAUDE.md` and `README.md` (project map).
+- **Checks:** `npm run check` (engine 20 files / 449 tests, web 14 files / 147 tests, all passing); `npm run content-check` PASS (0 failures, 11 known warnings); `npm run content-check:test` OK (20 tests); `npm run roster:check` PASS; `npm run build` passes. A script confirmed that every U-ID and rule ID referenced in the rulebooks is defined, and that every relative link and cited file path exists.
+- **Next:** owner decision pack G0, then G1 (match economy and progression kernel); see `ROADMAP.md`.
 
 ## Required end-of-task report
 - Milestone and scope

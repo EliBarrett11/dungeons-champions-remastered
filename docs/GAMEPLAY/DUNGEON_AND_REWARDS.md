@@ -1,5 +1,7 @@
 # Dungeon Routes, Monster Rounds and Rewards
 
+> **Canonical rulebook:** [`docs/rules/08-monsters-rewards.md`](../rules/08-monsters-rewards.md) now organises these rules with a status and implementation tag on each, and records later owner decisions. This file is kept as design background; where the two differ, the rulebook says which source wins.
+
 ## Route choices
 At the start of each Floor, players choose among routes that reveal their rewards, risks and challenges. Route effects persist through the Floor and can alter rewards, PvP modifiers, PvE opponents and difficulty. Routes converge at the next Floor.
 
@@ -11,6 +13,7 @@ Floor 1 has three Monster Rounds before the first PvP Round. The exact later-Flo
 - Bundles should have equal total value but different composition.
 - Rewards are mostly random with mild adaptive influence from the player's team, Traits, Items, Gold and Renown.
 - Rewards are not guaranteed to be useful to the current build.
+- Each Monster Round offers six fresh Champion reward options, reserved for the remainder of the match (D-026, owner 2026-10-12). How they relate to the three bundles is unresolved (`rules/12-unresolved-decisions.md` U-11).
 - Fairness goal: equalize total reward value/count over time, potentially through a per-player reward budget.
 
 ## Monster difficulty

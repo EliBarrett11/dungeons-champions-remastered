@@ -1,5 +1,7 @@
 # Trait System
 
+> **Canonical rulebook:** [`docs/rules/05-traits.md`](../rules/05-traits.md) now organises these rules with a status and implementation tag on each, and records later owner decisions. This file is kept as design background; where the two differ, the rulebook says which source wins.
+
 ## Taxonomy
 Each Champion has exactly three Traits: one Race, one Class and one Origin. Each Champion also has one Role, which is an archetype rather than one of the three Trait slots.
 

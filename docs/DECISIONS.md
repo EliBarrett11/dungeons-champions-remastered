@@ -28,6 +28,8 @@ These are the only status labels for rules in this project.
 | `champion` schema / authoring guide | `implemented` | Approved content that the engine supports and tests cover |
 | any schema | `deprecated` | SUPERSEDED |
 | This register | "APPROVED DEVELOPMENT APPROACH", "CONFIRMED design target" | CONFIRMED as stated, with the qualifiers in the row |
+| `docs/rules/` rulebooks | APPROVED DESIGN | CONFIRMED (design status; says nothing about implementation) |
+| `docs/rules/` rulebooks | IMPLEMENTED / PROTOTYPE / NOT IMPLEMENTED | Implementation tags, not statuses. They record what the source code does and never change a rule's status. |
 
 Aligning the schema `status` enums themselves is tracked in `OPEN_QUESTIONS.md` (schema issues); the schemas were not edited.
 
@@ -56,6 +58,13 @@ Aligning the schema `status` enums themselves is tracked in `OPEN_QUESTIONS.md` 
 | D-019 | Maximum team size: 12 Champions fielded. The source workbook states it as "Maximum Renown / team size: 12", so the Renown cap (formerly 10, `GAMEPLAY/ECONOMY.md`) is now 12, keeping one fielded Champion per Renown level. Renown itself is not implemented yet; its thresholds and growth remain UNRESOLVED. The M2 prototype's bench of 4 and fielding limit of 1–3 (P-020) are unchanged; this decision does not change them. | CONFIRMED (owner, 2026-10-11); prototype limits unchanged |
 | D-020 | Multi-Class is excluded: each Champion has exactly one primary Class, and no Feat, Trait or other mechanic grants a second Class. Multi-Class Feat text in the source workbook is not imported as playable data. It may be revisited later. | CONFIRMED (owner, 2026-10-11) |
 | D-021 | The approved roster is `content/roster/champions.json`, imported from `content/roster/source/Dungeons_and_Champions_Roster_135_Option_A_Unique_Combinations.xlsx` (SHA-256 `a3b302cd…9bfe`): Champion IDs DC-001 to DC-135, names, and Class/Race/Origin assignments are approved. Proposed abilities (Basic Attack, Passive, Ultimate, Feats), cost ranks, rarities, Roles and balance values stay PROPOSED: stored under `proposed`, shown as proposals, and not executed. | CONFIRMED for assignments (owner, 2026-10-11); other fields PROPOSED |
+| D-022 | Match length target: five Floors and 23 Rounds. Elimination decides the actual length: the match ends as soon as one player remains (D-006), which may be before Round 23. The per-Floor schedule after Floor 1, Round numbering, and what happens if more than one player remains after Round 23 are UNRESOLVED (`rules/12-unresolved-decisions.md` U-08, U-09). | CONFIRMED design target (owner, 2026-10-12) |
+| D-023 | Renown starts at 3 and has a maximum of 12; each Renown level allows one fielded Champion, so fielding capacity equals Renown. Supersedes "Renown begins at 1" in `GAMEPLAY/ECONOMY.md` and `GLOSSARY.md` (undated, never registered); confirmation of that supersession requested (U-05). Fame determines Renown. The owner approved Fame thresholds for testing, but their values are not in any project record: UNRESOLVED (U-01). | CONFIRMED (owner, 2026-10-12); thresholds UNRESOLVED |
+| D-024 | Fame: the Tavern action "Play my song" costs 4 Gold and grants 4 Fame (restates `GAMEPLAY/ECONOMY.md`; values in configuration). Round Fame rewards were approved for testing, but their values are not in any project record: UNRESOLVED (U-02). | CONFIRMED (owner, 2026-10-12); round rewards UNRESOLVED |
+| D-025 | Tavern: six slots, refreshed automatically at the start of every preparation phase, Monster and PvP Rounds alike; a reroll costs 2 Gold and replaces all six slots. Rank unlocks and probabilities were approved for testing, and an exhausted-rank fallback was approved, but neither the table nor the fallback's text is in any project record: UNRESOLVED (U-03, U-04). | CONFIRMED (owner, 2026-10-12); odds and fallback UNRESOLVED |
+| D-026 | Monster Round Champion rewards: each Monster Round offers six fresh Champion reward options, which stay reserved for the remainder of the match. How the six relate to the three reward bundles, what "fresh" excludes, and the scope of the reservation are UNRESOLVED (U-11). | CONFIRMED (owner, 2026-10-12); structure UNRESOLVED |
+| D-027 | Ownership: a player owns at most 12 Champions, from every source. No Champion selling in the initial ruleset (D-012's selling clause describes a later ruleset; U-34). | CONFIRMED (owner, 2026-10-12) |
+| D-028 | PvP loss damage: the losing player's Health loss depends on the Round and on the remaining Health of the winning opponent's surviving Champions. The formula is UNRESOLVED (U-10); the candidate in `GAMEPLAY/MATCH_FLOW.md` stays PROPOSED. | CONFIRMED concept (owner, 2026-10-12); formula UNRESOLVED |
 
 ## Combat decisions established in design discussions
 
@@ -188,10 +197,18 @@ Approved by the owner on 2026-10-11 after the M4 audit; P-030 and P-031 and the 
 | P-030 | Rewards at the cap: when the player owns 12 Champions, the two Champion reward bundles are disabled and the 3-Gold bundle stays available, so every victory has a valid reward choice. The 12-Champion cap (P-027) is enforced on every acquisition path. | PROVISIONAL (owner-approved M4 prototype rule) |
 | P-031 | Reward reservations: all six Champions drawn for the reward choices (P-022) stay reserved for the entire Expedition. None may appear in the shop, including Champions from reward choices already passed up. | PROVISIONAL (owner-approved M4 prototype rule) |
 
+## Full-game testing baseline (2026-10-12)
+Stated by the owner in the rulebook brief of 2026-10-12 as a provisional baseline. It applies to the full game; it does **not** change the single-player Expedition prototype, where P-025 (3 Gold) and P-026 (no base income) stay in force until the owner decides otherwise.
+
+| ID | Decision | Status |
+|---|---|---|
+| P-032 | Gold baseline: each player starts a match with 3 Gold and receives 5 Gold per Round. Payment timing (start of preparation or after the battle; Monster Rounds; Round 1) and the relation to interest and streak Gold are UNRESOLVED (U-06, U-07). | PROVISIONAL (owner, 2026-10-12) |
+
 ## Repository decision
 The repository audit reports the actual remote as `github.com/EliBarrett11/dungeons-champions-remastered`. Use that remote. The earlier shorthand `EliBarrett/dungeons-champions-remastered` was inaccurate.
 
 ## Documentation decisions
+- 2026-10-12: Canonical rulebooks created in `docs/rules/` (index, rulebooks 01–12) from `main` at `d7794fc`. The owner's brief listed established decisions; those it stated explicitly are recorded as D-022 to D-028 and P-032. Values it describes as approved but that appear in no project record (Fame thresholds and round rewards, Tavern rank unlocks and probabilities, the exhausted-rank fallback text) are recorded as UNRESOLVED, not reconstructed. D-023 supersedes the earlier "Renown begins at 1"; confirmation requested (U-05). Documentation only: no mechanic, Champion data or balance value changed.
 - 2026-10-11: Documentation reorganised into the `docs/` layout described in the root `README.md`. The two combat contracts were merged into `COMBAT/RESOLUTION_CONTRACT.md` without promoting any rule. Approved by the owner as "documentation repair".
 - 2026-10-11: Owner accepted interpretations I-1 to I-9 and chose the Ultimate timing model "A + Visual only" (P-011). Recorded as PROVISIONAL; the C-009 pause is marked SUPERSEDED rather than deleted.
 - 2026-10-11: Owner approved Health clamping (P-012) and Ultimate-first same-timestamp resolution (P-013). Recorded as PROVISIONAL.

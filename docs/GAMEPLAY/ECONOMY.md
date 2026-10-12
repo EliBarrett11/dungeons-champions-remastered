@@ -1,5 +1,7 @@
 # Economy: Gold, Fame, Renown and Tavern
 
+> **Canonical rulebook:** [`docs/rules/07-tavern-economy.md`](../rules/07-tavern-economy.md) now organises these rules with a status and implementation tag on each, and records later owner decisions. This file is kept as design background; where the two differ, the rulebook says which source wins.
+
 **Status:** relationships are partly CONFIRMED; exact balance values remain TUNABLE or UNRESOLVED.
 
 ## Gold
@@ -7,10 +9,10 @@
 - After a PvP Round, players receive baseline Gold, then win-streak bonus Gold, then interest.
 - A player matched against PvE receives baseline Gold but no PvP win-streak bonus.
 - Interest is confirmed as: `min(5, floor(Gold held immediately before Round income / 10))`.
-- Initial Gold, baseline income, rank prices, sell value, shop odds and experience prices are unresolved/tunable.
+- Full-game testing baseline (P-032, PROVISIONAL, 2026-10-12): 3 starting Gold and 5 Gold per Round; payment timing and the relation to interest and streaks are unresolved (U-06, U-07). Rank prices, shop odds (approved for testing but not recorded, U-03) and experience prices are unresolved; there is no selling in the initial ruleset (D-027).
 
 ## Tavern
-- The Tavern refreshes automatically every Round.
+- The Tavern refreshes automatically at every preparation phase, Monster and PvP Rounds alike (D-025).
 - Each Tavern shows six shop slots.
 - “Purchase a Drink” costs 2 Gold and rerolls all six slots.
 - Shop offers are visible to all players, but each player's Tavern interaction is private.
@@ -18,7 +20,7 @@
 
 ## Fame and Renown
 - Fame and Renown persist across Runs.
-- Renown begins at 1 and is capped at 12 (D-019: maximum team size 12; formerly 10). Renown is not implemented in the prototype.
+- Renown begins at 3 and is capped at 12 (D-023, owner 2026-10-12, which supersedes the earlier "begins at 1"; confirmation requested, `rules/12-unresolved-decisions.md` U-05. Cap: D-019, formerly 10). Renown is not implemented in the prototype.
 - A player may field one Champion per Renown level.
 - Fame determines Renown, but exact thresholds are unresolved.
 - Tavern Bard action “Play my song” costs 4 Gold and grants 4 Fame.

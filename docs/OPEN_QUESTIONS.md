@@ -2,6 +2,14 @@
 
 This list is intentionally honest about gaps. The presence of a proposal elsewhere does not resolve a question.
 
+## Rulebook decision queue (2026-10-12)
+The canonical rulebooks (`docs/rules/`) gather every rule-level gap into one numbered queue, `docs/rules/12-unresolved-decisions.md` (U-01 to U-36), with what each blocks. New items found while writing them:
+- **Approved, values not recorded:** Fame→Renown thresholds (U-01), round Fame rewards (U-02), Tavern rank unlocks and probabilities (U-03), the exhausted-rank fallback text (U-04). The owner described these as approved for testing; no project record contains them.
+- **Conflicts:** starting Renown 3 (D-023) vs the earlier "1" (U-05, recorded as superseded; confirm); interest and streaks vs the 3 + 5 Gold baseline (U-07); six reserved Champion options per Monster Round vs three bundles (U-11); D-027 no selling vs D-012's selling clause (U-34).
+- **New unspecified rules:** income timing (U-06), starting collection (U-12), eligibility capacity over 23 Rounds (U-14), full-game prices (U-27), "Play my song" limits (U-28), reroll limits and locking (U-29), Round numbering and schedule (U-08), post-battle step order (U-35), preparation timers (U-36), full-game fielding minimum and engine unit limit (U-25).
+
+The lists below remain valid and are referenced from rulebook 12.
+
 ## Blockers to the first combat engine
 
 | ID | Question | Why it matters | Status / next action |
@@ -86,7 +94,7 @@ This list is intentionally honest about gaps. The presence of a proposal elsewhe
 - Exact total reward-value calculation and fairness budget over a match.
 - Run streak reset/carry behavior across Floors.
 - Exact Run-End Upgrade catalogue, tier thresholds and generation rules.
-- Exact Fame-to-Renown thresholds and Renown cap behavior (the cap is 12 per D-019; Renown is not implemented).
+- Exact Fame-to-Renown thresholds and Renown cap behavior (start 3 per D-023, cap 12 per D-019; Renown is not implemented; values: U-01).
 - Exact solo Dragon encounter rules after match victory, and what the Dragon fight's outcome changes (if anything).
 - What happens when the last remaining players are all eliminated in the same Round (D-006 "last player standing" has no rule for this), and how placements are ordered for simultaneous eliminations.
 - Player Health damage after a drawn battle.

@@ -1,6 +1,6 @@
 # Glossary
 
-Definitions are taken from the existing documentation; the source is given for each. Where the documents do not define something, the entry says UNRESOLVED and points to `OPEN_QUESTIONS.md`. This glossary does not create rules.
+Definitions are taken from the existing documentation; the source is given for each. The rules themselves, with status and implementation tags, are in `docs/rules/` (start at `00-INDEX.md`). Where the documents do not define something, the entry says UNRESOLVED and points to `OPEN_QUESTIONS.md`. This glossary does not create rules.
 
 ## Match structure
 
@@ -10,7 +10,7 @@ Definitions are taken from the existing documentation; the source is given for e
 | **Round** | One stage of the match in which every remaining player fights once, simultaneously. Either a **PvP Round** or a **Monster Round**. | `GAMEPLAY/MATCH_FLOW.md` |
 | **PvP Round** | A Round in which players are paired 1v1 against each other. With an odd number of players, one player fights a PvE opponent instead. | `GAMEPLAY/MATCH_FLOW.md` |
 | **Monster Round** | A PvE Round against monsters; winning offers a choice of three reward bundles. | `GAMEPLAY/DUNGEON_AND_REWARDS.md` |
-| **Floor** | A section of the dungeon made of several Rounds. At the start of each Floor players choose a Route. Floor 1 has three Monster Rounds before the first PvP Round. Number of Floors and later schedules: UNRESOLVED. | `GAMEPLAY/MATCH_FLOW.md` |
+| **Floor** | A section of the dungeon made of several Rounds. At the start of each Floor players choose a Route. Floor 1 has three Monster Rounds before the first PvP Round. Design target: five Floors, 23 Rounds (D-022); later schedules: UNRESOLVED. | `GAMEPLAY/MATCH_FLOW.md` |
 | **Route** | A path chosen at the start of a Floor, with revealed rewards, risks and challenges that persist for that Floor. Routes converge at the next Floor. | `GAMEPLAY/DUNGEON_AND_REWARDS.md` |
 | **Run** | A player's current winning streak. Losing a Round ends the Run and resets the win streak, but does **not** eliminate the player and does not reset team, items, levels, Gold, Fame or Renown. (Note: unlike many roguelites, a "Run" here is not the whole game.) | `GAMEPLAY/ECONOMY.md` |
 | **Expedition (M2 prototype only)** | The browser prototype's playable session: up to three Monster Rounds with a reward choice after each victory, ending on defeat, draw, a voluntary end or a clear. A prototype term, not a game rule; named so it is not confused with **Run**. | `DECISIONS.md` P-018 |
@@ -27,8 +27,8 @@ Definitions are taken from the existing documentation; the source is given for e
 | **Gold** | Match currency used in the Tavern. Persists across Runs. Earned as baseline income, win-streak bonus and interest. | `GAMEPLAY/ECONOMY.md` |
 | **Interest** | `min(5, floor(Gold held immediately before Round income / 10))`. | `GAMEPLAY/ECONOMY.md` |
 | **Fame** | Persistent resource that determines Renown; e.g. "Play my song" costs 4 Gold and grants 4 Fame. Thresholds UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
-| **Renown** | Starts at 1, capped at 12 (D-019). Not implemented in the prototype. A player may field one Champion per Renown level. Whether it also acts as "player level" for shop odds: UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
-| **Tavern** | The shop: six slots, refreshes automatically every Round. Each player's interaction is private; offers are visible to all and reserve nothing. | `GAMEPLAY/ECONOMY.md`, D-009 |
+| **Renown** | Starts at 3 (D-023, superseding the earlier "starts at 1"), capped at 12 (D-019). Not implemented in the prototype. A player may field one Champion per Renown level. Whether it also acts as "player level" for shop odds: UNRESOLVED. | `GAMEPLAY/ECONOMY.md` |
+| **Tavern** | The shop: six slots, refreshed automatically at every preparation phase, Monster and PvP Rounds alike (D-025). Each player's interaction is private; offers are visible to all and reserve nothing. | `GAMEPLAY/ECONOMY.md`, D-009 |
 | **Drink ("Purchase a Drink")** | Costs 2 Gold and rerolls all six Tavern slots. Adopted for the prototype Expedition by P-023 and implemented in M4 (2 Gold, replaces all six offers). | `GAMEPLAY/ECONOMY.md`, P-023 |
 | **Reserved reward Champions (prototype)** | The six roster Champions drawn when an Expedition starts for its victory reward choices (two per Monster Round). Reserved for the whole Expedition, including ones passed up; the M4 shop never offers them. Not related to the shared pool (D-009). | P-022, P-028, P-031 |
 | **Owned Champions / collection (prototype)** | Every Champion the player owns in an Expedition (the UI calls it the bench). Starts at four; at most 12 from all sources (P-027, P-030). Fielding is limited separately to 1–3. | P-020, P-027, P-030 |
